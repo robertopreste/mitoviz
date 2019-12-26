@@ -1,0 +1,22 @@
+##fileformat=VCFv4.0
+##reference=chrRCRS
+##INFO=<ID=AC,Number=.,Type=Integer,Description="Allele count in genotypes">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
+##contig=<ID=chrMT,length=16569>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+chrMT	750	.	A	G	.	PASS	AC=1;AN=2
+chrMT	1438	.	A	G	.	PASS	AC=1;AN=2
+chrMT	2706	.	A	G	.	PASS	AC=1;AN=2
+chrMT	3270	.	CT	C	.	PASS	AC=1;AN=2
+chrMT	4216	.	T	C	.	PASS	AC=1;AN=2
+chrMT	7028	.	C	T	.	PASS	AC=1;AN=2
+chrMT	8935	.	C	T	.	PASS	AC=1;AN=2
+chrMT	9389	.	A	G	.	PASS	AC=1;AN=2
+chrMT	10463	.	T	C	.	PASS	AC=1;AN=2
+chrMT	11251	.	A	G	.	PASS	AC=1;AN=2
+chrMT	11719	.	G	A	.	PASS	AC=1;AN=2
+chrMT	12633	.	C	A	.	PASS	AC=1;AN=2
+chrMT	13368	.	G	A	.	PASS	AC=1;AN=2
+chrMT	14766	.	C	T	.	PASS	AC=1;AN=2
+chrMT	15326	.	A	G	.	PASS	AC=1;AN=2
+chrMT	16294	.	C	T	.	PASS	AC=1;AN=2
