@@ -19,3 +19,4 @@ numpy
 matplotlib
 pysam
 vcfpy
+opencv-python

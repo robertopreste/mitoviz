@@ -13,13 +13,7 @@ requirements = ["Click>=7.0", "numpy", "matplotlib", "pysam", "vcfpy"]
 
 setup_requirements = ["pytest-runner", ]
 
-test_requirements = ["pytest", ]
-
-# with open("requirements.txt") as f:
-#     requirements = f.read().splitlines()
-
-# with open("requirements_test.txt") as f:
-#     test_requirements = f.read().splitlines()
+test_requirements = ["pytest", "opencv-python"]
 
 setup(  # pragma: no cover
     author="Roberto Preste",
