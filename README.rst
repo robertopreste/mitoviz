@@ -44,13 +44,13 @@ Variants are shown according to their heteroplasmic fraction (HF), plotting vari
 HF = 1.0 on the outer border of the mitochondrial circle, those with HF = 0.0 on the inner
 border and all the others according to their actual HF value.
 
-.. image:: tests/images/sample_hf.png
+.. image:: /images/sample_hf.png
   :alt: Mitochondrial plot with HF
 
 If the HF information is not available, variants will all be shown in the middle of the
 mitochondrial circle.
 
-.. image:: tests/images/sample.png
+.. image:: /images/sample.png
   :alt: Mitochondrial plot without HF
 
 Usage
