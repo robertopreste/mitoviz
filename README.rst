@@ -20,20 +20,9 @@ mitoviz
         :target: https://mitoviz.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/robertopreste/mitoviz/shield.svg
-     :target: https://pyup.io/repos/github/robertopreste/mitoviz/
-     :alt: Updates
-
 .. image:: https://pyup.io/repos/github/robertopreste/mitoviz/python-3-shield.svg
      :target: https://pyup.io/repos/github/robertopreste/mitoviz/
      :alt: Python 3
-
-.. image:: https://pepy.tech/badge/mitoviz
-    :target: https://pepy.tech/project/mitoviz
-    :alt: Downloads
-
-.. image:: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg
-   :target: https://saythanks.io/to/robertopreste
 
 
 Plot variants on the human mitochondrial genome.
