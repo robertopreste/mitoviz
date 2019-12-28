@@ -4,6 +4,7 @@
 ##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
 ##contig=<ID=chrMT,length=16569>
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+chrMT	310	.	T	TC,C	.	PASS	AC=1,1;AN=3
 chrMT	750	.	A	G	.	PASS	AC=1;AN=2
 chrMT	1438	.	A	G	.	PASS	AC=1;AN=2
 chrMT	2706	.	A	G	.	PASS	AC=1;AN=2
