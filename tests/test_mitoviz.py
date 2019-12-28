@@ -28,7 +28,7 @@ class TestCli(unittest.TestCase):
 
     def tearDown(self) -> None:
         try:
-            os.remove("mitoviz.png")
+            os.remove("MITOVIZ001.png")
             os.remove(OUTPUT_IMG)
             os.remove(OUTPUT_HF_IMG)
         except FileNotFoundError:
@@ -48,11 +48,11 @@ class TestCli(unittest.TestCase):
 
         # When
         result = self.runner.invoke(cli.main, [SAMPLE_VCF])
-        result_img = cv2.imread("mitoviz.png")
+        result_img = cv2.imread("MITOVIZ001.png")
 
         # Then
         self.assertEqual(0, result.exit_code)
-        self.assertTrue(os.path.isfile("mitoviz.png"))
+        self.assertTrue(os.path.isfile("MITOVIZ001.png"))
         diff = cv2.subtract(base_img, result_img)
         self.assertFalse(np.any(diff))
 
@@ -62,11 +62,11 @@ class TestCli(unittest.TestCase):
 
         # When
         result = self.runner.invoke(cli.main, [SAMPLE_HF_VCF])
-        result_img = cv2.imread("mitoviz.png")
+        result_img = cv2.imread("HG00420.png")
 
         # Then
         self.assertEqual(0, result.exit_code)
-        self.assertTrue(os.path.isfile("mitoviz.png"))
+        self.assertTrue(os.path.isfile("HG00420.png"))
         diff = cv2.subtract(base_img, result_img)
         self.assertFalse(np.any(diff))
 

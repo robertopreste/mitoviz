@@ -4,7 +4,7 @@
 import os
 import unittest
 
-from vcfpy import Substitution
+from vcfpy import Call, Substitution
 
 from mitoviz.classes import Locus, Variant, VcfParser
 
@@ -96,6 +96,9 @@ class TestVcfParser(unittest.TestCase):
     def setUp(self) -> None:
         self.vcf = VcfParser(SAMPLE_HF_VCF)
 
+    def test_samples(self):
+        self.assertEqual(["HG00420"], self.vcf.samples)
+
     def test_variants(self):
         # Given/When
         variant = Variant(
@@ -106,5 +109,31 @@ class TestVcfParser(unittest.TestCase):
         )
 
         # Then
-        self.assertIsInstance(self.vcf.variants, list)
+        self.assertIsInstance(self.vcf.variants, dict)
         # self.assertIn(variant, self.vcf.variants)
+
+    def test_parse_call(self):
+        # Given
+        call = Call('HG00420', {'GT': '0/1',
+                                'DP': [873],
+                                'HF': [0.998],
+                                'CILOW': [0.991],
+                                'CIUP': [1.0]})
+        expected = 0.998
+
+        # When
+        result = self.vcf.parse_call(call, 0)
+
+        # Then
+        self.assertEqual(expected, result)
+
+    def test_parse_call_empty(self):
+        # Given
+        call = Call('HG00420', {})
+        expected = 0.5
+
+        # When
+        result = self.vcf.parse_call(call, 0)
+
+        # Then
+        self.assertEqual(expected, result)
