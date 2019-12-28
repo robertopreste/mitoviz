@@ -6,3 +6,8 @@ History
 ==================
 
 * First release.
+
+WIP
+---
+
+* Add functionality to plot multiple samples.
