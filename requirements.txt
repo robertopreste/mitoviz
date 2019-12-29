@@ -18,6 +18,6 @@ codecov
 
 numpy
 matplotlib
-pysam
+pysam==0.15.3
 vcfpy
 opencv-python
