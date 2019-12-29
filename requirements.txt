@@ -19,5 +19,5 @@ codecov
 numpy
 matplotlib
 pysam
-vcfpy
+vcfpy==0.12.1
 opencv-python
