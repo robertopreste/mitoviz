@@ -1,0 +1,44 @@
+##fileformat=VCFv4.0
+##FILTER=<ID=PASS,Description="All filters passed">
+##reference=chrRCRS
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=HF,Number=.,Type=Float,Description="Heteroplasmy Frequency of variant allele">
+##INFO=<ID=AC,Number=.,Type=Integer,Description="Allele count in genotypes">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
+##bcftools_normVersion=1.9+htslib-1.9
+##bcftools_normCommand=norm -m -both sample.vcf; Date=Mon Apr 29 10:08:13 2019
+##contig=<ID=chrMT>
+##INFO=<ID=NS,Number=1,Type=Integer,Description="Number of samples with data">
+##INFO=<ID=AC_Hom,Number=A,Type=Integer,Description="Allele counts in homozygous genotypes">
+##INFO=<ID=AC_Het,Number=A,Type=Integer,Description="Allele counts in heterozygous genotypes">
+##INFO=<ID=AC_Hemi,Number=A,Type=Integer,Description="Allele counts in hemizygous genotypes">
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele frequency">
+##INFO=<ID=MAF,Number=A,Type=Float,Description="Minor Allele frequency">
+##INFO=<ID=HWE,Number=A,Type=Float,Description="HWE test (PMID:15789306)">
+##INFO=<ID=ExcHet,Number=A,Type=Float,Description="Probability of excess heterozygosity">
+##bcftools_pluginVersion=1.9+htslib-1.9
+##bcftools_pluginCommand=plugin fill-tags -o processed_2.vcf processed.vcf.gz; Date=Mon Apr 29 10:10:33 2019
+##bcftools_filterVersion=1.9+htslib-1.9
+##bcftools_filterCommand=filter -i 'FMT/DP>30 & FMT/HF>0.3' -m x -S 0 -O v -o filtered_DP_HF.vcf processed_2.vcf; Date=Thu May 23 10:58:22 2019
+##bcftools_annotateVersion=1.9+htslib-1.9
+##bcftools_annotateCommand=annotate -x ^FORMAT/GT,FORMAT/HF -o vcf_tmp2.vcf vcf_tmp.vcf; Date=Fri May 24 11:00:18 2019
+##bcftools_pluginVersion=1.9+htslib-1.9
+##bcftools_pluginCommand=plugin fill-tags -o vcf_tmp3.vcf vcf_tmp2.vcf.gz; Date=Fri May 24 11:21:18 2019
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	SRR1777294	SRR1777295	SRR1777296	SRR1777290	SRR1777291
+chrMT	310	.	T	TC	.	PASS	"AC=28;AN=56;NS=28;AF=0.5;MAF=0.5;AC_Het=28;AC_Hom=0;AC_Hemi=0;HWE=4.03405e-08;ExcHet=3.50956e-08"	GT:HF	0/1/0:0.042,0.844	.:.	.:.	0/1/0:0.044,0.846	0/1/0:0.037,0.868
+chrMT	750	.	A	G	.	PASS	"AC=32;AN=43;NS=32;AF=0.744186;MAF=0.255814;AC_Het=11;AC_Hom=0;AC_Hemi=21;HWE=0.00290319;ExcHet=0.00290319"	GT:HF	0/1:0.999	01:01	01:01	0/1:0.999	01:01
+chrMT	1438	.	A	G	.	PASS	"AC=31;AN=47;NS=31;AF=0.659574;MAF=0.340426;AC_Het=16;AC_Hom=0;AC_Hemi=15;HWE=0.000130442;ExcHet=0.00010903"	GT:HF	01:01	0/1:0.986	01:01	0/1:0.999	0/1/0:0.996,0.002
+chrMT	2706	.	A	G	.	PASS	"AC=35;AN=45;NS=35;AF=0.777778;MAF=0.222222;AC_Het=10;AC_Hom=0;AC_Hemi=25;HWE=0.00690641;ExcHet=0.00554244"	GT:HF	01:01	01:01	01:01	0/1:0.999	0/1/0:0.998,0.002
+chrMT	3145	.	A	G	.	PASS	"AC=2;AN=4;NS=2;AF=0.5;MAF=0.5;AC_Het=2;AC_Hom=0;AC_Hemi=0;HWE=1;ExcHet=0.666667"	GT:HF	.:.	.:.	.:.	0/1:0.765	0/1:0.768
+chrMT	4769	.	A	G	.	PASS	"AC=25;AN=35;NS=25;AF=0.714286;MAF=0.285714;AC_Het=10;AC_Hom=0;AC_Hemi=15;HWE=0.00690641;ExcHet=0.00554244"	GT:HF	0/1:0.997	01:01	.:.	0/1:0.999	0/1:0.998
+chrMT	7028	.	C	T	.	PASS	"AC=25;AN=32;NS=25;AF=0.78125;MAF=0.21875;AC_Het=7;AC_Hom=0;AC_Hemi=18;HWE=0.037296;ExcHet=0.037296"	GT:HF	0/1:0.999	01:01	01:01	0/1:0.999	0/1:0.999
+chrMT	8701	.	A	G	.	PASS	"AC=14;AN=26;NS=14;AF=0.538462;MAF=0.461538;AC_Het=12;AC_Hom=0;AC_Hemi=2;HWE=0.0018564;ExcHet=0.00151471"	GT:HF	0/1:0.999	01:01	01:01	0/1:0.996	0/1:0.999
+chrMT	9540	.	T	C	.	PASS	"AC=13;AN=22;NS=13;AF=0.590909;MAF=0.409091;AC_Het=9;AC_Hom=0;AC_Hemi=4;HWE=0.0105306;ExcHet=0.0105306"	GT:HF	0/1:0.995	01:01	01:01	0/1:0.995	0/1:0.994
+chrMT	10400	.	C	T	.	PASS	"AC=13;AN=21;NS=13;AF=0.619048;MAF=0.380952;AC_Het=8;AC_Hom=0;AC_Hemi=5;HWE=0.0253302;ExcHet=0.0198912"	GT:HF	0/1:0.998	01:01	01:01	0/1:0.999	0/1:0.998
+chrMT	11626	.	T	C	.	PASS	"AC=11;AN=20;NS=11;AF=0.55;MAF=0.45;AC_Het=9;AC_Hom=0;AC_Hemi=2;HWE=0.0105306;ExcHet=0.0105306"	GT:HF	0/1:0.996	01:01	01:01	.:.	.:.
+chrMT	11719	.	G	A	.	PASS	"AC=34;AN=46;NS=34;AF=0.73913;MAF=0.26087;AC_Het=12;AC_Hom=0;AC_Hemi=22;HWE=0.0018564;ExcHet=0.00151471"	GT:HF	01:01	0/1:0.984	01:01	0/1:0.999	0/1:0.999
+chrMT	12705	.	C	T	.	PASS	"AC=12;AN=21;NS=12;AF=0.571429;MAF=0.428571;AC_Het=9;AC_Hom=0;AC_Hemi=3;HWE=0.0105306;ExcHet=0.0105306"	GT:HF	0/1:0.999	01:01	01:01	0/1:0.998	0/1:0.999
+chrMT	13368	.	G	A	.	PASS	"AC=2;AN=4;NS=2;AF=0.5;MAF=0.5;AC_Het=2;AC_Hom=0;AC_Hemi=0;HWE=1;ExcHet=0.666667"	GT:HF	.:.	.:.	.:.	0/1:0.73	0/1:0.759
+chrMT	14766	.	C	T	.	PASS	"AC=38;AN=59;NS=38;AF=0.644068;MAF=0.355932;AC_Het=21;AC_Hom=0;AC_Hemi=17;HWE=3.89618e-06;ExcHet=3.89618e-06"	GT:HF	0/1:0.997	0/1:0.988	01:01	0/1:0.999	0/1:0.998
+chrMT	15326	.	A	G	.	PASS	"AC=37;AN=58;NS=37;AF=0.637931;MAF=0.362069;AC_Het=21;AC_Hom=0;AC_Hemi=16;HWE=3.89618e-06;ExcHet=3.89618e-06"	GT:HF	0/1:0.998	01:01	01:01	0/1:0.997	0/1/0:0.995,0.003
+chrMT	16295	.	C	T	.	PASS	"AC=12;AN=22;NS=12;AF=0.545455;MAF=0.454545;AC_Het=10;AC_Hom=0;AC_Hemi=2;HWE=0.00690641;ExcHet=0.00554244"	GT:HF	0/1:0.995	01:01	01:01	.:.	.:.

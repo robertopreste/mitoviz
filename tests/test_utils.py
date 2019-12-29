@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
+import os
 import unittest
 
-from mitoviz.utils import convert_hf, convert_nt
+from mitoviz.utils import convert_hf, convert_nt, parse_path
 
 
 class TestUtils(unittest.TestCase):
@@ -26,6 +27,28 @@ class TestUtils(unittest.TestCase):
 
         # When
         result = convert_hf(hf)
+
+        # Then
+        self.assertEqual(expected, result)
+
+    def test_parse_path(self):
+        # Given
+        path = "test/dir/tester.py"
+        expected = ("test/dir", "tester", ".py")
+
+        # When
+        result = parse_path(path)
+
+        # Then
+        self.assertEqual(expected, result)
+
+    def test_parse_path_empty(self):
+        # Given
+        path = ""
+        expected = (os.getcwd(), "", ".png")
+
+        # When
+        result = parse_path(path)
 
         # Then
         self.assertEqual(expected, result)

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
+import os
+from typing import Optional, Tuple
 
 
 def convert_nt(nt: int) -> float:
@@ -37,3 +39,29 @@ def convert_hf(hf: float) -> float:
         Adjusted HF value.
     """
     return hf * 5
+
+
+def parse_path(path: Optional[str]) -> Tuple[str, str, str]:
+    """ Parse the given path into directory name, file name and extension.
+
+    Parameters
+    ----------
+    path : Optional[str]
+        Output path to parse; if None, returns the current directory and an
+        empty file name.
+
+    Returns
+    -------
+    Tuple[str, str, str]
+        Tuple with directory name, file name and extension.
+    """
+    if path:
+        dirname = os.path.dirname(path)
+        filename = os.path.basename(path)
+        name, ext = os.path.splitext(filename)
+    else:
+        dirname = os.getcwd()
+        name = ""
+        ext = ".png"
+
+    return dirname, name, ext

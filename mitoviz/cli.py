@@ -10,11 +10,11 @@ from .plot import plot_vcf
 @click.command()
 @click.version_option()
 @click.argument("input_vcf")
-@click.option("--output", "-o", default="mitoviz.png",
-              help="Output filename.")
-def main(input_vcf, output):
+@click.option("--sample", "-s", default=None, help="Specific sample to plot.")
+@click.option("--output", "-o", default=None, help="Output filename.")
+def main(input_vcf, sample, output):
     """ Plot variants on the human mitochondrial genome. """
-    plot_vcf(in_vcf=input_vcf, save=True, output=output)
+    plot_vcf(in_vcf=input_vcf, sample=sample, save=True, output=output)
 
     return 0
 

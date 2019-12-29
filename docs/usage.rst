@@ -19,6 +19,11 @@ option with the desired path::
 
     $ mitoviz sample.vcf --output my_mt_plot.png
 
+If the provided VCF file contains more than one sample, a separate plot will be created for each
+of them; if you want to plot only a specific sample, use the ``--sample`` option::
+
+    $ mitoviz multisample.vcf --sample SRR1777294
+
 Python Module
 -------------
 
@@ -35,3 +40,10 @@ saved using the ``output`` option::
     from mitoviz import plot_vcf
 
     plot_vcf("sample.vcf", save=True, output="my_mt_plot.png")
+
+If the provided VCF file contains more than one sample, a separate plot will be created for each
+of them; if you want to plot only a specific sample, use the ``sample`` option::
+
+    from mitoviz import plot_vcf
+
+    plot_vcf("multisample.vcf", save=True, sample="SRR1777294")

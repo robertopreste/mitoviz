@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
+from collections import defaultdict
+
 import vcfpy
 
 from .constants import COLORS, NT_LENGTHS, TEXT_HA, TEXT_VA, TEXT_Y, TYPES
@@ -143,40 +145,59 @@ class VcfParser:
 
     def __init__(self, vcf_in: str):
         self.vcf_in = vcf_in
-        self._variants = []
+        self._variants = defaultdict(list)
         self._reader = vcfpy.Reader.from_path(vcf_in)
         self.parse_variants()
+
+    @property
+    def samples(self):
+        return self._reader.header.samples.names
 
     @property
     def variants(self):
         return self._variants
 
-    @variants.setter
-    def variants(self, value):
-        if isinstance(value, list):
-            self._variants.extend(value)
-        elif isinstance(float, value):
-            self._variants.append(value)
-        else:
-            raise ValueError("not allowed")
+    @staticmethod
+    def parse_call(call: vcfpy.Call, i: int) -> float:
+        """ Parse the vcfpy.Call to get the i-th value for HF; if not present,
+            return 0.5.
+
+        Parameters
+        ----------
+        call : vcfpy.Call
+            Input call to parse.
+        i : int
+            i-th element of HF to get.
+
+        Returns
+        -------
+        float
+            Either the required i-th element of HF or 0.5.
+        """
+        hf_list = call.data.get("HF", [])
+        if hf_list:
+            return hf_list[i]
+        return 0.5
 
     def parse_variants(self):
         """ Read the variants from the input VCF file and parse them in the
             required format.
+
+        Variants are stored in a per-sample fashion, in the self.variants
+        dictionary.
         """
         for record in self._reader:
-            if "HF" in record.FORMAT:
-                variants = [
-                    Variant(record.REF, record.POS, alt,
-                            record.calls[0].data["HF"][i])
-                    for i, alt in enumerate(record.ALT)
-                ]
-            else:
-                variants = [
-                    Variant(record.REF, record.POS, alt, 0.5)
-                    for alt in record.ALT
-                ]
-            self.variants = variants
+            if self.samples:  # sample name is specified
+                for sample, call in record.call_for_sample.items():
+                    variants = [Variant(record.REF, record.POS, alt,
+                                        self.parse_call(call, i))
+                                for i, alt in enumerate(record.ALT)]
+                    self._variants[sample].extend(variants)
+            else:  # single sample without name
+                sample = "MITOVIZ001"
+                variants = [Variant(record.REF, record.POS, alt, 0.5)
+                            for alt in record.ALT]
+                self._variants[sample].extend(variants)
 
     def __repr__(self):
         return "{}(vcf_in={})".format(
