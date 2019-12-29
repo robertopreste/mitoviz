@@ -16,7 +16,7 @@ pytest-runner==5.1
 pytest-cov==2.7.1
 codecov
 
-numpy
+numpy==1.18.0
 matplotlib
 pysam
 vcfpy
