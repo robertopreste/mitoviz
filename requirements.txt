@@ -19,6 +19,6 @@ codecov
 
 numpy
 matplotlib
-pysam
+pysam==0.15.3
 vcfpy==0.12.1
 opencv-python==4.1.2.30
