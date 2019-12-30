@@ -1,14 +1,15 @@
 click==7.0
 
-pip==19.2.3
+pip==19.3.1
 bump2version==0.5.11
 wheel==0.33.6
 watchdog==0.9.0
-flake8==3.7.8
-tox==3.14.0
+coverage==5.0.1
+tox==3.14.3
+flake8==3.7.9
 coverage==4.5.4
-Sphinx==2.2.0
 sphinx-click==2.3.1
+Sphinx==2.3.1
 sphinxcontrib-napoleon==0.7
 twine==2.0.0
 pytest==5.2.0
