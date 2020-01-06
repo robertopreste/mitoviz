@@ -20,10 +20,10 @@ TYPES = ["reg", "trna", "rrna", "trna", "rrna", "trna",
          "trna", "trna", "cds", "cds", "trna", "cds", "trna", "trna"]
 
 COLORS = {
-    "trna": "#1e90ff",
-    "rrna": "#b22222",
-    "reg": "#ff7f50",
-    "cds": "#228b22",
+    "trna": "#4169e1",  # royalblue
+    "rrna": "#cd5c5c",  # indianred
+    "reg": "#ffa500",  # orange
+    "cds": "#2e8b57",  # seagreen
 }
 
 TEXT_HA = ["center", "center", "right", "right", "right", "right", "right",
