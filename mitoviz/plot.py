@@ -4,18 +4,27 @@
 import os
 from typing import List, Optional
 
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 
 from .classes import Locus, Variant, VcfParser
-from .constants import NAMES
+from .constants import COLORS, NAMES
 from .utils import parse_path
+
+
+def plot_legend() -> List[mpatches.Patch]:
+    """ Return a list of mpatches.Patch to create the loci legend. """
+    cds = mpatches.Patch(color=COLORS["cds"], label="Coding")
+    reg = mpatches.Patch(color=COLORS["reg"], label="Regulatory")
+    rrna = mpatches.Patch(color=COLORS["rrna"], label="rRNA")
+    trna = mpatches.Patch(color=COLORS["trna"], label="tRNA")
+    return [cds, reg, rrna, trna]
 
 
 def plot_mito():
     """ Return an axes object with the base mitochondrial genome plot. """
     fig = plt.figure(figsize=(20, 10), dpi=300)
     ax = fig.add_subplot(111, polar=True)
-    # ax = plt.axes([0.025, 0.025, 0.95, 0.95], polar=True)
     loci = [Locus(name=name, index=index)
             for name, index in zip(NAMES, range(len(NAMES)))]
     thetas = [el.theta for el in loci]
@@ -55,6 +64,7 @@ def plot_variants(sample: str, variants: List[Variant]) -> None:
         ax.scatter(variant.pos_x, variant.pos_y, c="black", s=20, zorder=20)
 
     ax.set_title(sample)
+    plt.legend(handles=plot_legend(), loc="center")
 
     return None
 
