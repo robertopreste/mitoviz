@@ -11,3 +11,8 @@ History
 ==================
 
 * Add functionality to plot multiple samples.
+
+0.2.1 (2020-01-06)
+------------------
+
+* Add legend to plots and update colors.
