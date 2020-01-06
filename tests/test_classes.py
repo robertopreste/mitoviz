@@ -41,10 +41,10 @@ class TestLocus(unittest.TestCase):
         self.assertEqual(1.430045868791116, self.nd1.theta)
 
     def test_color(self):
-        self.assertEqual("#ff7f50", self.dloop.color)
-        self.assertEqual("#1e90ff", self.tf.color)
-        self.assertEqual("#b22222", self.rnr1.color)
-        self.assertEqual("#228b22", self.nd1.color)
+        self.assertEqual("#ffa500", self.dloop.color)
+        self.assertEqual("#4169e1", self.tf.color)
+        self.assertEqual("#cd5c5c", self.rnr1.color)
+        self.assertEqual("#2e8b57", self.nd1.color)
 
     def test_text_ha(self):
         self.assertEqual("center", self.dloop.text_ha)
