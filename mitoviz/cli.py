@@ -12,9 +12,12 @@ from .plot import plot_vcf
 @click.argument("input_vcf")
 @click.option("--sample", "-s", default=None, help="Specific sample to plot.")
 @click.option("--output", "-o", default=None, help="Output filename.")
-def main(input_vcf, sample, output):
+@click.option("--labels", "-l", default=False, is_flag=True,
+              help="Add variant labels.")
+def main(input_vcf, sample, output, labels):
     """ Plot variants on the human mitochondrial genome. """
-    plot_vcf(in_vcf=input_vcf, sample=sample, save=True, output=output)
+    plot_vcf(in_vcf=input_vcf, sample=sample, save=True, output=output,
+             labels=labels)
 
     return 0
 

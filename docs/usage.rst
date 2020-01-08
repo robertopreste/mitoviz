@@ -24,6 +24,10 @@ of them; if you want to plot only a specific sample, use the ``--sample`` option
 
     $ mitoviz multisample.vcf --sample SRR1777294
 
+It is possible to show labels above each variant using the ``--labels`` flag::
+
+    $ mitoviz sample.vcf --labels
+
 Python Module
 -------------
 
@@ -47,3 +51,9 @@ of them; if you want to plot only a specific sample, use the ``sample`` option::
     from mitoviz import plot_vcf
 
     plot_vcf("multisample.vcf", save=True, sample="SRR1777294")
+
+If you want to show labels for each variant plotted, add the ``labels=True`` option::
+
+    from mitoviz import plot_vcf
+
+    plot_vcf("sample.vcf", labels=True)
