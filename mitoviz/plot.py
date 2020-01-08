@@ -12,6 +12,16 @@ from .constants import COLORS, NAMES
 from .utils import parse_path
 
 
+def label_variant(ax: plt.axes, variant: Variant):
+    """ Annotate each variant with a label in the plot. """
+    ax.annotate(variant.label,
+                xy=(variant.pos_x, variant.pos_y),
+                xytext=(variant.pos_x, variant.pos_y),
+                textcoords="offset pixels",
+                ha="center", va="bottom",
+                bbox=dict(facecolor="w", alpha=0.8, boxstyle="round"))
+
+
 def plot_legend() -> List[mpatches.Patch]:
     """ Return a list of mpatches.Patch to create the loci legend. """
     cds = mpatches.Patch(color=COLORS["cds"], label="Coding")
@@ -48,7 +58,9 @@ def plot_mito():
     return fig, ax
 
 
-def plot_variants(sample: str, variants: List[Variant]) -> None:
+def plot_variants(sample: str,
+                  variants: List[Variant],
+                  labels: bool = False) -> None:
     """ Plot variants available in the given list.
 
     Parameters
@@ -57,11 +69,15 @@ def plot_variants(sample: str, variants: List[Variant]) -> None:
         Sample name, used for the title.
     variants : List[Variant]
         List of Variant instances to plot.
+    labels : bool
+        Add a label for each variant shown. [default: False]
     """
     fig, ax = plot_mito()
 
     for variant in variants:
         ax.scatter(variant.pos_x, variant.pos_y, c="black", s=20, zorder=20)
+        if labels:
+            label_variant(ax, variant)
 
     ax.set_title(sample)
     plt.legend(handles=plot_legend(), loc="center")
@@ -72,7 +88,8 @@ def plot_variants(sample: str, variants: List[Variant]) -> None:
 def plot_vcf(in_vcf: str,
              sample: Optional[str] = None,
              save: bool = False,
-             output: Optional[str] = None) -> None:
+             output: Optional[str] = None,
+             labels: bool = False) -> None:
     """ Plot variants from the given VCF file.
 
     Parameters
@@ -85,12 +102,14 @@ def plot_vcf(in_vcf: str,
         If true, the final plot will be saved to a file.
     output : Optional[str]
         Path of the output file where the plot will be saved.
+    labels : bool
+        If true, add a label for each variant shown.
     """
     vcf = VcfParser(in_vcf)
     variants_per_sample = vcf.variants
 
     if sample:
-        plot_variants(sample, variants_per_sample[sample])
+        plot_variants(sample, variants_per_sample[sample], labels)
         if save:
             dirname, name, ext = parse_path(output)
             if name == "":
@@ -100,7 +119,7 @@ def plot_vcf(in_vcf: str,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            plot_variants(sample, variants)
+            plot_variants(sample, variants, labels)
             if save:
                 dirname, name, ext = parse_path(output)
                 if name == "":
