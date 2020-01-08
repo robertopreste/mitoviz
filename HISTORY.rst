@@ -16,3 +16,8 @@ History
 ------------------
 
 * Add legend to plots and update colors.
+
+0.2.2 (2020-01-08)
+------------------
+
+* Add option to plot variant labels.
