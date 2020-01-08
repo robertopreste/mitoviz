@@ -14,10 +14,19 @@ def main():
     """ Create the test files needed. """
     plot_vcf(in_vcf=os.path.join(DATADIR, "sample.vcf"),
              save=True, output=os.path.join(IMGDIR, "sample.png"))
+    plot_vcf(in_vcf=os.path.join(DATADIR, "sample.vcf"),
+             save=True, output=os.path.join(IMGDIR, "sample_labels.png"),
+             labels=True)
     plot_vcf(in_vcf=os.path.join(DATADIR, "sample_hf.vcf"),
              save=True, output=os.path.join(IMGDIR, "sample_hf.png"))
+    plot_vcf(in_vcf=os.path.join(DATADIR, "sample_hf.vcf"),
+             save=True, output=os.path.join(IMGDIR, "sample_hf_labels.png"),
+             labels=True)
     plot_vcf(in_vcf=os.path.join(DATADIR, "multisample.vcf"),
              save=True, output=os.path.join(IMGDIR, "multisample.png"))
+    plot_vcf(in_vcf=os.path.join(DATADIR, "multisample.vcf"),
+             save=True, output=os.path.join(IMGDIR, "multisample_labels.png"),
+             labels=True)
 
 
 if __name__ == '__main__':
