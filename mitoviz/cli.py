@@ -14,10 +14,12 @@ from .plot import plot_vcf
 @click.option("--output", "-o", default=None, help="Output filename.")
 @click.option("--labels", "-l", default=False, is_flag=True,
               help="Add variant labels.")
-def main(input_vcf, sample, output, labels):
+@click.option("--legend", "-L", default=False, is_flag=True,
+              help="Add legend to the plot.")
+def main(input_vcf, sample, output, labels, legend):
     """ Plot variants on the human mitochondrial genome. """
     plot_vcf(in_vcf=input_vcf, sample=sample, save=True, output=output,
-             labels=labels)
+             labels=labels, legend=legend)
 
     return 0
 

@@ -60,7 +60,8 @@ def plot_mito():
 
 def plot_variants(sample: str,
                   variants: List[Variant],
-                  labels: bool = False) -> None:
+                  labels: bool = False,
+                  legend: bool = False) -> None:
     """ Plot variants available in the given list.
 
     Parameters
@@ -71,6 +72,8 @@ def plot_variants(sample: str,
         List of Variant instances to plot.
     labels : bool
         Add a label for each variant shown. [default: False]
+    legend : bool
+        Add a legend for loci colors in the plot. [default: False]
     """
     fig, ax = plot_mito()
 
@@ -80,7 +83,8 @@ def plot_variants(sample: str,
             label_variant(ax, variant)
 
     ax.set_title(sample)
-    plt.legend(handles=plot_legend(), loc="center")
+    if legend:
+        plt.legend(handles=plot_legend(), loc="center")
 
     return None
 
@@ -89,7 +93,8 @@ def plot_vcf(in_vcf: str,
              sample: Optional[str] = None,
              save: bool = False,
              output: Optional[str] = None,
-             labels: bool = False) -> None:
+             labels: bool = False,
+             legend: bool = False) -> None:
     """ Plot variants from the given VCF file.
 
     Parameters
@@ -104,12 +109,14 @@ def plot_vcf(in_vcf: str,
         Path of the output file where the plot will be saved.
     labels : bool
         If true, add a label for each variant shown.
+    legend : bool
+        If true, add a legend for loci colors in the plot.
     """
     vcf = VcfParser(in_vcf)
     variants_per_sample = vcf.variants
 
     if sample:
-        plot_variants(sample, variants_per_sample[sample], labels)
+        plot_variants(sample, variants_per_sample[sample], labels, legend)
         if save:
             dirname, name, ext = parse_path(output)
             if name == "":
@@ -119,7 +126,7 @@ def plot_vcf(in_vcf: str,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            plot_variants(sample, variants, labels)
+            plot_variants(sample, variants, labels, legend)
             if save:
                 dirname, name, ext = parse_path(output)
                 if name == "":
