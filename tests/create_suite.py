@@ -11,7 +11,7 @@ from constants import (
 )
 
 
-def main():
+def main():  # pragma: no cover
     """ Create the test files needed. """
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG)
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_LABELS,

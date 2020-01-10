@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
-import os
+import os  # pragma: no cover
 
 TESTDIR = os.path.dirname(os.path.realpath(__file__))
 DATADIR = os.path.join(TESTDIR, "data")
