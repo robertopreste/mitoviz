@@ -21,3 +21,8 @@ History
 ------------------
 
 * Add option to plot variant labels.
+
+0.2.3 (2020-01-11)
+------------------
+
+* Make legend plotting optional.
