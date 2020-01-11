@@ -34,6 +34,8 @@ resulting plot, using the ``--legend`` option::
 
     $ mitoviz sample.vcf --legend
 
+Comprehensive help about the mitoviz CLI can be found with ``mitoviz --help``.
+
 Python Module
 -------------
 
@@ -70,3 +72,5 @@ option::
     from mitoviz import plot_vcf
 
     plot_vcf("sample.vcf", legend=True)
+
+Comprehensive help about the mitoviz Python module can be found with ``help(mitoviz.plot_vcf)``.
