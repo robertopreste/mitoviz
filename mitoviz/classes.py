@@ -2,7 +2,9 @@
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
 from collections import defaultdict
+from typing import List, Union
 
+import pandas as pd
 import vcfpy
 
 from .constants import COLORS, NT_LENGTHS, TEXT_HA, TEXT_VA, TEXT_Y, TYPES
@@ -85,7 +87,7 @@ class Variant:
     def __init__(self,
                  reference: str,
                  position: int,
-                 alternate: vcfpy.Substitution,
+                 alternate: Union[str, vcfpy.Substitution],
                  hf: float):
         self.reference = reference
         self.position = position
@@ -95,25 +97,31 @@ class Variant:
     def _is_deletion(self) -> bool:
         """ Check whether the current variant refers to a deletion. """
         # e.g. ref CTG | alt C
-        return self.alternate.type == "DEL"
+        if isinstance(self.alternate, vcfpy.Substitution):
+            return self.alternate.type == "DEL"
+        return len(self.reference) > len(self.alternate)
 
     def _is_insertion(self) -> bool:
         """ Check whether the current variant refers to an insertion. """
         # e.g. ref C | alt CTG
-        return self.alternate.type == "INS"
+        if isinstance(self.alternate, vcfpy.Substitution):
+            return self.alternate.type == "INS"
+        return len(self.reference) < len(self.alternate)
 
     @property
     def label(self) -> str:
         """ Create the variant label for deletions, insertions and SNPs. """
+        alternate = (self.alternate.value
+                     if isinstance(self.alternate, vcfpy.Substitution)
+                     else self.alternate)
         if self._is_deletion():
             label = "{}d".format(int(self.position) + 1)
         elif self._is_insertion():
             label = "{}.{}".format(
-                self.position, self.alternate.value[len(self.reference):]
+                self.position, alternate[len(self.reference):]
             )
         else:
-            label = "{}{}>{}".format(self.position, self.reference,
-                                     self.alternate.value)
+            label = "{}{}>{}".format(self.position, self.reference, alternate)
 
         return label
 
@@ -202,4 +210,64 @@ class VcfParser:
     def __repr__(self):
         return "{}(vcf_in={})".format(
             self.__class__.__name__, self.vcf_in
+        )
+
+
+class DataFrameParser:
+    """ Class to read and parse a given pandas DataFrame.
+
+    Attributes:
+        df_in: path of the input pandas DataFrame
+    """
+
+    def __init__(self,
+                 df_in: pd.DataFrame,
+                 pos_col: str = "POS",
+                 ref_col: str = "REF",
+                 alt_col: str = "ALT",
+                 sample_col: str = "SAMPLE",
+                 hf_col: str = "HF"):
+        self.df_in = df_in
+        self.pos_col = pos_col
+        self.ref_col = ref_col
+        self.alt_col = alt_col
+        self.sample_col = sample_col
+        self.hf_col = hf_col
+        self._variants = defaultdict(list)
+        self.parse_variants()
+
+    @property
+    def has_hf(self) -> bool:
+        """ Return whether the HF column is available in the DataFrame. """
+        return self.hf_col in self.df_in.columns
+
+    @property
+    def has_sample(self):
+        """ Return whether the SAMPLE column is available in the DataFrame. """
+        return self.sample_col in self.df_in.columns
+
+    @property
+    def variants(self):
+        return self._variants
+
+    def parse_variants(self):
+        """ Read the variants from the input DataFrame and parse them in the
+            required format.
+
+        Variants are stored in a per-sample fashion, in the self.variants
+        dictionary.
+        """
+        for record in self.df_in.itertuples():
+            rec = record._asdict()
+            sample = rec[self.sample_col] if self.has_sample else "MITOVIZ001"
+            hf = rec[self.hf_col] if self.has_hf else 0.5
+            variant = Variant(rec[self.ref_col], rec[self.pos_col],
+                              rec[self.alt_col], hf)
+            self._variants[sample].append(variant)
+
+    def __repr__(self):
+        return ("{}(pos_col={}, ref_col={}, alt_col={}, "
+                "sample_col={}, hf_col={})").format(
+            self.__class__.__name__, self.pos_col, self.ref_col,
+            self.alt_col, self.sample_col, self.hf_col
         )
