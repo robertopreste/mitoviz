@@ -6,8 +6,9 @@ from typing import List, Optional
 
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
+import pandas as pd
 
-from .classes import Locus, Variant, VcfParser
+from .classes import Locus, Variant, VcfParser, DataFrameParser
 from .constants import COLORS, NAMES
 from .utils import parse_path
 
@@ -114,6 +115,58 @@ def plot_vcf(in_vcf: str,
     """
     vcf = VcfParser(in_vcf)
     variants_per_sample = vcf.variants
+
+    if sample:
+        plot_variants(sample, variants_per_sample[sample], labels, legend)
+        if save:
+            dirname, name, ext = parse_path(output)
+            if name == "":
+                name = sample
+            plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+            plt.close()
+    else:
+        for i, (sample, variants) in enumerate(variants_per_sample.items(),
+                                               start=1):
+            plot_variants(sample, variants, labels, legend)
+            if save:
+                dirname, name, ext = parse_path(output)
+                if name == "":
+                    name = sample
+                    plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                elif len(variants_per_sample) == 1:
+                    plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                else:
+                    plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
+                plt.close()
+
+    return None
+
+
+def plot_df(in_df: pd.DataFrame,
+            sample: Optional[str] = None,
+            save: bool = False,
+            output: Optional[str] = None,
+            labels: bool = False,
+            legend: bool = False) -> None:
+    """ Plot variants from the given pandas DataFrame.
+
+    Parameters
+    ----------
+    in_df : pd.DataFrame
+        Input pandas DataFrame.
+    sample : Optional[str]
+        Specific sample to plot (defaults to all available samples).
+    save : bool
+        If true, the final plot will be saved to a file.
+    output : Optional[str]
+        Path of the output file where the plot will be saved.
+    labels : bool
+        If true, add a label for each variant shown.
+    legend : bool
+        If true, add a legend for loci colors in the plot.
+    """
+    df = DataFrameParser(in_df)
+    variants_per_sample = df.variants
 
     if sample:
         plot_variants(sample, variants_per_sample[sample], labels, legend)

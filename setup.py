@@ -9,7 +9,8 @@ with open("README.rst") as readme_file:
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-requirements = ["Click>=7.0", "numpy", "matplotlib", "pysam", "vcfpy"]
+requirements = ["Click>=7.0", "numpy", "pandas", "matplotlib", "pysam",
+                "vcfpy"]
 
 setup_requirements = ["pytest-runner", ]
 
