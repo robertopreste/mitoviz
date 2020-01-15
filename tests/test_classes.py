@@ -6,12 +6,8 @@ import unittest
 
 from vcfpy import Call, Substitution
 
-from mitoviz.classes import Locus, Variant, VcfParser
-
-DATADIR = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "data"
-)
-SAMPLE_HF_VCF = os.path.join(DATADIR, "sample_hf.vcf")
+from mitoviz.classes import Locus, Variant, VcfParser, DataFrameParser
+from .constants import SAMPLE_HF_VCF, SAMPLE_DF, SAMPLE_HF_DF
 
 
 class TestLocus(unittest.TestCase):
@@ -74,15 +70,64 @@ class TestVariant(unittest.TestCase):
             alternate=Substitution("SNV", "A"),
             hf=0.3
         )
+        self.variant_del = Variant(
+            reference="CT",
+            position=3308,
+            alternate=Substitution("DEL", "C"),
+            hf=0.3
+        )
+        self.variant_ins = Variant(
+            reference="C",
+            position=3308,
+            alternate=Substitution("INS", "CA"),
+            hf=0.3
+        )
+        self.variant_raw = Variant(
+            reference="C",
+            position=3308,
+            alternate="A",
+            hf=0.3
+        )
+        self.variant_del_raw = Variant(
+            reference="CT",
+            position=3308,
+            alternate="C",
+            hf=0.3
+        )
+        self.variant_ins_raw = Variant(
+            reference="C",
+            position=3308,
+            alternate="CA",
+            hf=0.3
+        )
 
-    def test__is_deletion(self):
+    def test__is_deletion_false(self):
         self.assertFalse(self.variant._is_deletion())
+        self.assertFalse(self.variant_raw._is_deletion())
 
-    def test__is_insertion(self):
+    def test__is_deletion_true(self):
+        self.assertTrue(self.variant_del._is_deletion())
+        self.assertTrue(self.variant_del_raw._is_deletion())
+
+    def test__is_insertion_false(self):
         self.assertFalse(self.variant._is_insertion())
+        self.assertFalse(self.variant_raw._is_insertion())
+
+    def test__is_insertion_true(self):
+        self.assertTrue(self.variant_ins._is_insertion())
+        self.assertTrue(self.variant_ins_raw._is_insertion())
 
     def test_label(self):
         self.assertEqual("3308C>A", self.variant.label)
+        self.assertEqual("3308C>A", self.variant_raw.label)
+
+    def test_label_deletion(self):
+        self.assertEqual("3309d", self.variant_del.label)
+        self.assertEqual("3309d", self.variant_del_raw.label)
+
+    def test_label_insertion(self):
+        self.assertEqual("3308.A", self.variant_ins.label)
+        self.assertEqual("3308.A", self.variant_ins_raw.label)
 
     def test_pos_x(self):
         self.assertEqual(1.2557981773190898, self.variant.pos_x)
@@ -137,3 +182,35 @@ class TestVcfParser(unittest.TestCase):
 
         # Then
         self.assertEqual(expected, result)
+
+
+class TestDfParser(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.df = DataFrameParser(SAMPLE_DF)
+        self.df_hf = DataFrameParser(SAMPLE_HF_DF)
+
+    def test_variants(self):
+        # Given/When
+        variant = Variant(
+            reference="C",
+            position=8935,
+            alternate=Substitution("SNV", "T"),
+            hf=0.899
+        )
+
+        # Then
+        self.assertIsInstance(self.df.variants, dict)
+        # self.assertIn(variant, self.vcf.variants)
+
+    def test_has_sample_true(self):
+        self.assertTrue(self.df_hf.has_sample)
+
+    def test_has_sample_false(self):
+        self.assertFalse(self.df.has_sample)
+
+    def test_has_hf_true(self):
+        self.assertTrue(self.df_hf.has_hf)
+
+    def test_has_hf_false(self):
+        self.assertFalse(self.df.has_hf)

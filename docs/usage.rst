@@ -73,4 +73,26 @@ option::
 
     plot_vcf("sample.vcf", legend=True)
 
-Comprehensive help about the mitoviz Python module can be found with ``help(mitoviz.plot_vcf)``.
+Comprehensive help about the ``plot_vcf`` function can be found with ``help(mitoviz.plot_vcf)``.
+
+A similar function to plot variants contained in a pandas DataFrame is available as ``plot_df``.
+Supposing you have a pandas DataFrame with human mitochondrial variants named ``variants_df``, it
+is possible to plot them as follows::
+
+    from mitoviz import plot_df
+
+    plot_df(variants_df)
+
+This function expects a DataFrame with at least a reference allele, position and alternate allele
+columns; these are respectively called "REF", "POS" and "ALT" by default, but it is possible to
+use custom column names::
+
+    from mitoviz import plot_df
+
+    plot_df(variants_df, ref_col="position", ref_col="reference", alt_col="alternate")
+
+It is possible to provide optional sample and hf (heteroplasmic fraction) columns, which are called
+"SAMPLE" and "HF" by default but can be customised using the ``sample_col`` and ``hf_col`` options.
+
+Apart from this, ``plot_df`` accepts the same set of options available for ``plot_vcf``; more
+comprehensive help about the ``plot_df`` function can be found with ``help(mitoviz.plot_df)``.

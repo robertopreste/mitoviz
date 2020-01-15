@@ -102,6 +102,14 @@ of them; if you want to plot only a specific sample, use the ``sample`` option::
 
     plot_vcf("multisample.vcf", save=True, sample="SRR1777294")
 
+A similar function to plot variants contained in a pandas DataFrame is available as ``plot_df``.
+Supposing you have a pandas DataFrame with human mitochondrial variants named ``variants_df``, it
+is possible to plot them as follows::
+
+    from mitoviz import plot_df
+
+    plot_df(variants_df)
+
 Please refer to the Usage_ section of the documentation for further information.
 
 Installation

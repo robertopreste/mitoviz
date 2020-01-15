@@ -10,15 +10,11 @@ def convert_nt(nt: int) -> float:
 
     Used to calculate relative values required for polar plots.
 
-    Parameters
-    ----------
-    nt : int
-        Position/width in nucleotides.
+    Args:
+        nt: position/width in nucleotides
 
-    Returns
-    -------
-    float
-        Relative value.
+    Returns:
+        relative value
     """
     return (nt * 6.29) / 16569
 
@@ -28,15 +24,11 @@ def convert_hf(hf: float) -> float:
 
     Used to plot the variant on a polar plot.
 
-    Parameters
-    ----------
-    hf : float
-        Heteroplasmic fraction of the variant.
+    Args:
+        hf: heteroplasmic fraction of the variant
 
-    Returns
-    -------
-    float
-        Adjusted HF value.
+    Returns:
+        adjusted HF value
     """
     return hf * 5
 
@@ -44,16 +36,12 @@ def convert_hf(hf: float) -> float:
 def parse_path(path: Optional[str]) -> Tuple[str, str, str]:
     """ Parse the given path into directory name, file name and extension.
 
-    Parameters
-    ----------
-    path : Optional[str]
-        Output path to parse; if None, returns the current directory and an
-        empty file name.
+    Args:
+        path: output path to parse; if None, returns the current directory
+            and an empty file name
 
-    Returns
-    -------
-    Tuple[str, str, str]
-        Tuple with directory name, file name and extension.
+    Returns:
+        tuple with directory name, file name and extension
     """
     if path:
         dirname = os.path.dirname(path)

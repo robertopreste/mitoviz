@@ -26,3 +26,8 @@ History
 ------------------
 
 * Make legend plotting optional.
+
+0.3.0 (2020-01-15)
+==================
+
+* Add ``plot_df`` function to plot variants from a pandas DataFrame.
