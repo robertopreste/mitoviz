@@ -65,16 +65,11 @@ def plot_variants(sample: str,
                   legend: bool = False) -> None:
     """ Plot variants available in the given list.
 
-    Parameters
-    ----------
-    sample : str
-        Sample name, used for the title.
-    variants : List[Variant]
-        List of Variant instances to plot.
-    labels : bool
-        Add a label for each variant shown. [default: False]
-    legend : bool
-        Add a legend for loci colors in the plot. [default: False]
+    Args:
+        sample: sample name, used for the plot title
+        variants: list of Variant instances to plot
+        labels: add a label for each variant shown [default: False]
+        legend: add a legend for loci colors in the plot [default: False]
     """
     fig, ax = plot_mito()
 
@@ -98,20 +93,14 @@ def plot_vcf(in_vcf: str,
              legend: bool = False) -> None:
     """ Plot variants from the given VCF file.
 
-    Parameters
-    ----------
-    in_vcf : str
-        Path of the input VCF file.
-    sample : Optional[str]
-        Specific sample to plot (defaults to all available samples).
-    save : bool
-        If true, the final plot will be saved to a file.
-    output : Optional[str]
-        Path of the output file where the plot will be saved.
-    labels : bool
-        If true, add a label for each variant shown.
-    legend : bool
-        If true, add a legend for loci colors in the plot.
+    Args:
+        in_vcf: path of the input VCF file
+        sample: specific sample to plot (defaults to all available samples)
+        save: if true, the final plot will be saved to a file [default: False]
+        output: path of the output file where the plot will be saved
+        labels: if true, add a label for each variant shown [default: False]
+        legend: if true, add a legend for loci colors in the plot
+            [default: False]
     """
     vcf = VcfParser(in_vcf)
     variants_per_sample = vcf.variants
@@ -153,32 +142,21 @@ def plot_df(in_df: pd.DataFrame,
             alt_col: str = "ALT",
             sample_col: str = "SAMPLE",
             hf_col: str = "HF") -> None:
-    """ Plot variants from the given pandas DataFrame.
+    """ Plot variant from the given pandas DataFrame.
 
-    Parameters
-    ----------
-    in_df : pd.DataFrame
-        Input pandas DataFrame.
-    sample : Optional[str]
-        Specific sample to plot (defaults to all available samples).
-    save : bool
-        If true, the final plot will be saved to a file.
-    output : Optional[str]
-        Path of the output file where the plot will be saved.
-    labels : bool
-        If true, add a label for each variant shown.
-    legend : bool
-        If true, add a legend for loci colors in the plot.
-    pos_col : str
-        Column name for the variant position.
-    ref_col : str
-        Column name for the variant reference allele.
-    alt_col : str
-        Column name for the variant alternate allele.
-    sample_col : str
-        Column name for the variant sample.
-    hf_col
-        Column name for the variant heteroplasmic fraction.
+    Args:
+        in_df: input pandas DataFrame
+        sample: specific sample to plot (defaults to all available samples)
+        save: if true, the final plot will be saved to a file [default: False]
+        output: path of the output file where the plot will be saved
+        labels: if true, add a label for each variant shown [default: False]
+        legend: if true, add a legend for loci colors in the plot
+            [default: False]
+        pos_col: column name for the variant position
+        ref_col: column name for the variant reference allele
+        alt_col: column name for the variant alternate allele
+        sample_col: column name for the variant sample
+        hf_col: column name for the variant heteroplasmic fraction
     """
     df = DataFrameParser(in_df,
                          pos_col=pos_col,
