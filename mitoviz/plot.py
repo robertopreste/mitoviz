@@ -147,7 +147,12 @@ def plot_df(in_df: pd.DataFrame,
             save: bool = False,
             output: Optional[str] = None,
             labels: bool = False,
-            legend: bool = False) -> None:
+            legend: bool = False,
+            pos_col: str = "POS",
+            ref_col: str = "REF",
+            alt_col: str = "ALT",
+            sample_col: str = "SAMPLE",
+            hf_col: str = "HF") -> None:
     """ Plot variants from the given pandas DataFrame.
 
     Parameters
@@ -164,8 +169,23 @@ def plot_df(in_df: pd.DataFrame,
         If true, add a label for each variant shown.
     legend : bool
         If true, add a legend for loci colors in the plot.
+    pos_col : str
+        Column name for the variant position.
+    ref_col : str
+        Column name for the variant reference allele.
+    alt_col : str
+        Column name for the variant alternate allele.
+    sample_col : str
+        Column name for the variant sample.
+    hf_col
+        Column name for the variant heteroplasmic fraction.
     """
-    df = DataFrameParser(in_df)
+    df = DataFrameParser(in_df,
+                         pos_col=pos_col,
+                         ref_col=ref_col,
+                         alt_col=alt_col,
+                         sample_col=sample_col,
+                         hf_col=hf_col)
     variants_per_sample = df.variants
 
     if sample:

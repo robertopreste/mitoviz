@@ -16,3 +16,6 @@ Python Module
 
 .. automodule:: mitoviz.plot_vcf
     :members:
+
+.. automodule:: mitoviz.plot_df
+    :members:
