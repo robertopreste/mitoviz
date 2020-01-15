@@ -9,7 +9,7 @@ import numpy as np
 
 from mitoviz import plot_df, plot_vcf
 from .constants import (
-    SAMPLE_VCF, SAMPLE_HF_VCF, SAMPLE_MULTI_VCF,
+    SAMPLE_VCF, SAMPLE_HF_VCF, SAMPLE_MULTI_VCF, SAMPLE_CUSTOM_DF,
     SAMPLE_DF, SAMPLE_HF_DF, SAMPLE_MULTI_DF,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND,
     BASE_IMG_DF, BASE_IMG_LABELS_DF, BASE_IMG_LEGEND_DF,
@@ -313,6 +313,26 @@ class TestModuleDataFrame(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove(OUTPUT_HF_IMG)
+
+    def test_module_plot_custom(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_DF)
+
+        # When
+        plot_df(SAMPLE_CUSTOM_DF, save=True,
+                pos_col="position",
+                ref_col="reference",
+                alt_col="alternate",
+                sample_col="samplename",
+                hf_col="het_frac")
+        result_img = cv2.imread("HG00420.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("HG00420.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("HG00420.png")
 
     def test_module_plot_sample_multi(self):
         # Given
