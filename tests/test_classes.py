@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
-import os
 import unittest
 
+import pandas.testing as pt
 from vcfpy import Call, Substitution
 
-from mitoviz.classes import Locus, Variant, VcfParser, DataFrameParser
-from .constants import SAMPLE_HF_VCF, SAMPLE_DF, SAMPLE_HF_DF
+from mitoviz.classes import (
+    DataFrameParser, Locus, TabularParser, Variant, VcfParser
+)
+from .constants import (
+    SAMPLE_DF, SAMPLE_HF_CSV, SAMPLE_HF_DF, SAMPLE_HF_TSV, SAMPLE_HF_VCF,
+)
 
 
 class TestLocus(unittest.TestCase):
@@ -184,7 +188,7 @@ class TestVcfParser(unittest.TestCase):
         self.assertEqual(expected, result)
 
 
-class TestDfParser(unittest.TestCase):
+class TestDataFrameParser(unittest.TestCase):
 
     def setUp(self) -> None:
         self.df = DataFrameParser(SAMPLE_DF)
@@ -214,3 +218,19 @@ class TestDfParser(unittest.TestCase):
 
     def test_has_hf_false(self):
         self.assertFalse(self.df.has_hf)
+
+
+class TestTabularParser(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.csv = TabularParser(SAMPLE_HF_CSV)
+        self.tsv = TabularParser(SAMPLE_HF_TSV, sep="\t")
+
+    def test_df(self):
+        # Given/When
+        df = SAMPLE_HF_DF
+
+        # Then
+
+        pt.assert_frame_equal(df, self.csv.df)
+        pt.assert_frame_equal(df, self.tsv.df)

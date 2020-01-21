@@ -7,10 +7,11 @@ import unittest
 import cv2
 import numpy as np
 
-from mitoviz import plot_df, plot_vcf
+from mitoviz import plot_df, plot_table, plot_vcf
 from .constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF, SAMPLE_MULTI_VCF, SAMPLE_CUSTOM_DF,
     SAMPLE_DF, SAMPLE_HF_DF, SAMPLE_MULTI_DF,
+    SAMPLE_HF_CSV, SAMPLE_HF_TSV,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND,
     BASE_IMG_DF, BASE_IMG_LABELS_DF, BASE_IMG_LEGEND_DF,
     BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND,
@@ -381,3 +382,126 @@ class TestModuleDataFrame(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
+
+
+class TestModuleTabular(unittest.TestCase):
+
+    def test_module_plot_csv(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_DF)
+
+        # When
+        plot_table(SAMPLE_HF_CSV, save=True)
+        result_img = cv2.imread("HG00420.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("HG00420.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("HG00420.png")
+
+    def test_module_plot_csv_labels(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_LABELS_DF)
+
+        # When
+        plot_table(SAMPLE_HF_CSV, save=True, labels=True)
+        result_img = cv2.imread("HG00420.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("HG00420.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("HG00420.png")
+
+    def test_module_plot_csv_legend(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_LEGEND_DF)
+
+        # When
+        plot_table(SAMPLE_HF_CSV, save=True, legend=True)
+        result_img = cv2.imread("HG00420.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("HG00420.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("HG00420.png")
+
+    def test_module_plot_csv_output(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_DF)
+
+        # When
+        plot_table(SAMPLE_HF_CSV, save=True, output=OUTPUT_HF_IMG)
+        result_img = cv2.imread(OUTPUT_HF_IMG)
+
+        # Then
+        self.assertTrue(os.path.isfile(OUTPUT_HF_IMG))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove(OUTPUT_HF_IMG)
+
+    def test_module_plot_tsv(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_DF)
+
+        # When
+        plot_table(SAMPLE_HF_TSV, sep="\t", save=True)
+        result_img = cv2.imread("HG00420.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("HG00420.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("HG00420.png")
+
+    def test_module_plot_tsv_labels(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_LABELS_DF)
+
+        # When
+        plot_table(SAMPLE_HF_TSV, sep="\t", save=True, labels=True)
+        result_img = cv2.imread("HG00420.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("HG00420.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("HG00420.png")
+
+    def test_module_plot_tsv_legend(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_LEGEND_DF)
+
+        # When
+        plot_table(SAMPLE_HF_TSV, sep="\t", save=True, legend=True)
+        result_img = cv2.imread("HG00420.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("HG00420.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("HG00420.png")
+
+    def test_module_plot_tsv_output(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_DF)
+
+        # When
+        plot_table(SAMPLE_HF_TSV, sep="\t", save=True, output=OUTPUT_HF_IMG)
+        result_img = cv2.imread(OUTPUT_HF_IMG)
+
+        # Then
+        self.assertTrue(os.path.isfile(OUTPUT_HF_IMG))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove(OUTPUT_HF_IMG)
