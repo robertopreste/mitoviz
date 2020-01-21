@@ -8,7 +8,7 @@ import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from .classes import Locus, Variant, VcfParser, DataFrameParser
+from .classes import Locus, Variant, VcfParser, DataFrameParser, TabularParser
 from .constants import COLORS, NAMES
 from .utils import parse_path
 
@@ -188,5 +188,52 @@ def plot_df(in_df: pd.DataFrame,
                 else:
                     plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
                 plt.close()
+
+    return None
+
+
+def plot_table(in_table: str,
+               sep: str = ",",
+               sample: Optional[str] = None,
+               save: bool = False,
+               output: Optional[str] = None,
+               labels: bool = False,
+               legend: bool = False,
+               pos_col: str = "POS",
+               ref_col: str = "REF",
+               alt_col: str = "ALT",
+               sample_col: str = "SAMPLE",
+               hf_col: str = "HF",
+               **kwargs) -> None:
+    """ Plot variants from the given tabular file.
+
+    Args:
+        in_table: path of the input tabular file
+        sep: column delimiter used [default: ',']
+        sample: specific sample to plot (defaults to all available samples)
+        save: if true, the final plot will be saved to a file [default: False]
+        output: path of the output file where the plot will be saved
+        labels: if true, add a label for each variant shown [default: False]
+        legend: if true, add a legend for loci colors in the plot
+            [default: False]
+        pos_col: column name for the variant position
+        ref_col: column name for the variant reference allele
+        alt_col: column name for the variant alternate allele
+        sample_col: column name for the variant sample
+        hf_col: column name for the variant heteroplasmic fraction
+        **kwargs: additional arguments passed to pandas.read_table()
+    """
+    table = TabularParser(in_table, sep=sep, **kwargs)
+    plot_df(table.df,
+            sample=sample,
+            save=save,
+            output=output,
+            labels=labels,
+            legend=legend,
+            pos_col=pos_col,
+            ref_col=ref_col,
+            alt_col=alt_col,
+            sample_col=sample_col,
+            hf_col=hf_col)
 
     return None
