@@ -34,6 +34,13 @@ resulting plot, using the ``--legend`` option::
 
     $ mitoviz sample.vcf --legend
 
+It is also possible to plot variants stored in a tabular file, such as CSV or TSV formats; mitoviz
+will automatically recognise them, treating the file as comma-separated by default. If a different
+separator is used (as in the case of TSV files), just specify it with the ``--sep`` option::
+
+    $ mitoviz sample.tsv --sep "\t"
+
+
 Comprehensive help about the mitoviz CLI can be found with ``mitoviz --help``.
 
 Python Module
@@ -94,5 +101,24 @@ use custom column names::
 It is possible to provide optional sample and hf (heteroplasmic fraction) columns, which are called
 "SAMPLE" and "HF" by default but can be customised using the ``sample_col`` and ``hf_col`` options.
 
-Apart from this, ``plot_df`` accepts the same set of options available for ``plot_vcf``; more
-comprehensive help about the ``plot_df`` function can be found with ``help(mitoviz.plot_df)``.
+Apart from this, ``plot_df`` accepts the same set of options available for ``plot_vcf``.
+
+Variants stored in tabular files can be plotted using ``plot_table``, which accepts the same
+options available for ``plot_vcf`` and ``plot_df``, with the addition of ``sep``, which is used to
+specify the column separator. By default, the comma is used as column delimiter::
+
+    from mitoviz import plot_table
+
+    # plotting a CSV file
+    plot_table("sample.csv")
+    # plotting a TSV (tab-separated) file
+    plot_table("sample.tsv", sep="\t")
+
+``plot_table`` also accept additional keyword options, which will be passed to ``pandas.read_table``
+when processing the given input file::
+
+    from mitoviz import plot_table
+
+    plot_table("sample.tsv", sep="\t", comment="#", skiprows=0)
+
+More comprehensive help about the ``plot_df`` function can be found with ``help(mitoviz.plot_df)``.
