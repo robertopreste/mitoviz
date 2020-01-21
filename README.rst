@@ -78,6 +78,12 @@ of them; if you want to plot only a specific sample, use the ``--sample`` option
 
     $ mitoviz multisample.vcf --sample SRR1777294
 
+It is also possible to plot variants stored in a tabular file, such as CSV or TSV formats; mitoviz
+will automatically recognise them, treating the file as comma-separated by default. If a different
+separator is used (as in the case of TSV files), just specify it with the ``--sep`` option::
+
+    $ mitoviz sample.tsv --sep "\t"
+
 Python Module
 -------------
 
@@ -109,6 +115,24 @@ is possible to plot them as follows::
     from mitoviz import plot_df
 
     plot_df(variants_df)
+
+Variants stored in tabular files can be plotted using ``plot_table``, which accepts the same
+options available for ``plot_vcf`` and ``plot_df``, with the addition of ``sep``, which is used to
+specify the column separator. By default, the comma is used as column delimiter::
+
+    from mitoviz import plot_table
+
+    # plotting a CSV file
+    plot_table("sample.csv")
+    # plotting a TSV (tab-separated) file
+    plot_table("sample.tsv", sep="\t")
+
+``plot_table`` also accept additional keyword options, which will be passed to ``pandas.read_table``
+when processing the given input file::
+
+    from mitoviz import plot_table
+
+    plot_table("sample.tsv", sep="\t", comment="#", skiprows=0)
 
 Please refer to the Usage_ section of the documentation for further information.
 

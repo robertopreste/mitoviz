@@ -19,3 +19,6 @@ Python Module
 
 .. automodule:: mitoviz.plot_df
     :members:
+
+.. automodule:: mitoviz.plot_table
+    :members:

@@ -257,6 +257,8 @@ class DataFrameParser:
         Variants are stored in a per-sample fashion, in the self.variants
         dictionary.
         """
+        if self.has_hf:
+            self.df_in[self.hf_col] = self.df_in[self.hf_col].astype(float)
         for record in self.df_in.itertuples():
             rec = record._asdict()
             sample = rec[self.sample_col] if self.has_sample else "MITOVIZ001"
@@ -271,3 +273,36 @@ class DataFrameParser:
             self.__class__.__name__, self.pos_col, self.ref_col,
             self.alt_col, self.sample_col, self.hf_col
         )
+
+
+class TabularParser:
+    """ Class to read and parse a given tabular generic file.
+
+    Attributes:
+        table_in: path of the input tabular file
+        sep: column delimiter used
+        **kwargs: additional arguments passed to pandas.read_table()
+    """
+
+    def __init__(self,
+                 table_in: str,
+                 sep: str = ",",
+                 **kwargs):
+        self.table_in = table_in
+        self.sep = sep
+        self.kwargs = kwargs
+
+    @property
+    def df(self) -> pd.DataFrame:
+        try:
+            df_in = pd.read_table(self.table_in, sep=self.sep, **self.kwargs)
+        except TypeError as e:
+            raise TypeError(e)
+        return df_in
+
+    def __repr__(self):
+        return "{}(table_in={}, sep={!r})".format(self.__class__.__name__,
+                                                  self.table_in, self.sep)
+
+
+
