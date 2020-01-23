@@ -4,7 +4,7 @@
 import os
 
 from mitoviz import plot_df, plot_vcf
-from constants import (
+from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF,
     SAMPLE_DF, SAMPLE_HF_DF,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND,

@@ -9,7 +9,7 @@ import numpy as np
 from click.testing import CliRunner
 
 from mitoviz import cli
-from .constants import (
+from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF, SAMPLE_MULTI_VCF, SAMPLE_HF_CSV, SAMPLE_HF_TSV,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND,
     BASE_HF_IMG_DF, BASE_HF_IMG_LABELS_DF, BASE_HF_IMG_LEGEND_DF,

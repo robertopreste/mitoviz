@@ -7,8 +7,8 @@ import unittest
 import cv2
 import numpy as np
 
-from mitoviz import plot_df, plot_table, plot_vcf
-from .constants import (
+from mitoviz.mitoviz import plot_df, plot_table, plot_vcf
+from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF, SAMPLE_MULTI_VCF, SAMPLE_CUSTOM_DF,
     SAMPLE_DF, SAMPLE_HF_DF, SAMPLE_MULTI_DF,
     SAMPLE_HF_CSV, SAMPLE_HF_TSV,
