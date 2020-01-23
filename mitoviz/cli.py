@@ -6,11 +6,11 @@ import sys
 
 import click
 
-from .plot import plot_vcf, plot_table
+from mitoviz.mitoviz import plot_table, plot_vcf
 
 
 @click.command(context_settings=dict(ignore_unknown_options=True,
-                                     allow_extra_args=True,))
+                                     allow_extra_args=True))
 @click.version_option()
 @click.argument("input_file", type=click.Path(exists=True))
 @click.option("--sample", "-s", default=None, help="Specific sample to plot.")

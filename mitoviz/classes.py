@@ -2,16 +2,18 @@
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
 from collections import defaultdict
-from typing import List, Union
+from typing import Union
 
 import pandas as pd
 import vcfpy
 
-from .constants import COLORS, NT_LENGTHS, TEXT_HA, TEXT_VA, TEXT_Y, TYPES
-from .utils import convert_hf, convert_nt
+from mitoviz.constants import (
+    COLORS, NT_LENGTHS, TEXT_HA, TEXT_VA, TEXT_Y, TYPES
+)
+from mitoviz.utils import convert_hf, convert_nt
 
 
-class Locus:
+class _Locus:
     """ Class referring to a single mt locus.
 
     Used to create the base mitochondrial plot on which variants will
@@ -74,7 +76,7 @@ class Locus:
         )
 
 
-class Variant:
+class _Variant:
     """ Class used to store a given variant.
 
     Attributes:
@@ -137,6 +139,17 @@ class Variant:
         """
         return 20 + convert_hf(self.hf)
 
+    def __key(self):
+        return self.reference, self.position, self.alternate, self.hf
+
+    def __hash__(self):
+        return hash(self.__key())
+
+    def __eq__(self, other):
+        if isinstance(other, _Variant):
+            return self.__key() == other.__key()
+        return NotImplemented
+
     def __repr__(self):
         return "{}(reference={}, position={}, alternate={}, hf={})".format(
             self.__class__.__name__, self.reference, self.position,
@@ -144,7 +157,7 @@ class Variant:
         )
 
 
-class VcfParser:
+class _VcfParser:
     """ Class to read and parse the given VCF file.
 
     Attributes
@@ -192,13 +205,13 @@ class VcfParser:
         for record in self._reader:
             if self.samples:  # sample name is specified
                 for sample, call in record.call_for_sample.items():
-                    variants = [Variant(record.REF, record.POS, alt,
+                    variants = [_Variant(record.REF, record.POS, alt,
                                         self.parse_call(call, i))
                                 for i, alt in enumerate(record.ALT)]
                     self._variants[sample].extend(variants)
             else:  # single sample without name
                 sample = "MITOVIZ001"
-                variants = [Variant(record.REF, record.POS, alt, 0.5)
+                variants = [_Variant(record.REF, record.POS, alt, 0.5)
                             for alt in record.ALT]
                 self._variants[sample].extend(variants)
 
@@ -208,7 +221,7 @@ class VcfParser:
         )
 
 
-class DataFrameParser:
+class _DataFrameParser:
     """ Class to read and parse a given pandas DataFrame.
 
     Attributes:
@@ -263,8 +276,8 @@ class DataFrameParser:
             rec = record._asdict()
             sample = rec[self.sample_col] if self.has_sample else "MITOVIZ001"
             hf = rec[self.hf_col] if self.has_hf else 0.5
-            variant = Variant(rec[self.ref_col], rec[self.pos_col],
-                              rec[self.alt_col], hf)
+            variant = _Variant(rec[self.ref_col], rec[self.pos_col],
+                               rec[self.alt_col], hf)
             self._variants[sample].append(variant)
 
     def __repr__(self):
@@ -275,7 +288,7 @@ class DataFrameParser:
         )
 
 
-class TabularParser:
+class _TabularParser:
     """ Class to read and parse a given tabular generic file.
 
     Attributes:
