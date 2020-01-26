@@ -1,22 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
-import os
 import unittest
 
+import pandas.testing as pt
 from vcfpy import Call, Substitution
 
-from mitoviz.classes import Locus, Variant, VcfParser, DataFrameParser
-from .constants import SAMPLE_HF_VCF, SAMPLE_DF, SAMPLE_HF_DF
+from mitoviz.classes import (
+    _DataFrameParser, _Locus, _TabularParser, _Variant, _VcfParser
+)
+from mitoviz.tests.constants import (
+    SAMPLE_DF, SAMPLE_HF_CSV, SAMPLE_HF_DF, SAMPLE_HF_TSV, SAMPLE_HF_VCF,
+)
 
 
 class TestLocus(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.dloop = Locus("DLOOP", 0)
-        self.tf = Locus("TF", 1)
-        self.rnr1 = Locus("RNR1", 2)
-        self.nd1 = Locus("ND1", 6)
+        self.dloop = _Locus("DLOOP", 0)
+        self.tf = _Locus("TF", 1)
+        self.rnr1 = _Locus("RNR1", 2)
+        self.nd1 = _Locus("ND1", 6)
 
     def test_loc_type(self):
         self.assertEqual("reg", self.dloop.loc_type)
@@ -64,37 +68,37 @@ class TestLocus(unittest.TestCase):
 class TestVariant(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.variant = Variant(
+        self.variant = _Variant(
             reference="C",
             position=3308,
             alternate=Substitution("SNV", "A"),
             hf=0.3
         )
-        self.variant_del = Variant(
+        self.variant_del = _Variant(
             reference="CT",
             position=3308,
             alternate=Substitution("DEL", "C"),
             hf=0.3
         )
-        self.variant_ins = Variant(
+        self.variant_ins = _Variant(
             reference="C",
             position=3308,
             alternate=Substitution("INS", "CA"),
             hf=0.3
         )
-        self.variant_raw = Variant(
+        self.variant_raw = _Variant(
             reference="C",
             position=3308,
             alternate="A",
             hf=0.3
         )
-        self.variant_del_raw = Variant(
+        self.variant_del_raw = _Variant(
             reference="CT",
             position=3308,
             alternate="C",
             hf=0.3
         )
-        self.variant_ins_raw = Variant(
+        self.variant_ins_raw = _Variant(
             reference="C",
             position=3308,
             alternate="CA",
@@ -139,14 +143,14 @@ class TestVariant(unittest.TestCase):
 class TestVcfParser(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.vcf = VcfParser(SAMPLE_HF_VCF)
+        self.vcf = _VcfParser(SAMPLE_HF_VCF)
 
     def test_samples(self):
         self.assertEqual(["HG00420"], self.vcf.samples)
 
     def test_variants(self):
         # Given/When
-        variant = Variant(
+        variant = _Variant(
             reference="C",
             position=8935,
             alternate=Substitution("SNV", "T"),
@@ -155,7 +159,7 @@ class TestVcfParser(unittest.TestCase):
 
         # Then
         self.assertIsInstance(self.vcf.variants, dict)
-        # self.assertIn(variant, self.vcf.variants)
+        self.assertIn(variant, list(self.vcf.variants.values())[0])
 
     def test_parse_call(self):
         # Given
@@ -184,24 +188,31 @@ class TestVcfParser(unittest.TestCase):
         self.assertEqual(expected, result)
 
 
-class TestDfParser(unittest.TestCase):
+class TestDataFrameParser(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.df = DataFrameParser(SAMPLE_DF)
-        self.df_hf = DataFrameParser(SAMPLE_HF_DF)
+        self.df = _DataFrameParser(SAMPLE_DF)
+        self.df_hf = _DataFrameParser(SAMPLE_HF_DF)
 
     def test_variants(self):
         # Given/When
-        variant = Variant(
+        variant = _Variant(
             reference="C",
             position=8935,
-            alternate=Substitution("SNV", "T"),
+            alternate="T",
+            hf=0.5
+        )
+        variant_hf = _Variant(
+            reference="C",
+            position=8935,
+            alternate="T",
             hf=0.899
         )
 
         # Then
         self.assertIsInstance(self.df.variants, dict)
-        # self.assertIn(variant, self.vcf.variants)
+        self.assertIn(variant, list(self.df.variants.values())[0])
+        self.assertIn(variant_hf, list(self.df_hf.variants.values())[0])
 
     def test_has_sample_true(self):
         self.assertTrue(self.df_hf.has_sample)
@@ -214,3 +225,19 @@ class TestDfParser(unittest.TestCase):
 
     def test_has_hf_false(self):
         self.assertFalse(self.df.has_hf)
+
+
+class TestTabularParser(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.csv = _TabularParser(SAMPLE_HF_CSV)
+        self.tsv = _TabularParser(SAMPLE_HF_TSV, sep="\t")
+
+    def test_df(self):
+        # Given/When
+        df = SAMPLE_HF_DF
+
+        # Then
+
+        pt.assert_frame_equal(df, self.csv.df)
+        pt.assert_frame_equal(df, self.tsv.df)

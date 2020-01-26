@@ -13,6 +13,12 @@ SAMPLE_VCF = os.path.join(DATADIR, "sample.vcf")
 SAMPLE_HF_VCF = os.path.join(DATADIR, "sample_hf.vcf")
 SAMPLE_MULTI_VCF = os.path.join(DATADIR, "multisample.vcf")
 
+SAMPLE_HF_CSV = os.path.join(DATADIR, "sample_hf.csv")
+SAMPLE_HF_TSV = os.path.join(DATADIR, "sample_hf.tsv")
+SAMPLE_HF_TSV_COMM = os.path.join(DATADIR, "sample_hf_comment.tsv")
+
+BASE_MITO = os.path.join(IMGDIR, "base_mito.png")
+
 BASE_IMG = os.path.join(IMGDIR, "sample.png")
 BASE_IMG_LABELS = os.path.join(IMGDIR, "sample_labels.png")
 BASE_IMG_LEGEND = os.path.join(IMGDIR, "sample_legend.png")
