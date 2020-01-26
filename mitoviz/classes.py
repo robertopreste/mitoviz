@@ -308,7 +308,8 @@ class _TabularParser:
     @property
     def df(self) -> pd.DataFrame:
         try:
-            df_in = pd.read_table(self.table_in, sep=self.sep, **self.kwargs)
+            df_in = pd.read_table(self.table_in, sep=self.sep, engine="python",
+                                  **self.kwargs)
         except TypeError as e:
             raise TypeError(e)
         return df_in
