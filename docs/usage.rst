@@ -40,6 +40,11 @@ separator is used (as in the case of TSV files), just specify it with the ``--se
 
     $ mitoviz sample.tsv --sep "\t"
 
+Additional keyword options can be specified in the format ``option=value``, and will be passed to
+``pandas.read_table`` when processing the given input file::
+
+    $ mitoviz sample.tsv --sep "\t" comment=#
+
 
 Comprehensive help about the mitoviz CLI can be found with ``mitoviz --help``.
 
@@ -121,4 +126,5 @@ when processing the given input file::
 
     plot_table("sample.tsv", sep="\t", comment="#", skiprows=0)
 
-More comprehensive help about the ``plot_df`` function can be found with ``help(mitoviz.plot_df)``.
+
+Comprehensive help about mitoviz functions can be found with ``help(mitoviz.<function_name>)``.

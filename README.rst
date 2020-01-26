@@ -38,7 +38,8 @@ Features
 
 mitoviz is a simple python package to plot human mitochondrial variants on a graphical
 representation of the human mitochondrial genome. It currently supports plotting variants
-stored in a VCF file.
+stored in VCF and tabular files, as well as from general ``pandas`` dataframes when using
+mitoviz from inside Python.
 
 Variants are shown according to their heteroplasmic fraction (HF), plotting variants with
 HF = 1.0 on the outer border of the mitochondrial circle, those with HF = 0.0 on the inner
@@ -49,9 +50,6 @@ border and all the others according to their actual HF value.
 
 If the HF information is not available, variants will all be shown in the middle of the
 mitochondrial circle.
-
-.. image:: /images/sample.png
-  :alt: Mitochondrial plot without HF
 
 Usage
 =====
@@ -74,7 +72,7 @@ option with the desired path::
     $ mitoviz sample.vcf --output my_mt_plot.png
 
 If the provided VCF file contains more than one sample, a separate plot will be created for each
-of them; if you want to plot only a specific sample, use the ``--sample`` option::
+of them; if you want to only plot a specific sample, use the ``--sample`` option::
 
     $ mitoviz multisample.vcf --sample SRR1777294
 
@@ -97,14 +95,10 @@ In this case, no plot will be shown until a call to ``plt.show()`` is made. It i
 save the resulting plot using the ``save`` option and to provide a specific file where the plot will be
 saved using the ``output`` option::
 
-    from mitoviz import plot_vcf
-
     plot_vcf("sample.vcf", save=True, output="my_mt_plot.png")
 
 If the provided VCF file contains more than one sample, a separate plot will be created for each
-of them; if you want to plot only a specific sample, use the ``sample`` option::
-
-    from mitoviz import plot_vcf
+of them; if you want to only plot a specific sample, use the ``sample`` option::
 
     plot_vcf("multisample.vcf", save=True, sample="SRR1777294")
 
@@ -129,8 +123,6 @@ specify the column separator. By default, the comma is used as column delimiter:
 
 ``plot_table`` also accept additional keyword options, which will be passed to ``pandas.read_table``
 when processing the given input file::
-
-    from mitoviz import plot_table
 
     plot_table("sample.tsv", sep="\t", comment="#", skiprows=0)
 
