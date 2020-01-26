@@ -31,3 +31,10 @@ History
 ==================
 
 * Add ``plot_df`` function to plot variants from a pandas DataFrame.
+
+0.4.0 (2020-01-26)
+==================
+
+* Add ``plot_table`` function to plot variants from tabular files;
+* add CLI functionality to plot variants from tabular files;
+* refactor code.
