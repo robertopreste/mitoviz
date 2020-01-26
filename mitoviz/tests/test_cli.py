@@ -11,7 +11,7 @@ from click.testing import CliRunner
 from mitoviz import cli
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF, SAMPLE_MULTI_VCF, SAMPLE_HF_CSV, SAMPLE_HF_TSV,
-    BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND,
+    BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND, SAMPLE_HF_TSV_COMM,
     BASE_HF_IMG_DF, BASE_HF_IMG_LABELS_DF, BASE_HF_IMG_LEGEND_DF,
     BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND,
     BASE_MULTI_IMG, BASE_MULTI_IMG_LABELS, BASE_MULTI_IMG_LEGEND,
@@ -365,3 +365,21 @@ class TestCli(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove(OUTPUT_HF_IMG)
+
+    def test_cli_plot_tsv_comment(self):
+        # Given
+        base_img = cv2.imread(BASE_HF_IMG_DF)
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_TSV_COMM, "--sep", "\t",
+                                     "comment=#"])
+        result_img = cv2.imread("HG00420.png")
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile("HG00420.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("HG00420.png")
