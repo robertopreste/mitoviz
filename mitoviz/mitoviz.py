@@ -7,7 +7,7 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from mitoviz.classes import _DataFrameParser, _TabularParser, _VcfParser
+from mitoviz.parsers import _DataFrameParser, _TabularParser, _VcfParser
 from mitoviz.plot import _plot_variants
 from mitoviz.utils import parse_path
 

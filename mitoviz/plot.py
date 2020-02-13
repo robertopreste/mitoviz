@@ -6,11 +6,12 @@ from typing import List
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 
-from mitoviz.classes import _Locus, _Variant
 from mitoviz.constants import COLORS, NAMES
+from mitoviz.locus import _PolarLocus
+from mitoviz.variant import _PolarVariant
 
 
-def _label_variant(ax: plt.axes, variant: _Variant):
+def _label_variant(ax: plt.axes, variant: _PolarVariant):
     """ Annotate each variant with a label in the plot. """
     ax.annotate(variant.label,
                 xy=(variant.pos_x, variant.pos_y),
@@ -33,7 +34,7 @@ def _plot_mito():
     """ Return an axes object with the base mitochondrial genome plot. """
     fig = plt.figure(figsize=(20, 10), dpi=300)
     ax = fig.add_subplot(111, polar=True)
-    loci = [_Locus(name=name, index=index)
+    loci = [_PolarLocus(name=name, index=index)
             for name, index in zip(NAMES, range(len(NAMES)))]
     thetas = [el.theta for el in loci]
     radii = [5.0] * 38
@@ -57,7 +58,7 @@ def _plot_mito():
 
 
 def _plot_variants(sample: str,
-                   variants: List[_Variant],
+                   variants: List[_PolarVariant],
                    labels: bool = False,
                    legend: bool = False) -> None:
     """ Plot variants available in the given list.
