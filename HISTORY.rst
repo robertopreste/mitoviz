@@ -38,3 +38,9 @@ History
 * Add ``plot_table`` function to plot variants from tabular files;
 * add CLI functionality to plot variants from tabular files;
 * refactor code.
+
+0.4.1 (2020-02-13
+-----------------
+
+* Refactor to use abstract classes;
+* Rename internal classes to _PolarLocus and _PolarVariant.
