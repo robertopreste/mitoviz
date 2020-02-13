@@ -22,6 +22,7 @@ class TestPlot(unittest.TestCase):
             mpatches.Patch(color="#ffa500", label="Regulatory"),
             mpatches.Patch(color="#cd5c5c", label="rRNA"),
             mpatches.Patch(color="#4169e1", label="tRNA"),
+            mpatches.Patch(color="grey", label="Non Coding")
         ]
 
         # When
