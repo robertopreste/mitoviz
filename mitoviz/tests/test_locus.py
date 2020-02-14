@@ -12,7 +12,7 @@ class TestPolarLocus(unittest.TestCase):
         self.dloop = _PolarLocus("DLOOP", 0)
         self.tf = _PolarLocus("TF", 1)
         self.rnr1 = _PolarLocus("RNR1", 2)
-        self.nd1 = _PolarLocus("ND1", 6)
+        self.nd1 = _PolarLocus("ND1", 7)
 
     def test_loc_type(self):
         self.assertEqual("reg", self.dloop.loc_type)
@@ -30,7 +30,7 @@ class TestPolarLocus(unittest.TestCase):
         self.assertEqual(0.0, self.dloop.theta)
         self.assertEqual(0.2264460739936025, self.tf.theta)
         self.assertEqual(0.42100368157402374, self.rnr1.theta)
-        self.assertEqual(1.430045868791116, self.nd1.theta)
+        self.assertEqual(1.4308051179914298, self.nd1.theta)
 
     def test_color(self):
         self.assertEqual("#ffa500", self.dloop.color)

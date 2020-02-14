@@ -3,10 +3,14 @@
 # Created by Roberto Preste
 import os
 
+import matplotlib.pyplot as plt
+
 from mitoviz import plot_df, plot_vcf
+from mitoviz.plot import _plot_mito
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF,
     SAMPLE_DF, SAMPLE_HF_DF,
+    BASE_MITO,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND,
     BASE_IMG_DF, BASE_IMG_LABELS_DF, BASE_IMG_LEGEND_DF,
     BASE_HF_IMG, BASE_HF_IMG_LEGEND, BASE_HF_IMG_LABELS,
@@ -17,6 +21,10 @@ from mitoviz.tests.constants import (
 
 def main():  # pragma: no cover
     """ Create the test files needed. """
+    fig, ax = _plot_mito()
+    plt.savefig(BASE_MITO)
+    plt.close()
+
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG)
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_LABELS,
              labels=True)

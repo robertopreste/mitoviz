@@ -39,8 +39,13 @@ History
 * add CLI functionality to plot variants from tabular files;
 * refactor code.
 
-0.4.1 (2020-02-13
------------------
+0.4.1 (2020-02-13)
+------------------
 
 * Refactor to use abstract classes;
 * Rename internal classes to _PolarLocus and _PolarVariant.
+
+0.4.2 (2020-02-14)
+------------------
+
+* Fix bug with non coding loci not being shown in plots.

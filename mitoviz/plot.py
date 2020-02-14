@@ -27,7 +27,8 @@ def _plot_legend() -> List[mpatches.Patch]:
     reg = mpatches.Patch(color=COLORS["reg"], label="Regulatory")
     rrna = mpatches.Patch(color=COLORS["rrna"], label="rRNA")
     trna = mpatches.Patch(color=COLORS["trna"], label="tRNA")
-    return [cds, reg, rrna, trna]
+    nc = mpatches.Patch(color=COLORS["nc"], label="Non Coding")
+    return [cds, reg, rrna, trna, nc]
 
 
 def _plot_mito():
@@ -37,15 +38,16 @@ def _plot_mito():
     loci = [_PolarLocus(name=name, index=index)
             for name, index in zip(NAMES, range(len(NAMES)))]
     thetas = [el.theta for el in loci]
-    radii = [5.0] * 38
+    radii = [5.0] * 48
     widths = [el.width for el in loci]
 
     bars = plt.bar(thetas, radii, width=widths, bottom=20.0)
     for locus, bar in zip(loci, bars):
         bar.set_facecolor(locus.color)
-        ax.annotate(locus.name,
-                    xy=(locus.theta, locus.text_y),
-                    ha=locus.text_ha, va=locus.text_va)
+        if locus.loc_type != "nc":
+            ax.annotate(locus.name,
+                        xy=(locus.theta, locus.text_y),
+                        ha=locus.text_ha, va=locus.text_va)
 
     ax.set_xticklabels([])
     ax.set_yticklabels([])
