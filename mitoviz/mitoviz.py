@@ -17,7 +17,8 @@ def plot_vcf(in_vcf: str,
              save: bool = False,
              output: Optional[str] = None,
              labels: bool = False,
-             legend: bool = False) -> None:
+             legend: bool = False,
+             split: bool = False) -> None:
     """ Plot variants from the given VCF file.
 
     Args:
@@ -28,12 +29,14 @@ def plot_vcf(in_vcf: str,
         labels: if true, add a label for each variant shown [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
+        split: plot split H and L strands [default: False]
     """
     vcf = _VcfParser(in_vcf)
     variants_per_sample = vcf.variants
 
     if sample:
-        _plot_variants(sample, variants_per_sample[sample], labels, legend)
+        _plot_variants(sample, variants_per_sample[sample], labels, legend,
+                       split)
         if save:
             dirname, name, ext = parse_path(output)
             if name == "":
@@ -43,7 +46,7 @@ def plot_vcf(in_vcf: str,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            _plot_variants(sample, variants, labels, legend)
+            _plot_variants(sample, variants, labels, legend, split)
             if save:
                 dirname, name, ext = parse_path(output)
                 if name == "":
@@ -64,6 +67,7 @@ def plot_df(in_df: pd.DataFrame,
             output: Optional[str] = None,
             labels: bool = False,
             legend: bool = False,
+            split: bool = False,
             pos_col: str = "POS",
             ref_col: str = "REF",
             alt_col: str = "ALT",
@@ -79,6 +83,7 @@ def plot_df(in_df: pd.DataFrame,
         labels: if true, add a label for each variant shown [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
+        split: plot split H and L strands [default: False]
         pos_col: column name for the variant position
         ref_col: column name for the variant reference allele
         alt_col: column name for the variant alternate allele
@@ -94,7 +99,8 @@ def plot_df(in_df: pd.DataFrame,
     variants_per_sample = df.variants
 
     if sample:
-        _plot_variants(sample, variants_per_sample[sample], labels, legend)
+        _plot_variants(sample, variants_per_sample[sample], labels, legend,
+                       split)
         if save:
             dirname, name, ext = parse_path(output)
             if name == "":
@@ -104,7 +110,7 @@ def plot_df(in_df: pd.DataFrame,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            _plot_variants(sample, variants, labels, legend)
+            _plot_variants(sample, variants, labels, legend, split)
             if save:
                 dirname, name, ext = parse_path(output)
                 if name == "":
@@ -126,6 +132,7 @@ def plot_table(in_table: str,
                output: Optional[str] = None,
                labels: bool = False,
                legend: bool = False,
+               split: bool = False,
                pos_col: str = "POS",
                ref_col: str = "REF",
                alt_col: str = "ALT",
@@ -143,6 +150,7 @@ def plot_table(in_table: str,
         labels: if true, add a label for each variant shown [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
+        split: plot split H and L strands [default: False]
         pos_col: column name for the variant position
         ref_col: column name for the variant reference allele
         alt_col: column name for the variant alternate allele
@@ -157,6 +165,7 @@ def plot_table(in_table: str,
             output=output,
             labels=labels,
             legend=legend,
+            split=split,
             pos_col=pos_col,
             ref_col=ref_col,
             alt_col=alt_col,
