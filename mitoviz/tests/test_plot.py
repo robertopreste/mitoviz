@@ -10,7 +10,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from mitoviz.plot import _plot_legend, _plot_mito
-from mitoviz.tests.constants import BASE_MITO
+from mitoviz.tests.constants import (
+    BASE_MITO, BASE_MITO_LEGEND, BASE_MITO_SPLIT
+)
 
 
 class TestPlot(unittest.TestCase):
@@ -39,6 +41,42 @@ class TestPlot(unittest.TestCase):
 
         # When
         fig, ax = _plot_mito()
+        plt.savefig(result_img_path)
+        plt.close()
+        result_img = cv2.imread(result_img_path)
+
+        # Then
+        self.assertTrue(os.path.isfile(result_img_path))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove(result_img_path)
+
+    def test__plot_mito_legend(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_LEGEND)
+        result_img_path = "test_base_mito_legend.png"
+
+        # When
+        fig, ax = _plot_mito(legend=True)
+        plt.savefig(result_img_path)
+        plt.close()
+        result_img = cv2.imread(result_img_path)
+
+        # Then
+        self.assertTrue(os.path.isfile(result_img_path))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove(result_img_path)
+
+    def test__plot_mito_split(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_SPLIT)
+        result_img_path = "test_base_mito_split.png"
+
+        # When
+        fig, ax = _plot_mito(split=True)
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)

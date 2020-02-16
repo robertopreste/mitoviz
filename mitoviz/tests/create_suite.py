@@ -10,7 +10,7 @@ from mitoviz.plot import _plot_mito
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF,
     SAMPLE_DF, SAMPLE_HF_DF,
-    BASE_MITO,
+    BASE_MITO, BASE_MITO_LEGEND, BASE_MITO_SPLIT,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND,
     BASE_IMG_DF, BASE_IMG_LABELS_DF, BASE_IMG_LEGEND_DF,
     BASE_HF_IMG, BASE_HF_IMG_LEGEND, BASE_HF_IMG_LABELS,
@@ -23,6 +23,14 @@ def main():  # pragma: no cover
     """ Create the test files needed. """
     fig, ax = _plot_mito()
     plt.savefig(BASE_MITO)
+    plt.close()
+
+    fig, ax = _plot_mito(legend=True)
+    plt.savefig(BASE_MITO_LEGEND)
+    plt.close()
+
+    fig, ax = _plot_mito(split=True)
+    plt.savefig(BASE_MITO_SPLIT)
     plt.close()
 
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG)

@@ -18,6 +18,8 @@ SAMPLE_HF_TSV = os.path.join(DATADIR, "sample_hf.tsv")
 SAMPLE_HF_TSV_COMM = os.path.join(DATADIR, "sample_hf_comment.tsv")
 
 BASE_MITO = os.path.join(IMGDIR, "base_mito.png")
+BASE_MITO_LEGEND = os.path.join(IMGDIR, "base_mito_legend.png")
+BASE_MITO_SPLIT = os.path.join(IMGDIR, "base_mito_split.png")
 
 BASE_IMG = os.path.join(IMGDIR, "sample.png")
 BASE_IMG_LABELS = os.path.join(IMGDIR, "sample_labels.png")

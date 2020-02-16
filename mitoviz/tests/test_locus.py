@@ -45,13 +45,13 @@ class TestPolarLocus(unittest.TestCase):
         self.assertEqual("right", self.nd1.text_ha)
 
     def test_text_va(self):
-        self.assertEqual("bottom", self.dloop.text_va)
+        self.assertEqual("top", self.dloop.text_va)
         self.assertEqual("bottom", self.tf.text_va)
         self.assertEqual("bottom", self.rnr1.text_va)
         self.assertEqual("bottom", self.nd1.text_va)
 
     def test_text_y(self):
-        self.assertEqual(25.2, self.dloop.text_y)
+        self.assertEqual(19.2, self.dloop.text_y)
         self.assertEqual(25.2, self.tf.text_y)
         self.assertEqual(25.2, self.rnr1.text_y)
         self.assertEqual(25.2, self.nd1.text_y)
