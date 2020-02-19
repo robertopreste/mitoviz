@@ -50,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'mitoviz'
-copyright = u"2019, Roberto Preste"
+copyright = u"2020, Roberto Preste"
 author = u"Roberto Preste"
 
 # The version info for the project you're documenting, acts as replacement
