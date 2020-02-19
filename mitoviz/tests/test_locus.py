@@ -3,7 +3,7 @@
 # Created by Roberto Preste
 import unittest
 
-from mitoviz.locus import _PolarLocus
+from mitoviz.locus import _PolarLocus, _PolarSplitLocus
 
 
 class TestPolarLocus(unittest.TestCase):
@@ -45,13 +45,36 @@ class TestPolarLocus(unittest.TestCase):
         self.assertEqual("right", self.nd1.text_ha)
 
     def test_text_va(self):
-        self.assertEqual("bottom", self.dloop.text_va)
+        self.assertEqual("top", self.dloop.text_va)
         self.assertEqual("bottom", self.tf.text_va)
         self.assertEqual("bottom", self.rnr1.text_va)
         self.assertEqual("bottom", self.nd1.text_va)
 
     def test_text_y(self):
-        self.assertEqual(25.2, self.dloop.text_y)
+        self.assertEqual(19.2, self.dloop.text_y)
         self.assertEqual(25.2, self.tf.text_y)
         self.assertEqual(25.2, self.rnr1.text_y)
         self.assertEqual(25.2, self.nd1.text_y)
+
+
+class TestPolarSplitLocus(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.dloop = _PolarSplitLocus("DLOOP", 0)
+        self.tf = _PolarSplitLocus("TF", 1)
+        self.nc1 = _PolarSplitLocus("NC1", 6)
+
+    def test_strand(self):
+        self.assertEqual("L", self.dloop.strand)
+        self.assertEqual("H", self.tf.strand)
+        self.assertEqual("", self.nc1.strand)
+
+    def test_bottom(self):
+        self.assertEqual(20.0, self.dloop.bottom)
+        self.assertEqual(22.5, self.tf.bottom)
+        self.assertEqual(20.0, self.nc1.bottom)
+
+    def test_radius(self):
+        self.assertEqual(2.5, self.dloop.radius)
+        self.assertEqual(2.5, self.tf.radius)
+        self.assertEqual(5.0, self.nc1.radius)
