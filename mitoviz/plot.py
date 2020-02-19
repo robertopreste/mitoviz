@@ -5,6 +5,7 @@ from typing import List
 
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
+import numpy as np
 
 from mitoviz.constants import COLORS, NAMES
 from mitoviz.locus import _PolarLocus, _PolarSplitLocus
@@ -56,6 +57,10 @@ def _plot_mito(legend: bool = False,
     widths = [el.width for el in loci]
 
     bars = plt.bar(thetas, radii, width=widths, bottom=bottoms)
+
+    # Add black borders, useful for split plots
+    ax.bar(0, 0.1, 2 * np.pi, 19.9, facecolor="black")
+    ax.bar(0, 0.1, 2 * np.pi, 25.0, facecolor="black")
 
     for locus, bar in zip(loci, bars):
         bar.set_facecolor(locus.color)
