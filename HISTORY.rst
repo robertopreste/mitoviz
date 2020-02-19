@@ -49,3 +49,8 @@ History
 ------------------
 
 * Fix bug with non coding loci not being shown in plots.
+
+0.5.0 (2020-02-19)
+==================
+
+* Add ``split`` option to plot split strands on polar plots.
