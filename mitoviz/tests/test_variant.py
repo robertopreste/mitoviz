@@ -5,43 +5,43 @@ import unittest
 
 from vcfpy import Substitution
 
-from mitoviz.variant import _PolarVariant
+from mitoviz.variant import _Variant
 
 
 class TestPolarVariant(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.variant = _PolarVariant(
+        self.variant = _Variant(
             reference="C",
             position=3308,
             alternate=Substitution("SNV", "A"),
             hf=0.3
         )
-        self.variant_del = _PolarVariant(
+        self.variant_del = _Variant(
             reference="CT",
             position=3308,
             alternate=Substitution("DEL", "C"),
             hf=0.3
         )
-        self.variant_ins = _PolarVariant(
+        self.variant_ins = _Variant(
             reference="C",
             position=3308,
             alternate=Substitution("INS", "CA"),
             hf=0.3
         )
-        self.variant_raw = _PolarVariant(
+        self.variant_raw = _Variant(
             reference="C",
             position=3308,
             alternate="A",
             hf=0.3
         )
-        self.variant_del_raw = _PolarVariant(
+        self.variant_del_raw = _Variant(
             reference="CT",
             position=3308,
             alternate="C",
             hf=0.3
         )
-        self.variant_ins_raw = _PolarVariant(
+        self.variant_ins_raw = _Variant(
             reference="C",
             position=3308,
             alternate="CA",
@@ -76,8 +76,17 @@ class TestPolarVariant(unittest.TestCase):
         self.assertEqual("3308.A", self.variant_ins.label)
         self.assertEqual("3308.A", self.variant_ins_raw.label)
 
-    def test_pos_x(self):
-        self.assertEqual(1.2557981773190898, self.variant.pos_x)
+    def test_polar_x(self):
+        self.assertEqual(1.2557981773190898, self.variant.polar_x)
 
-    def test_pos_y(self):
-        self.assertEqual(21.5, self.variant.pos_y)
+    def test_polar_y(self):
+        self.assertEqual(21.5, self.variant.polar_y)
+
+    def test_linear_x(self):
+        self.assertEqual(3308, self.variant.linear_x)
+
+    def test_linear_y(self):
+        self.assertEqual(0.3, self.variant.linear_y)
+
+    def test_color(self):
+        self.assertEqual("#2e8b57", self.variant.color)
