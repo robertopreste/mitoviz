@@ -8,11 +8,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from mitoviz.parsers import _DataFrameParser, _TabularParser, _VcfParser
-from mitoviz.plot import _plot_variants
+from mitoviz.plot import _plot_variants_polar, _plot_variants_linear
 from mitoviz.utils import parse_path
 
 
 def plot_vcf(in_vcf: str,
+             linear: bool = False,
              sample: Optional[str] = None,
              save: bool = False,
              output: Optional[str] = None,
@@ -23,6 +24,8 @@ def plot_vcf(in_vcf: str,
 
     Args:
         in_vcf: path of the input VCF file
+        linear: plot variants on a linear plot rather than a polar one
+            [default: False]
         sample: specific sample to plot (defaults to all available samples)
         save: if true, the final plot will be saved to a file [default: False]
         output: path of the output file where the plot will be saved
@@ -35,8 +38,19 @@ def plot_vcf(in_vcf: str,
     variants_per_sample = vcf.variants
 
     if sample:
-        _plot_variants(sample, variants_per_sample[sample], labels, legend,
-                       split)
+        if linear:
+            _plot_variants_linear(sample,
+                                  variants_per_sample[sample],
+                                  labels,
+                                  legend,
+                                  split)
+        else:
+            _plot_variants_polar(sample,
+                                 variants_per_sample[sample],
+                                 labels,
+                                 legend,
+                                 split)
+
         if save:
             dirname, name, ext = parse_path(output)
             if name == "":
@@ -46,7 +60,11 @@ def plot_vcf(in_vcf: str,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            _plot_variants(sample, variants, labels, legend, split)
+            if linear:
+                _plot_variants_linear(sample, variants, labels, legend, split)
+            else:
+                _plot_variants_polar(sample, variants, labels, legend, split)
+
             if save:
                 dirname, name, ext = parse_path(output)
                 if name == "":
@@ -62,6 +80,7 @@ def plot_vcf(in_vcf: str,
 
 
 def plot_df(in_df: pd.DataFrame,
+            linear: bool = False,
             sample: Optional[str] = None,
             save: bool = False,
             output: Optional[str] = None,
@@ -77,6 +96,8 @@ def plot_df(in_df: pd.DataFrame,
 
     Args:
         in_df: input pandas DataFrame
+        linear: plot variants on a linear plot rather than a polar one
+            [default: False]
         sample: specific sample to plot (defaults to all available samples)
         save: if true, the final plot will be saved to a file [default: False]
         output: path of the output file where the plot will be saved
@@ -99,8 +120,19 @@ def plot_df(in_df: pd.DataFrame,
     variants_per_sample = df.variants
 
     if sample:
-        _plot_variants(sample, variants_per_sample[sample], labels, legend,
-                       split)
+        if linear:
+            _plot_variants_linear(sample,
+                                  variants_per_sample[sample],
+                                  labels,
+                                  legend,
+                                  split)
+        else:
+            _plot_variants_polar(sample,
+                                 variants_per_sample[sample],
+                                 labels,
+                                 legend,
+                                 split)
+
         if save:
             dirname, name, ext = parse_path(output)
             if name == "":
@@ -110,7 +142,11 @@ def plot_df(in_df: pd.DataFrame,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            _plot_variants(sample, variants, labels, legend, split)
+            if linear:
+                _plot_variants_linear(sample, variants, labels, legend, split)
+            else:
+                _plot_variants_polar(sample, variants, labels, legend, split)
+
             if save:
                 dirname, name, ext = parse_path(output)
                 if name == "":
@@ -127,6 +163,7 @@ def plot_df(in_df: pd.DataFrame,
 
 def plot_table(in_table: str,
                sep: str = ",",
+               linear: bool = False,
                sample: Optional[str] = None,
                save: bool = False,
                output: Optional[str] = None,
@@ -144,6 +181,8 @@ def plot_table(in_table: str,
     Args:
         in_table: path of the input tabular file
         sep: column delimiter used [default: ',']
+        linear: plot variants on a linear plot rather than a polar one
+            [default: False]
         sample: specific sample to plot (defaults to all available samples)
         save: if true, the final plot will be saved to a file [default: False]
         output: path of the output file where the plot will be saved
@@ -160,6 +199,7 @@ def plot_table(in_table: str,
     """
     table = _TabularParser(in_table, sep=sep, **kwargs)
     plot_df(table.df,
+            linear=linear,
             sample=sample,
             save=save,
             output=output,
