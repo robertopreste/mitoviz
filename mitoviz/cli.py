@@ -27,7 +27,7 @@ from mitoviz.mitoviz import plot_table, plot_vcf
               help="Column delimiter used (if INPUT_FILE is not a VCF file)")
 @click.pass_context
 def main(ctx, input_file, linear, sample, output, labels, legend, split, sep):
-    """ Plot variants on the human mitochondrial genome. """
+    """ Plot human mitochondrial variants available in INPUT_FILE. """
     ext = os.path.splitext(os.path.basename(input_file))[-1]
     if ext.casefold() == ".vcf":
         plot_vcf(in_vcf=input_file, linear=linear, sample=sample, save=True,
