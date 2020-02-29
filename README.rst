@@ -34,12 +34,12 @@ Features
 
 mitoviz is a simple python package to plot human mitochondrial variants on a graphical
 representation of the human mitochondrial genome. It currently supports plotting variants
-stored in VCF and tabular files, as well as from general ``pandas`` dataframes when using
-mitoviz from inside Python.
+stored in VCF and tabular files, as well as from general ``pandas`` dataframes when importing
+mitoviz in Python.
 
 Variants are shown according to their heteroplasmic fraction (HF), plotting variants with
 HF = 1.0 on the outer border of the mitochondrial circle, those with HF = 0.0 on the inner
-border and all the others according to their actual HF value.
+border and all the others in between, according to their actual HF value.
 
 .. image:: https://github.com/robertopreste/mitoviz/raw/master/mitoviz/tests/images/sample_hf.png
   :alt: Mitochondrial plot with HF
@@ -53,6 +53,8 @@ their HF.
 
 .. image:: https://github.com/robertopreste/mitoviz/raw/master/mitoviz/tests/images/sample_linear_hf.png
   :alt: Mitochondrial linear plot with HF
+
+Variants with no HF information will be shown as if their HF was 0.5.
 
 Usage
 =====
@@ -69,10 +71,9 @@ simple:
 
     $ mitoviz sample.vcf
 
-An image named ``mitoviz.png`` will be created in the current directory.
-
-If you want to provide a specific filename where the plot will be saved, just add the ``--output``
-option with the desired path:
+An image named ``mitoviz.png`` will be created in the current directory; if you want to provide a
+specific filename where the plot will be saved, just add the ``--output`` option with the desired
+path:
 
 .. code-block:: console
 
