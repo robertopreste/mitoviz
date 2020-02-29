@@ -46,6 +46,6 @@ setup(  # pragma: no cover
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/robertopreste/mitoviz",
-    version='0.5.0',
+    version='0.6.0',
     zip_safe=False,
 )
