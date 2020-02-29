@@ -21,7 +21,7 @@ from mitoviz.mitoviz import plot_table, plot_vcf
               help="Add variant labels.")
 @click.option("--legend", "-L", default=False, is_flag=True,
               help="Add legend to the plot.")
-@click.option("--split", default=False, is_flag=True,
+@click.option("--split", "-p", default=False, is_flag=True,
               help="Plot split H and L strands.")
 @click.option("--sep", "-S", default=",",
               help="Column delimiter used (if INPUT_FILE is not a VCF file)")
