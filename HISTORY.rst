@@ -54,3 +54,9 @@ History
 ==================
 
 * Add ``split`` option to plot split strands on polar plots.
+
+0.6.0 (2020-02-29)
+==================
+
+* ``_PolarVariant`` is deprecated and replaced by ``_Variant``;
+* Add ``linear`` option to create linear plots.

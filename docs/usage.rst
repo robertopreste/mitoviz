@@ -37,18 +37,30 @@ It is possible to show labels above each variant using the ``--labels`` flag:
     $ mitoviz sample.vcf --labels
 
 Mitochondrial loci on mitoviz plots are drawn using a green color for protein-coding, blue for
-tRNAs, red for rRNAs, orange for regulatory (D-Loop) and grey for non-coding loci. It is possible to include a legend in the
+tRNAs, red for rRNAs, orange for regulatory (D-Loop and L-strand origin) and grey for non-coding
+loci. It is possible to include a legend in the
 resulting plot, using the ``--legend`` option:
 
 .. code-block:: console
 
     $ mitoviz sample.vcf --legend
 
-The plot can draw loci located on H and L strands on two different levels, using the ``--split`` option:
+The plot can draw loci located on H and L strands on two different levels, using the ``--split``
+option:
 
 .. code-block:: console
 
     $ mitoviz sample.vcf --split
+
+mitoviz can create linear plots as well, where variants are shown using a *lollipop plot* style,
+using the ``--linear`` option:
+
+.. code-block:: console
+
+    $ mitoviz sample.vcf --linear
+
+Linear plots can be managed and customised using the ``--output``, ``--sample``, ``--labels``,
+``--legend`` and ``--split`` options.
 
 It is also possible to plot variants stored in a tabular file, such as CSV or TSV formats; mitoviz
 will automatically recognise them, treating the file as comma-separated by default. If a different
@@ -115,13 +127,25 @@ option:
 
     plot_vcf("sample.vcf", legend=True)
 
-Loci located on the H and L strands can be shown on two separate levels, using the ``split=True`` option:
+Loci located on the H and L strands can be shown on two separate levels, using the ``split=True``
+option:
 
 .. code-block:: python
 
     from mitoviz import plot_vcf
 
     plot_vcf("sample.vcf", split=True)
+
+Linear plots can be also created (instead of the default polar plot), using the ``linear=True``
+option:
+
+.. code-block:: python
+
+    from mitoviz import plot_vcf
+
+    plot_vcf("sample.vcf", linear=True)
+
+The ``linear=True`` option can be combined with previously described options as well.
 
 Comprehensive help about the ``plot_vcf`` function can be found with ``help(mitoviz.plot_vcf)``.
 
