@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
-from mitoviz.classes.abstract_locus import _AbstractLocus
+from mitoviz.classes.base_locus import _BaseLocus
 from mitoviz.constants import (
-    COLORS, NT_LENGTHS, STRANDS, TEXT_HA, TEXT_VA, TEXT_Y, TYPES
+    NT_LENGTHS, STARTS, TEXT_HA, TEXT_VA, TEXT_Y, TYPES
 )
 from mitoviz.utils import convert_nt
 
 
-class _PolarLocus(_AbstractLocus):
+class _PolarLocus(_BaseLocus):
     """ Class referring to a single mt locus, used in polar plots.
 
     Attributes:
@@ -22,13 +22,17 @@ class _PolarLocus(_AbstractLocus):
     _text_y = TEXT_Y
 
     def __init__(self, name: str, index: int):
-        super().__init__(name=name)
-        self.index = index
+        super().__init__(name=name, index=index)
 
     @property
     def loc_type(self) -> str:
-        """ The locus type (regulatory, coding, rRNA, tRNA). """
+        """ The locus type (regulatory, coding, rRNA, tRNA, non-coding). """
         return self._types[self.index]
+
+    @property
+    def color(self) -> str:
+        """ The locus-type-specific color. """
+        return self._colors[self.loc_type]
 
     @property
     def width(self) -> float:
@@ -48,11 +52,6 @@ class _PolarLocus(_AbstractLocus):
                 + sum(map(convert_nt, self._nt_lengths[1:self.index])))
 
     @property
-    def color(self) -> str:
-        """ The locus-type-specific color. """
-        return COLORS[self.loc_type]
-
-    @property
     def text_ha(self) -> str:
         """ The horizontal alignment for the text label. """
         return self._text_ha[self.index]
@@ -66,11 +65,6 @@ class _PolarLocus(_AbstractLocus):
     def text_y(self) -> float:
         """ The y position for the text label. """
         return self._text_y[self.index]
-
-    def __repr__(self):
-        return "{}(name={}, index={})".format(
-            self.__class__.__name__, self.name, self.index
-        )
 
 
 class _PolarSplitLocus(_PolarLocus):
@@ -91,9 +85,9 @@ class _PolarSplitLocus(_PolarLocus):
         super().__init__(name=name, index=index)
 
     @property
-    def strand(self) -> str:
-        """ The mitochondrial strand on which the locus is located. """
-        return STRANDS[self.index]
+    def color(self) -> str:
+        """ The locus-type-specific color. """
+        return self._colors[self.loc_type]
 
     @property
     def bottom(self) -> float:
@@ -110,3 +104,59 @@ class _PolarSplitLocus(_PolarLocus):
         if self.strand == "":  # non coding
             return 5.0
         return 2.5
+
+
+class _LinearLocus(_BaseLocus):
+    """ Class referring to a single mt locus, used in linear plots.
+
+    Attributes:
+        name: name of the locus
+        index: index of the locus in the mt genome (dloop = 0, tf = 1, etc.)
+    """
+    _types = TYPES + ["reg"]
+    _nt_lengths = [576] + NT_LENGTHS[1:] + [546]
+    _starts = STARTS
+
+    def __init__(self, name: str, index: int):
+        super().__init__(name=name, index=index)
+
+    @property
+    def loc_type(self) -> str:
+        """ The locus type (regulatory, coding, rRNA, tRNA). """
+        return self._types[self.index]
+
+    @property
+    def color(self) -> str:
+        """ The locus-type-specific color. """
+        return self._colors[self.loc_type]
+
+    @property
+    def height(self) -> tuple:
+        """ The vertical position of the locus, if plotting split strands. """
+        if self.strand == "H":
+            return (-0.05, 0.05)
+        elif self.strand == "L":
+            return (-0.1, 0.05)
+        return (-0.1, 0.1)
+
+    @property
+    def width(self) -> float:
+        """ The width of the locus in nucleotides. """
+        return self._nt_lengths[self.index]
+
+    @property
+    def start(self) -> int:
+        """ Position on the mt genome where the locus starts. """
+        return self._starts[self.index]
+
+    @property
+    def text_x(self) -> float:
+        """ The x position for the text label. """
+        return self.start + (self.width / 2)
+
+    @property
+    def text_y(self) -> float:
+        """ The y position for the text label. """
+        if self.name in ["TQ", "TA", "TC", "TD", "TK", "TS2", "TP"]:
+            return -0.13
+        return -0.12

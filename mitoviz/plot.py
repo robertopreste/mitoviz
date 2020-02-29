@@ -8,16 +8,25 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from mitoviz.constants import COLORS, NAMES
-from mitoviz.locus import _PolarLocus, _PolarSplitLocus
-from mitoviz.variant import _PolarVariant
+from mitoviz.locus import _PolarLocus, _PolarSplitLocus, _LinearLocus
+from mitoviz.variant import _Variant
 
 
-def _label_variant(ax: plt.axes, variant: _PolarVariant):
-    """ Annotate each variant with a label in the plot. """
+def _label_variant_polar(ax: plt.axes, variant: _Variant):
+    """ Annotate each variant with a label in the polar plot. """
     ax.annotate(variant.label,
-                xy=(variant.pos_x, variant.pos_y),
-                xytext=(variant.pos_x, variant.pos_y),
+                xy=(variant.polar_x, variant.polar_y),
+                xytext=(variant.polar_x, variant.polar_y),
                 textcoords="offset pixels",
+                ha="center", va="bottom",
+                bbox=dict(facecolor="w", alpha=0.8, boxstyle="round"))
+
+
+def _label_variant_linear(ax: plt.axes, variant: _Variant):
+    """ Annotate each variant with a label in the linear plot. """
+    ax.annotate(variant.label,
+                xy=(variant.linear_x, variant.linear_y + 0.02),
+                xytext=(variant.linear_x, variant.linear_y + 0.02),
                 ha="center", va="bottom",
                 bbox=dict(facecolor="w", alpha=0.8, boxstyle="round"))
 
@@ -32,9 +41,65 @@ def _plot_legend() -> List[mpatches.Patch]:
     return [cds, reg, rrna, trna, nc]
 
 
-def _plot_mito(legend: bool = False,
-               split: bool = False):
-    """ Return an axes object with the base mitochondrial genome plot.
+def _plot_mito_linear(legend: bool = False,
+                      split: bool = False):
+    """ Return an axes object with the base mt genome linear plot.
+
+    Args:
+        legend: add a legend for loci colors in the plot [default: False]
+        split: plot split H and L strands [default: False]
+    """
+    fig = plt.figure(figsize=(20, 10), dpi=300)
+    ax = fig.add_subplot(111)
+    names = NAMES + ["DLOOP"]
+    loci = [_LinearLocus(name=name, index=index)
+            for index, name in enumerate(names)]
+
+    if split:
+        h_loci = [locus for locus in loci if locus.strand == "H"]
+        l_loci = [locus for locus in loci if locus.strand == "L"]
+        nc_loci = [locus for locus in loci if locus.strand == ""]
+        ax.broken_barh([(locus.start, locus.width) for locus in h_loci],
+                       (-0.05, 0.05),
+                       facecolors=[locus.color for locus in h_loci])
+        ax.broken_barh([(locus.start, locus.width) for locus in l_loci],
+                       (-0.1, 0.05),
+                       facecolors=[locus.color for locus in l_loci])
+        ax.broken_barh([(locus.start, locus.width) for locus in nc_loci],
+                       (-0.1, 0.1),
+                       facecolors=[locus.color for locus in nc_loci])
+    else:
+        ax.broken_barh([(locus.start, locus.width) for locus in loci],
+                       (-0.1, 0.1),
+                       facecolors=[f"{locus.color}" for locus in loci])
+    ax.set_xticks([0, 4000, 8000, 12000, 16000])
+    ax.set_yticks([0.0, 0.25, 0.50, 0.75, 1.00])
+    ax.set_ylim(-0.15, 1.10)
+
+    for locus in loci:
+        if locus.name == "OLR":
+            ax.annotate(locus.name,
+                        xy=(locus.text_x, -0.11),
+                        ha="center",
+                        fontsize=4)
+            continue
+        if locus.loc_type != "nc":
+            ax.annotate(locus.name,
+                        xy=(locus.text_x, locus.text_y),
+                        ha="center",
+                        fontsize=5)
+
+    if legend:
+        handles = _plot_legend()
+        plt.legend(handles=handles, loc="upper right")
+        ax.set_xlim([-500, 18000])
+
+    return fig, ax
+
+
+def _plot_mito_polar(legend: bool = False,
+                     split: bool = False):
+    """ Return an axes object with the base mt genome polar plot.
 
     Args:
         legend: add a legend for loci colors in the plot [default: False]
@@ -51,7 +116,7 @@ def _plot_mito(legend: bool = False,
     else:
         loci = [_PolarLocus(name=name, index=index)
                 for index, name in enumerate(NAMES)]
-        radii = [5.0] * 48
+        radii = 5.0
         bottoms = 20.0
     thetas = [el.theta for el in loci]
     widths = [el.width for el in loci]
@@ -64,6 +129,12 @@ def _plot_mito(legend: bool = False,
 
     for locus, bar in zip(loci, bars):
         bar.set_facecolor(locus.color)
+        if locus.name == "OLR":
+            ax.annotate(locus.name,
+                        xy=(locus.theta, locus.text_y),
+                        ha=locus.text_ha, va=locus.text_va,
+                        fontsize=6)
+            continue
         if locus.loc_type != "nc":
             ax.annotate(locus.name,
                         xy=(locus.theta, locus.text_y),
@@ -83,26 +154,58 @@ def _plot_mito(legend: bool = False,
     return fig, ax
 
 
-def _plot_variants(sample: str,
-                   variants: List[_PolarVariant],
-                   labels: bool = False,
-                   legend: bool = False,
-                   split: bool = False) -> None:
-    """ Plot variants available in the given list.
+def _plot_variants_polar(sample: str,
+                         variants: List[_Variant],
+                         labels: bool = False,
+                         legend: bool = False,
+                         split: bool = False) -> None:
+    """ Plot variants available in the given list onto a polar plot.
 
     Args:
         sample: sample name, used for the plot title
-        variants: list of Variant instances to plot
+        variants: list of _PolarVariant instances to plot
         labels: add a label for each variant shown [default: False]
         legend: add a legend for loci colors in the plot [default: False]
         split: plot split H and L strands [default: False]
     """
-    fig, ax = _plot_mito(legend, split)
+    fig, ax = _plot_mito_polar(legend, split)
 
     for variant in variants:
-        ax.scatter(variant.pos_x, variant.pos_y, c="black", s=20, zorder=20)
+        ax.scatter(variant.polar_x, variant.polar_y,
+                   c="black", s=20, zorder=20)
         if labels:
-            _label_variant(ax, variant)
+            _label_variant_polar(ax, variant)
+
+    ax.set_title(sample)
+
+    return None
+
+
+def _plot_variants_linear(sample: str,
+                          variants: List[_Variant],
+                          labels: bool = False,
+                          legend: bool = False,
+                          split: bool = False) -> None:
+    """ Plot variant available in a given list onto a linear plot.
+
+    Args:
+        sample: sample name, used for the plot title
+        variants: list of _LinearVariant instances to plot
+        labels: add a label for each variant shown [default: False]
+        legend: add a legend for loci colors in the plot [default: False]
+        split: plot split H and L strands [default: False]
+    """
+    fig, ax = _plot_mito_linear(legend, split)
+
+    for variant in variants:
+        marker, stem, base = plt.stem([variant.linear_x], [variant.linear_y],
+                                      "-.", use_line_collection=True)
+        plt.setp(marker, "color", variant.color)
+        plt.setp(stem, "color", variant.color)
+        plt.setp(base, "linestyle", "None")
+
+        if labels:
+            _label_variant_linear(ax, variant)
 
     ax.set_title(sample)
 

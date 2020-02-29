@@ -3,7 +3,7 @@
 # Created by Roberto Preste
 import unittest
 
-from mitoviz.locus import _PolarLocus, _PolarSplitLocus
+from mitoviz.locus import _LinearLocus, _PolarLocus, _PolarSplitLocus
 
 
 class TestPolarLocus(unittest.TestCase):
@@ -20,6 +20,12 @@ class TestPolarLocus(unittest.TestCase):
         self.assertEqual("rrna", self.rnr1.loc_type)
         self.assertEqual("cds", self.nd1.loc_type)
 
+    def test_color(self):
+        self.assertEqual("#ffa500", self.dloop.color)
+        self.assertEqual("#4169e1", self.tf.color)
+        self.assertEqual("#cd5c5c", self.rnr1.color)
+        self.assertEqual("#2e8b57", self.nd1.color)
+
     def test_width(self):
         self.assertEqual(0.4259388013760637, self.dloop.width)
         self.assertEqual(0.026953346611141286, self.tf.width)
@@ -31,12 +37,6 @@ class TestPolarLocus(unittest.TestCase):
         self.assertEqual(0.2264460739936025, self.tf.theta)
         self.assertEqual(0.42100368157402374, self.rnr1.theta)
         self.assertEqual(1.4308051179914298, self.nd1.theta)
-
-    def test_color(self):
-        self.assertEqual("#ffa500", self.dloop.color)
-        self.assertEqual("#4169e1", self.tf.color)
-        self.assertEqual("#cd5c5c", self.rnr1.color)
-        self.assertEqual("#2e8b57", self.nd1.color)
 
     def test_text_ha(self):
         self.assertEqual("center", self.dloop.text_ha)
@@ -64,6 +64,11 @@ class TestPolarSplitLocus(unittest.TestCase):
         self.tf = _PolarSplitLocus("TF", 1)
         self.nc1 = _PolarSplitLocus("NC1", 6)
 
+    def test_color(self):
+        self.assertEqual("#ffa500", self.dloop.color)
+        self.assertEqual("#4169e1", self.tf.color)
+        self.assertEqual("grey", self.nc1.color)
+
     def test_strand(self):
         self.assertEqual("L", self.dloop.strand)
         self.assertEqual("H", self.tf.strand)
@@ -78,3 +83,54 @@ class TestPolarSplitLocus(unittest.TestCase):
         self.assertEqual(2.5, self.dloop.radius)
         self.assertEqual(2.5, self.tf.radius)
         self.assertEqual(5.0, self.nc1.radius)
+
+
+class TestLinearLocus(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.dloop = _LinearLocus("DLOOP", 0)
+        self.nc1 = _LinearLocus("NC1", 6)
+        self.nd1 = _LinearLocus("ND1", 7)
+        self.tq = _LinearLocus("TQ", 9)
+
+    def test_loc_type(self):
+        self.assertEqual("reg", self.dloop.loc_type)
+        self.assertEqual("nc", self.nc1.loc_type)
+        self.assertEqual("cds", self.nd1.loc_type)
+        self.assertEqual("trna", self.tq.loc_type)
+
+    def test_color(self):
+        self.assertEqual("#ffa500", self.dloop.color)
+        self.assertEqual("grey", self.nc1.color)
+        self.assertEqual("#2e8b57", self.nd1.color)
+        self.assertEqual("#4169e1", self.tq.color)
+
+    def test_width(self):
+        self.assertEqual(576, self.dloop.width)
+        self.assertEqual(2, self.nc1.width)
+        self.assertEqual(956, self.nd1.width)
+        self.assertEqual(69, self.tq.width)
+
+    def test_height(self):
+        self.assertEqual((-0.1, 0.05), self.dloop.height)
+        self.assertEqual((-0.1, 0.1), self.nc1.height)
+        self.assertEqual((-0.05, 0.05), self.nd1.height)
+        self.assertEqual((-0.1, 0.05), self.tq.height)
+
+    def test_start(self):
+        self.assertEqual(0, self.dloop.start)
+        self.assertEqual(3304, self.nc1.start)
+        self.assertEqual(3306, self.nd1.start)
+        self.assertEqual(4331, self.tq.start)
+
+    def test_text_x(self):
+        self.assertEqual(288.0, self.dloop.text_x)
+        self.assertEqual(3305.0, self.nc1.text_x)
+        self.assertEqual(3784.0, self.nd1.text_x)
+        self.assertEqual(4365.5, self.tq.text_x)
+
+    def test_text_y(self):
+        self.assertEqual(-0.12, self.dloop.text_y)
+        self.assertEqual(-0.12, self.nc1.text_y)
+        self.assertEqual(-0.12, self.nd1.text_y)
+        self.assertEqual(-0.13, self.tq.text_y)

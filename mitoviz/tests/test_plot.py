@@ -9,9 +9,10 @@ import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 
-from mitoviz.plot import _plot_legend, _plot_mito
+from mitoviz.plot import _plot_legend, _plot_mito_linear, _plot_mito_polar
 from mitoviz.tests.constants import (
-    BASE_MITO, BASE_MITO_LEGEND, BASE_MITO_SPLIT
+    BASE_MITO_POLAR, BASE_MITO_POLAR_LEGEND, BASE_MITO_POLAR_SPLIT,
+    BASE_MITO_LINEAR, BASE_MITO_LINEAR_LEGEND, BASE_MITO_LINEAR_SPLIT
 )
 
 
@@ -34,13 +35,13 @@ class TestPlot(unittest.TestCase):
         for n in range(len(result)):
             self.assertTrue(self._compare_patches(expected[n], result[n]))
 
-    def test__plot_mito(self):
+    def test__plot_mito_polar(self):
         # Given
-        base_img = cv2.imread(BASE_MITO)
+        base_img = cv2.imread(BASE_MITO_POLAR)
         result_img_path = "test_base_mito.png"
 
         # When
-        fig, ax = _plot_mito()
+        fig, ax = _plot_mito_polar()
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)
@@ -52,13 +53,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img_path)
 
-    def test__plot_mito_legend(self):
+    def test__plot_mito_polar_legend(self):
         # Given
-        base_img = cv2.imread(BASE_MITO_LEGEND)
+        base_img = cv2.imread(BASE_MITO_POLAR_LEGEND)
         result_img_path = "test_base_mito_legend.png"
 
         # When
-        fig, ax = _plot_mito(legend=True)
+        fig, ax = _plot_mito_polar(legend=True)
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)
@@ -70,13 +71,67 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img_path)
 
-    def test__plot_mito_split(self):
+    def test__plot_mito_polar_split(self):
         # Given
-        base_img = cv2.imread(BASE_MITO_SPLIT)
+        base_img = cv2.imread(BASE_MITO_POLAR_SPLIT)
         result_img_path = "test_base_mito_split.png"
 
         # When
-        fig, ax = _plot_mito(split=True)
+        fig, ax = _plot_mito_polar(split=True)
+        plt.savefig(result_img_path)
+        plt.close()
+        result_img = cv2.imread(result_img_path)
+
+        # Then
+        self.assertTrue(os.path.isfile(result_img_path))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove(result_img_path)
+
+    def test__plot_mito_linear(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_LINEAR)
+        result_img_path = "test_base_mito.png"
+
+        # When
+        fig, ax = _plot_mito_linear()
+        plt.savefig(result_img_path)
+        plt.close()
+        result_img = cv2.imread(result_img_path)
+
+        # Then
+        self.assertTrue(os.path.isfile(result_img_path))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove(result_img_path)
+
+    def test__plot_mito_linear_legend(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_LINEAR_LEGEND)
+        result_img_path = "test_base_mito_legend.png"
+
+        # When
+        fig, ax = _plot_mito_linear(legend=True)
+        plt.savefig(result_img_path)
+        plt.close()
+        result_img = cv2.imread(result_img_path)
+
+        # Then
+        self.assertTrue(os.path.isfile(result_img_path))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove(result_img_path)
+
+    def test__plot_mito_linear_split(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_LINEAR_SPLIT)
+        result_img_path = "test_base_mito_split.png"
+
+        # When
+        fig, ax = _plot_mito_linear(split=True)
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)

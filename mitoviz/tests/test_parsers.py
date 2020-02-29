@@ -10,7 +10,7 @@ from mitoviz.tests.constants import (
     SAMPLE_DF, SAMPLE_HF_CSV, SAMPLE_HF_DF, SAMPLE_HF_TSV, SAMPLE_HF_VCF,
 )
 from mitoviz.parsers import _DataFrameParser, _TabularParser, _VcfParser
-from mitoviz.variant import _PolarVariant
+from mitoviz.variant import _Variant
 
 
 class TestVcfParser(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestVcfParser(unittest.TestCase):
 
     def test_variants(self):
         # Given/When
-        variant = _PolarVariant(
+        variant = _Variant(
             reference="C",
             position=8935,
             alternate=Substitution("SNV", "T"),
@@ -69,13 +69,13 @@ class TestDataFrameParser(unittest.TestCase):
 
     def test_variants(self):
         # Given/When
-        variant = _PolarVariant(
+        variant = _Variant(
             reference="C",
             position=8935,
             alternate="T",
             hf=0.5
         )
-        variant_hf = _PolarVariant(
+        variant_hf = _Variant(
             reference="C",
             position=8935,
             alternate="T",

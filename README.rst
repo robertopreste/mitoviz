@@ -20,10 +20,6 @@ mitoviz
         :target: https://mitoviz.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/robertopreste/mitoviz/python-3-shield.svg
-     :target: https://pyup.io/repos/github/robertopreste/mitoviz/
-     :alt: Python 3
-
 
 Plot variants on the human mitochondrial genome.
 
@@ -38,18 +34,27 @@ Features
 
 mitoviz is a simple python package to plot human mitochondrial variants on a graphical
 representation of the human mitochondrial genome. It currently supports plotting variants
-stored in VCF and tabular files, as well as from general ``pandas`` dataframes when using
-mitoviz from inside Python.
+stored in VCF and tabular files, as well as from general ``pandas`` dataframes when importing
+mitoviz in Python.
 
 Variants are shown according to their heteroplasmic fraction (HF), plotting variants with
 HF = 1.0 on the outer border of the mitochondrial circle, those with HF = 0.0 on the inner
-border and all the others according to their actual HF value.
+border and all the others in between, according to their actual HF value.
 
-.. image:: /images/sample_hf.png
+.. image:: https://github.com/robertopreste/mitoviz/raw/master/mitoviz/tests/images/sample_hf.png
   :alt: Mitochondrial plot with HF
 
 If the HF information is not available, variants will all be shown in the middle of the
 mitochondrial circle.
+
+A linear representation of the mitochondrial genome can also be plotted; in this case,
+variants are shown using a *lollipop plot* style, with the height of the marker reflecting
+their HF.
+
+.. image:: https://github.com/robertopreste/mitoviz/raw/master/mitoviz/tests/images/sample_linear_hf.png
+  :alt: Mitochondrial linear plot with HF
+
+Variants with no HF information will be shown as if their HF was 0.5.
 
 Usage
 =====
@@ -66,21 +71,19 @@ simple:
 
     $ mitoviz sample.vcf
 
-An image named ``mitoviz.png`` will be created in the current directory.
-
-If you want to provide a specific filename where the plot will be saved, just add the ``--output``
-option with the desired path:
+An image named ``mitoviz.png`` will be created in the current directory; if you want to provide a
+specific filename where the plot will be saved, just add the ``--output`` option with the desired
+path:
 
 .. code-block:: console
 
     $ mitoviz sample.vcf --output my_mt_plot.png
 
-If the provided VCF file contains more than one sample, a separate plot will be created for each
-of them; if you want to only plot a specific sample, use the ``--sample`` option:
+Linear plots can be created using the ``--linear`` option:
 
 .. code-block:: console
 
-    $ mitoviz multisample.vcf --sample SRR1777294
+    $ mitoviz sample.vcf --linear
 
 It is also possible to plot variants stored in a tabular file, such as CSV or TSV formats; mitoviz
 will automatically recognise them, treating the file as comma-separated by default. If a different
@@ -102,19 +105,18 @@ Import mitoviz and use its ``plot_vcf`` function to use it in your own script:
     my_plot = plot_vcf("sample.vcf")
 
 In this case, no plot will be shown until a call to ``plt.show()`` is made. It is possible to
-save the resulting plot using the ``save`` option and to provide a specific file where the plot will be
-saved using the ``output`` option:
+save the resulting plot using the ``save`` option and to provide a specific file where the plot
+will be saved using the ``output`` option:
 
 .. code-block:: python
 
     plot_vcf("sample.vcf", save=True, output="my_mt_plot.png")
 
-If the provided VCF file contains more than one sample, a separate plot will be created for each
-of them; if you want to only plot a specific sample, use the ``sample`` option:
+By default, a polar plot is returned; linear plots are easily created using the ``linear`` option:
 
 .. code-block:: python
 
-    plot_vcf("multisample.vcf", save=True, sample="SRR1777294")
+    plot_vcf("sample.vcf", save=True, linear=True)
 
 A similar function to plot variants contained in a pandas DataFrame is available as ``plot_df``.
 Supposing you have a pandas DataFrame with human mitochondrial variants named ``variants_df``, it

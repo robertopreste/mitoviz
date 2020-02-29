@@ -6,32 +6,53 @@ import os
 import matplotlib.pyplot as plt
 
 from mitoviz import plot_df, plot_vcf
-from mitoviz.plot import _plot_mito
+from mitoviz.plot import _plot_mito_linear, _plot_mito_polar
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF,
     SAMPLE_DF, SAMPLE_HF_DF,
-    BASE_MITO, BASE_MITO_LEGEND, BASE_MITO_SPLIT,
+    BASE_MITO_POLAR, BASE_MITO_POLAR_LEGEND, BASE_MITO_POLAR_SPLIT,
+    BASE_MITO_LINEAR, BASE_MITO_LINEAR_LEGEND, BASE_MITO_LINEAR_SPLIT,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND, BASE_IMG_SPLIT,
+    BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
+    BASE_IMG_LINEAR_SPLIT,
     BASE_IMG_DF, BASE_IMG_LABELS_DF, BASE_IMG_LEGEND_DF, BASE_IMG_SPLIT_DF,
-    BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND, BASE_HF_IMG_SPLIT_DF,
+    BASE_IMG_LINEAR_DF, BASE_IMG_LINEAR_LABELS_DF, BASE_IMG_LINEAR_LEGEND_DF,
+    BASE_IMG_LINEAR_SPLIT_DF,
+    BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND, BASE_HF_IMG_SPLIT,
+    BASE_HF_IMG_LINEAR, BASE_HF_IMG_LINEAR_LABELS, BASE_HF_IMG_LINEAR_LEGEND,
+    BASE_HF_IMG_LINEAR_SPLIT,
     BASE_HF_IMG_DF, BASE_HF_IMG_LABELS_DF, BASE_HF_IMG_LEGEND_DF,
-    BASE_HF_IMG_SPLIT,
+    BASE_HF_IMG_SPLIT_DF,
+    BASE_HF_IMG_LINEAR_DF, BASE_HF_IMG_LINEAR_LABELS_DF,
+    BASE_HF_IMG_LINEAR_LEGEND_DF, BASE_HF_IMG_LINEAR_SPLIT_DF,
     SAMPLE_MULTI_VCF, SAMPLE_MULTI_DF, IMGDIR
 )
 
 
 def main():  # pragma: no cover
     """ Create the test files needed. """
-    fig, ax = _plot_mito()
-    plt.savefig(BASE_MITO)
+    fig, ax = _plot_mito_polar()
+    plt.savefig(BASE_MITO_POLAR)
     plt.close()
 
-    fig, ax = _plot_mito(legend=True)
-    plt.savefig(BASE_MITO_LEGEND)
+    fig, ax = _plot_mito_polar(legend=True)
+    plt.savefig(BASE_MITO_POLAR_LEGEND)
     plt.close()
 
-    fig, ax = _plot_mito(split=True)
-    plt.savefig(BASE_MITO_SPLIT)
+    fig, ax = _plot_mito_polar(split=True)
+    plt.savefig(BASE_MITO_POLAR_SPLIT)
+    plt.close()
+
+    fig, ax = _plot_mito_linear()
+    plt.savefig(BASE_MITO_LINEAR)
+    plt.close()
+
+    fig, ax = _plot_mito_linear(legend=True)
+    plt.savefig(BASE_MITO_LINEAR_LEGEND)
+    plt.close()
+
+    fig, ax = _plot_mito_linear(split=True)
+    plt.savefig(BASE_MITO_LINEAR_SPLIT)
     plt.close()
 
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG)
@@ -42,6 +63,14 @@ def main():  # pragma: no cover
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_SPLIT,
              split=True)
 
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, output=BASE_IMG_LINEAR)
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,
+             output=BASE_IMG_LINEAR_LABELS, labels=True)
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,
+             output=BASE_IMG_LINEAR_LEGEND, legend=True)
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,
+             output=BASE_IMG_LINEAR_SPLIT, split=True)
+
     plot_df(in_df=SAMPLE_DF, save=True, output=BASE_IMG_DF)
     plot_df(in_df=SAMPLE_DF, save=True, output=BASE_IMG_LABELS_DF,
             labels=True)
@@ -49,6 +78,15 @@ def main():  # pragma: no cover
             legend=True)
     plot_df(in_df=SAMPLE_DF, save=True, output=BASE_IMG_SPLIT_DF,
             split=True)
+
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True,
+            output=BASE_IMG_LINEAR_DF)
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True,
+            output=BASE_IMG_LINEAR_LABELS_DF, labels=True)
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True,
+            output=BASE_IMG_LINEAR_LEGEND_DF, legend=True)
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True,
+            output=BASE_IMG_LINEAR_SPLIT_DF, split=True)
 
     plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True, output=BASE_HF_IMG)
     plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True,
@@ -58,6 +96,15 @@ def main():  # pragma: no cover
     plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True,
              output=BASE_HF_IMG_SPLIT, split=True)
 
+    plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True,
+             output=BASE_HF_IMG_LINEAR)
+    plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True,
+             output=BASE_HF_IMG_LINEAR_LABELS, labels=True)
+    plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True,
+             output=BASE_HF_IMG_LINEAR_LEGEND, legend=True)
+    plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True,
+             output=BASE_HF_IMG_LINEAR_SPLIT, split=True)
+
     plot_df(in_df=SAMPLE_HF_DF, save=True, output=BASE_HF_IMG_DF)
     plot_df(in_df=SAMPLE_HF_DF, save=True,
             output=BASE_HF_IMG_LABELS_DF, labels=True)
@@ -65,6 +112,15 @@ def main():  # pragma: no cover
             output=BASE_HF_IMG_LEGEND_DF, legend=True)
     plot_df(in_df=SAMPLE_HF_DF, save=True,
             output=BASE_HF_IMG_SPLIT_DF, split=True)
+
+    plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True,
+            output=BASE_HF_IMG_LINEAR_DF)
+    plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True,
+            output=BASE_HF_IMG_LINEAR_LABELS_DF, labels=True)
+    plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True,
+            output=BASE_HF_IMG_LINEAR_LEGEND_DF, legend=True)
+    plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True,
+            output=BASE_HF_IMG_LINEAR_SPLIT_DF, split=True)
 
     plot_vcf(in_vcf=SAMPLE_MULTI_VCF, save=True,
              output=os.path.join(IMGDIR, "multisample.png"))
@@ -78,6 +134,18 @@ def main():  # pragma: no cover
              output=os.path.join(IMGDIR, "multisample_split.png"),
              split=True)
 
+    plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True,
+             output=os.path.join(IMGDIR, "multisample_linear.png"))
+    plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True,
+             output=os.path.join(IMGDIR, "multisample_linear_labels.png"),
+             labels=True)
+    plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True,
+             output=os.path.join(IMGDIR, "multisample_linear_legend.png"),
+             legend=True)
+    plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True,
+             output=os.path.join(IMGDIR, "multisample_linear_split.png"),
+             split=True)
+
     plot_df(in_df=SAMPLE_MULTI_DF, save=True,
             output=os.path.join(IMGDIR, "multisample_df.png"))
     plot_df(in_df=SAMPLE_MULTI_DF, save=True,
@@ -88,6 +156,18 @@ def main():  # pragma: no cover
             legend=True)
     plot_df(in_df=SAMPLE_MULTI_DF, save=True,
             output=os.path.join(IMGDIR, "multisample_split_df.png"),
+            split=True)
+
+    plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True,
+            output=os.path.join(IMGDIR, "multisample_linear_df.png"))
+    plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True,
+            output=os.path.join(IMGDIR, "multisample_linear_labels_df.png"),
+            labels=True)
+    plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True,
+            output=os.path.join(IMGDIR, "multisample_linear_legend_df.png"),
+            legend=True)
+    plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True,
+            output=os.path.join(IMGDIR, "multisample_linear_split_df.png"),
             split=True)
 
 
