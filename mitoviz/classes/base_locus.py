@@ -20,6 +20,11 @@ class _BaseLocus:
         self.index = index
 
     @property
+    def color(self) -> str:
+        """ The locus-type-specific color. """
+        return self._colors[self.loc_type]
+
+    @property
     def loc_type(self):
         """ The locus type (regulatory, coding, rRNA, tRNA, non-coding). """
         return NotImplemented

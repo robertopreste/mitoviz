@@ -8,30 +8,39 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from mitoviz.constants import COLORS, NAMES
-from mitoviz.locus import _PolarLocus, _PolarSplitLocus, _LinearLocus
+from mitoviz.locus import _LinearLocus, _PolarLocus, _PolarSplitLocus
 from mitoviz.variant import _Variant
 
 
-def _label_variant_polar(ax: plt.axes, variant: _Variant):
-    """ Annotate each variant with a label in the polar plot. """
-    ax.annotate(variant.label,
-                xy=(variant.polar_x, variant.polar_y),
-                xytext=(variant.polar_x, variant.polar_y),
-                textcoords="offset pixels",
-                ha="center", va="bottom",
-                bbox=dict(facecolor="w", alpha=0.8, boxstyle="round"))
+def _label_variant(ax: plt.axes, variant: _Variant, linear: bool = False):
+    """ Annotate each variant with a label in the polar or linear plot.
+
+    Args:
+        ax: axis element on which the label will be added
+        variant: variant to annotate
+        linear: whether the resulting is a linear or polar plot
+            [default: False]
+    """
+    if linear:
+        ax.annotate(variant.label,
+                    xy=(variant.linear_x, variant.linear_y + 0.02),
+                    xytext=(variant.linear_x, variant.linear_y + 0.02),
+                    ha="center", va="bottom",
+                    bbox=dict(facecolor="w",
+                              alpha=0.8,
+                              boxstyle="round"))
+    else:
+        ax.annotate(variant.label,
+                    xy=(variant.polar_x, variant.polar_y),
+                    xytext=(variant.polar_x, variant.polar_y),
+                    textcoords="offset pixels",
+                    ha="center", va="bottom",
+                    bbox=dict(facecolor="w",
+                              alpha=0.8,
+                              boxstyle="round"))
 
 
-def _label_variant_linear(ax: plt.axes, variant: _Variant):
-    """ Annotate each variant with a label in the linear plot. """
-    ax.annotate(variant.label,
-                xy=(variant.linear_x, variant.linear_y + 0.02),
-                xytext=(variant.linear_x, variant.linear_y + 0.02),
-                ha="center", va="bottom",
-                bbox=dict(facecolor="w", alpha=0.8, boxstyle="round"))
-
-
-def _plot_legend() -> List[mpatches.Patch]:
+def _legend_patches() -> List[mpatches.Patch]:
     """ Return a list of mpatches.Patch to create the loci legend. """
     cds = mpatches.Patch(color=COLORS["cds"], label="Coding")
     reg = mpatches.Patch(color=COLORS["reg"], label="Regulatory")
@@ -90,7 +99,7 @@ def _plot_mito_linear(legend: bool = False,
                         fontsize=5)
 
     if legend:
-        handles = _plot_legend()
+        handles = _legend_patches()
         plt.legend(handles=handles, loc="upper right")
         ax.set_xlim([-500, 18000])
 
@@ -148,7 +157,7 @@ def _plot_mito_polar(legend: bool = False,
     ax.set_theta_zero_location("N")
 
     if legend:
-        handles = _plot_legend()
+        handles = _legend_patches()
         plt.legend(handles=handles, loc="center")
 
     return fig, ax
@@ -174,11 +183,9 @@ def _plot_variants_polar(sample: str,
         ax.scatter(variant.polar_x, variant.polar_y,
                    c="black", s=20, zorder=20)
         if labels:
-            _label_variant_polar(ax, variant)
+            _label_variant(ax, variant, linear=False)
 
     ax.set_title(sample)
-
-    return None
 
 
 def _plot_variants_linear(sample: str,
@@ -205,8 +212,6 @@ def _plot_variants_linear(sample: str,
         plt.setp(base, "linestyle", "None")
 
         if labels:
-            _label_variant_linear(ax, variant)
+            _label_variant(ax, variant, linear=True)
 
     ax.set_title(sample)
-
-    return None

@@ -30,15 +30,28 @@ def main(ctx, input_file, linear, sample, output, labels, legend, split, sep):
     """ Plot human mitochondrial variants available in INPUT_FILE. """
     ext = os.path.splitext(os.path.basename(input_file))[-1]
     if ext.casefold() == ".vcf":
-        plot_vcf(in_vcf=input_file, linear=linear, sample=sample, save=True,
-                 output=output, labels=labels, legend=legend, split=split)
+        plot_vcf(in_vcf=input_file,
+                 linear=linear,
+                 sample=sample,
+                 save=True,
+                 output=output,
+                 labels=labels,
+                 legend=legend,
+                 split=split)
     else:
         pandas_opts = dict()
         if ctx.args:
             pandas_opts.update([el.split("=") for el in ctx.args])
-        plot_table(in_table=input_file, sep=sep, linear=linear, sample=sample,
-                   save=True, output=output, labels=labels, legend=legend,
-                   split=split, **pandas_opts)
+        plot_table(in_table=input_file,
+                   sep=sep,
+                   linear=linear,
+                   sample=sample,
+                   save=True,
+                   output=output,
+                   labels=labels,
+                   legend=legend,
+                   split=split,
+                   **pandas_opts)
 
     return 0
 
