@@ -111,6 +111,5 @@ class TestTabularParser(unittest.TestCase):
         df = SAMPLE_HF_DF
 
         # Then
-
         pt.assert_frame_equal(df, self.csv.df)
         pt.assert_frame_equal(df, self.tsv.df)
