@@ -55,18 +55,20 @@ If you are proposing a feature:
 Get Started!
 ============
 
-Ready to contribute? Here's how to set up `mitoviz` for local development.
+Ready to contribute? Here's how to set up ``mitoviz`` for local development.
 
-1. Fork the `mitoviz` repo on GitHub.
+1. Fork the ``mitoviz`` repo on GitHub.
 2. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/mitoviz.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+3. Set up a virtualenv for local development::
 
-    $ mkvirtualenv mitoviz
     $ cd mitoviz/
-    $ python setup.py develop
+    $ python -m venv venv
+    $ source venv/bin/activate
+    $ python -m ci install-reqs
+    $ python -m ci install
 
 4. Create a branch for local development::
 
@@ -77,8 +79,8 @@ Ready to contribute? Here's how to set up `mitoviz` for local development.
 5. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
-    $ flake8 mitoviz tests
-    $ python setup.py test or py.test
+    $ python -m ci flake8
+    $ pytest
     $ tox
 
    To get flake8 and tox, just pip install them into your virtualenv.
@@ -109,7 +111,7 @@ Tips
 
 To run a subset of tests::
 
-$ py.test tests.test_mitoviz
+    $ pytest tests.test_mitoviz
 
 
 Deploying

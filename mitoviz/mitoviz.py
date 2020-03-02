@@ -36,20 +36,14 @@ def plot_vcf(in_vcf: str,
     """
     vcf = _VcfParser(in_vcf)
     variants_per_sample = vcf.variants
+    plot_variants = _plot_variants_linear if linear else _plot_variants_polar
 
     if sample:
-        if linear:
-            _plot_variants_linear(sample,
-                                  variants_per_sample[sample],
-                                  labels,
-                                  legend,
-                                  split)
-        else:
-            _plot_variants_polar(sample,
-                                 variants_per_sample[sample],
-                                 labels,
-                                 legend,
-                                 split)
+        plot_variants(sample,
+                      variants_per_sample[sample],
+                      labels,
+                      legend,
+                      split)
 
         if save:
             dirname, name, ext = parse_path(output)
@@ -60,10 +54,7 @@ def plot_vcf(in_vcf: str,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            if linear:
-                _plot_variants_linear(sample, variants, labels, legend, split)
-            else:
-                _plot_variants_polar(sample, variants, labels, legend, split)
+            plot_variants(sample, variants, labels, legend, split)
 
             if save:
                 dirname, name, ext = parse_path(output)
@@ -75,8 +66,6 @@ def plot_vcf(in_vcf: str,
                 else:
                     plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
                 plt.close()
-
-    return None
 
 
 def plot_df(in_df: pd.DataFrame,
@@ -118,20 +107,14 @@ def plot_df(in_df: pd.DataFrame,
                           sample_col=sample_col,
                           hf_col=hf_col)
     variants_per_sample = df.variants
+    plot_variants = _plot_variants_linear if linear else _plot_variants_polar
 
     if sample:
-        if linear:
-            _plot_variants_linear(sample,
-                                  variants_per_sample[sample],
-                                  labels,
-                                  legend,
-                                  split)
-        else:
-            _plot_variants_polar(sample,
-                                 variants_per_sample[sample],
-                                 labels,
-                                 legend,
-                                 split)
+        plot_variants(sample,
+                      variants_per_sample[sample],
+                      labels,
+                      legend,
+                      split)
 
         if save:
             dirname, name, ext = parse_path(output)
@@ -142,10 +125,7 @@ def plot_df(in_df: pd.DataFrame,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            if linear:
-                _plot_variants_linear(sample, variants, labels, legend, split)
-            else:
-                _plot_variants_polar(sample, variants, labels, legend, split)
+            plot_variants(sample, variants, labels, legend, split)
 
             if save:
                 dirname, name, ext = parse_path(output)
@@ -157,8 +137,6 @@ def plot_df(in_df: pd.DataFrame,
                 else:
                     plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
                 plt.close()
-
-    return None
 
 
 def plot_table(in_table: str,
@@ -211,5 +189,3 @@ def plot_table(in_table: str,
             alt_col=alt_col,
             sample_col=sample_col,
             hf_col=hf_col)
-
-    return None

@@ -30,7 +30,7 @@ from mitoviz.tests.constants import (
 )
 
 
-class TestCli(unittest.TestCase):
+class TestCliVcf(unittest.TestCase):
 
     def setUp(self) -> None:
         self.runner = CliRunner()
@@ -506,6 +506,12 @@ class TestCli(unittest.TestCase):
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
 
+
+class TestCliCsv(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.runner = CliRunner()
+
     def test_cli_plot_polar_csv(self):
         # Given
         base_img = cv2.imread(BASE_HF_IMG_DF)
@@ -657,6 +663,12 @@ class TestCli(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove(OUTPUT_HF_IMG)
+
+
+class TestCliTsv(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.runner = CliRunner()
 
     def test_cli_plot_tsv(self):
         # Given

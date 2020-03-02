@@ -60,3 +60,9 @@ History
 
 * ``_PolarVariant`` is deprecated and replaced by ``_Variant``;
 * Add ``linear`` option to create linear plots.
+
+0.6.1 (2020-03-02)
+------------------
+
+* Refactor and clean code;
+* Add CI module for internal management.

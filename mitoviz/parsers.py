@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
 from collections import defaultdict
+from typing import List
 
 import pandas as pd
 import vcfpy
@@ -23,7 +24,7 @@ class _VcfParser:
         self.parse_variants()
 
     @property
-    def samples(self):
+    def samples(self) -> List[str]:
         return self._reader.header.samples.names
 
     @property

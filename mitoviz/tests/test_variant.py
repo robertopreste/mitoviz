@@ -8,7 +8,7 @@ from vcfpy import Substitution
 from mitoviz.variant import _Variant
 
 
-class TestPolarVariant(unittest.TestCase):
+class TestVariant(unittest.TestCase):
 
     def setUp(self) -> None:
         self.variant = _Variant(

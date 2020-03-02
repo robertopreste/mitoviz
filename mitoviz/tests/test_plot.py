@@ -9,7 +9,7 @@ import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 
-from mitoviz.plot import _plot_legend, _plot_mito_linear, _plot_mito_polar
+from mitoviz.plot import _legend_patches, _plot_mito_linear, _plot_mito_polar
 from mitoviz.tests.constants import (
     BASE_MITO_POLAR, BASE_MITO_POLAR_LEGEND, BASE_MITO_POLAR_SPLIT,
     BASE_MITO_LINEAR, BASE_MITO_LINEAR_LEGEND, BASE_MITO_LINEAR_SPLIT
@@ -18,7 +18,7 @@ from mitoviz.tests.constants import (
 
 class TestPlot(unittest.TestCase):
 
-    def test__plot_legend(self):
+    def test__legend_patches(self):
         # Given
         expected = [
             mpatches.Patch(color="#2e8b57", label="Coding"),
@@ -29,7 +29,7 @@ class TestPlot(unittest.TestCase):
         ]
 
         # When
-        result = _plot_legend()
+        result = _legend_patches()
 
         # Then
         for n in range(len(result)):

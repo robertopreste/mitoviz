@@ -29,8 +29,8 @@ from mitoviz.tests.constants import (
 )
 
 
-def main():  # pragma: no cover
-    """ Create the test files needed. """
+def create_mito_polar():  # pragma: no cover
+    """ Create base mitochondrial polar plots. """
     fig, ax = _plot_mito_polar()
     plt.savefig(BASE_MITO_POLAR)
     plt.close()
@@ -43,6 +43,9 @@ def main():  # pragma: no cover
     plt.savefig(BASE_MITO_POLAR_SPLIT)
     plt.close()
 
+
+def create_mito_linear():
+    """ Create base mitochondrial linear plots. """
     fig, ax = _plot_mito_linear()
     plt.savefig(BASE_MITO_LINEAR)
     plt.close()
@@ -55,6 +58,9 @@ def main():  # pragma: no cover
     plt.savefig(BASE_MITO_LINEAR_SPLIT)
     plt.close()
 
+
+def create_sample_vcf_polar():
+    """ Create polar plots from sample.vcf. """
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG)
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_LABELS,
              labels=True)
@@ -63,6 +69,9 @@ def main():  # pragma: no cover
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_SPLIT,
              split=True)
 
+
+def create_sample_vcf_linear():
+    """ Create linear plots from sample.vcf. """
     plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, output=BASE_IMG_LINEAR)
     plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,
              output=BASE_IMG_LINEAR_LABELS, labels=True)
@@ -71,6 +80,9 @@ def main():  # pragma: no cover
     plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,
              output=BASE_IMG_LINEAR_SPLIT, split=True)
 
+
+def create_sample_df_polar():
+    """ Create polar plots from the sample dataframe. """
     plot_df(in_df=SAMPLE_DF, save=True, output=BASE_IMG_DF)
     plot_df(in_df=SAMPLE_DF, save=True, output=BASE_IMG_LABELS_DF,
             labels=True)
@@ -79,6 +91,9 @@ def main():  # pragma: no cover
     plot_df(in_df=SAMPLE_DF, save=True, output=BASE_IMG_SPLIT_DF,
             split=True)
 
+
+def create_sample_df_linear():
+    """ Create linear plots from the sample dataframe. """
     plot_df(in_df=SAMPLE_DF, linear=True, save=True,
             output=BASE_IMG_LINEAR_DF)
     plot_df(in_df=SAMPLE_DF, linear=True, save=True,
@@ -88,6 +103,9 @@ def main():  # pragma: no cover
     plot_df(in_df=SAMPLE_DF, linear=True, save=True,
             output=BASE_IMG_LINEAR_SPLIT_DF, split=True)
 
+
+def create_sample_vcf_hf_polar():
+    """ Create polar plots from sample_hf.vcf. """
     plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True, output=BASE_HF_IMG)
     plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True,
              output=BASE_HF_IMG_LABELS, labels=True)
@@ -96,6 +114,9 @@ def main():  # pragma: no cover
     plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True,
              output=BASE_HF_IMG_SPLIT, split=True)
 
+
+def create_sample_vcf_hf_linear():
+    """ Create linear plots from sample_hf.vcf. """
     plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True,
              output=BASE_HF_IMG_LINEAR)
     plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True,
@@ -105,6 +126,9 @@ def main():  # pragma: no cover
     plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True,
              output=BASE_HF_IMG_LINEAR_SPLIT, split=True)
 
+
+def create_sample_df_hf_polar():
+    """ Create polar plots from the sample dataframe with hf. """
     plot_df(in_df=SAMPLE_HF_DF, save=True, output=BASE_HF_IMG_DF)
     plot_df(in_df=SAMPLE_HF_DF, save=True,
             output=BASE_HF_IMG_LABELS_DF, labels=True)
@@ -113,6 +137,9 @@ def main():  # pragma: no cover
     plot_df(in_df=SAMPLE_HF_DF, save=True,
             output=BASE_HF_IMG_SPLIT_DF, split=True)
 
+
+def create_sample_df_hf_linear():
+    """ Create linear plots from the sample dataframe with hf. """
     plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True,
             output=BASE_HF_IMG_LINEAR_DF)
     plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True,
@@ -122,6 +149,9 @@ def main():  # pragma: no cover
     plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True,
             output=BASE_HF_IMG_LINEAR_SPLIT_DF, split=True)
 
+
+def create_multisample_vcf_polar():
+    """ Create polar plots from multisample.vcf. """
     plot_vcf(in_vcf=SAMPLE_MULTI_VCF, save=True,
              output=os.path.join(IMGDIR, "multisample.png"))
     plot_vcf(in_vcf=SAMPLE_MULTI_VCF, save=True,
@@ -134,6 +164,9 @@ def main():  # pragma: no cover
              output=os.path.join(IMGDIR, "multisample_split.png"),
              split=True)
 
+
+def create_multisample_vcf_linear():
+    """ Create linear plots from multisample.vcf. """
     plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True,
              output=os.path.join(IMGDIR, "multisample_linear.png"))
     plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True,
@@ -146,6 +179,9 @@ def main():  # pragma: no cover
              output=os.path.join(IMGDIR, "multisample_linear_split.png"),
              split=True)
 
+
+def create_multisample_df_polar():
+    """ Create polar plots from the multisample dataframe. """
     plot_df(in_df=SAMPLE_MULTI_DF, save=True,
             output=os.path.join(IMGDIR, "multisample_df.png"))
     plot_df(in_df=SAMPLE_MULTI_DF, save=True,
@@ -158,6 +194,9 @@ def main():  # pragma: no cover
             output=os.path.join(IMGDIR, "multisample_split_df.png"),
             split=True)
 
+
+def create_multisample_df_linear():
+    """ Create linear plots from the multisample dataframe. """
     plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True,
             output=os.path.join(IMGDIR, "multisample_linear_df.png"))
     plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True,
@@ -171,5 +210,25 @@ def main():  # pragma: no cover
             split=True)
 
 
-if __name__ == '__main__':
-    main()
+def create_all():
+    """ Create all the test files needed. """
+    create_mito_polar()
+    create_mito_linear()
+
+    create_sample_vcf_polar()
+    create_sample_vcf_linear()
+
+    create_sample_df_polar()
+    create_sample_df_linear()
+
+    create_sample_vcf_hf_polar()
+    create_sample_vcf_hf_linear()
+
+    create_sample_df_hf_polar()
+    create_sample_df_hf_linear()
+
+    create_multisample_vcf_polar()
+    create_multisample_vcf_linear()
+
+    create_multisample_df_polar()
+    create_multisample_df_linear()
