@@ -29,7 +29,7 @@ from mitoviz.tests.constants import (
 )
 
 
-def create_mito_polar():  # pragma: no cover
+def create_mito_polar():
     """ Create base mitochondrial polar plots. """
     fig, ax = _plot_mito_polar()
     plt.savefig(BASE_MITO_POLAR)

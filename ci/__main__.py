@@ -10,7 +10,7 @@ import click
 from .create_suite import create_all
 
 
-@click.group()  # pragma: no cover
+@click.group()
 def cli():
     """ Main entry point for the CI infrastructure. """
     pass
