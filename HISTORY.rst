@@ -66,3 +66,8 @@ History
 
 * Refactor and clean code;
 * Add CI module for internal management.
+
+0.6.2 (2020-03-03)
+------------------
+
+* Fix borders on linear plots.
