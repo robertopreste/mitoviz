@@ -84,6 +84,8 @@ def _plot_mito_linear(legend: bool = False,
     ax.set_xticks([0, 4000, 8000, 12000, 16000])
     ax.set_yticks([0.0, 0.25, 0.50, 0.75, 1.00])
     ax.set_ylim(-0.15, 1.10)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
 
     for locus in loci:
         if locus.name == "OLR":
