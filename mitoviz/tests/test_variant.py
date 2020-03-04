@@ -64,6 +64,9 @@ class TestVariant(unittest.TestCase):
         self.assertTrue(self.variant_ins._is_insertion)
         self.assertTrue(self.variant_ins_raw._is_insertion)
 
+    def test_color(self):
+        self.assertEqual("#2e8b57", self.variant.color)
+
     def test_label(self):
         self.assertEqual("3308C>A", self.variant.label)
         self.assertEqual("3308C>A", self.variant_raw.label)
@@ -88,5 +91,23 @@ class TestVariant(unittest.TestCase):
     def test_linear_y(self):
         self.assertEqual(0.3, self.variant.linear_y)
 
-    def test_color(self):
-        self.assertEqual("#2e8b57", self.variant.color)
+    def test_strand(self):
+        # Given/When
+        variant_h = self.variant
+        variant_l = _Variant(
+            reference="C",
+            position=500,
+            alternate=Substitution("SNV", "A"),
+            hf=0.3
+        )
+        variant_nc = _Variant(
+            reference="C",
+            position=3305,
+            alternate=Substitution("SNV", "A"),
+            hf=0.3
+        )
+
+        # Then
+        self.assertEqual("H", variant_h.strand)
+        self.assertEqual("L", variant_l.strand)
+        self.assertEqual("", variant_nc.strand)
