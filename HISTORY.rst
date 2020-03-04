@@ -72,7 +72,7 @@ History
 
 * Fix borders on linear plots.
 
-0.6.2 (2020-03-04)
+0.6.3 (2020-03-04)
 ------------------
 
 * Fix stemlines on split linear plots.
