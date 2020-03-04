@@ -89,6 +89,26 @@ class _Variant:
         """ The y position of the variant on the polar mt genome plot. """
         return 20 + convert_hf(self.hf)
 
+    @property
+    def strand(self) -> str:
+        """ The mitochondrial strand on which the variant's locus is located.
+        """
+        if self.position in [*range(0, 576), *range(4331, 4400),
+                             *range(5586, 5655), *range(5656, 5729),
+                             *range(5729, 5761), *range(5760, 5826),
+                             *range(5826, 5892), *range(7445, 7517),
+                             *range(14148, 14673), *range(14673, 14742),
+                             *range(15955, 16024), *range(16023, 16569)]:
+            return "L"
+        elif self.position in [*range(3304, 3306), *range(4400, 4401),
+                               *range(5579, 5586), *range(5655, 5656),
+                               *range(5891, 5903), *range(7514, 7517),
+                               *range(8269, 8294), *range(8364, 8365),
+                               *range(14742, 14746), *range(15953, 15955)]:
+            return ""
+        else:
+            return "H"
+
     def __key(self):
         return self.reference, self.position, self.alternate, self.hf
 
