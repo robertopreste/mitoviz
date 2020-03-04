@@ -5,4 +5,4 @@ from mitoviz.mitoviz import plot_df, plot_table, plot_vcf  # noqa
 
 __author__ = """Roberto Preste"""
 __email__ = "robertopreste@gmail.com"
-__version__ = '0.6.2'
+__version__ = '0.6.3'
