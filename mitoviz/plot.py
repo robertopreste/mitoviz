@@ -207,8 +207,13 @@ def _plot_variants_linear(sample: str,
     fig, ax = _plot_mito_linear(legend, split)
 
     for variant in variants:
+        if split:
+            bottom = -0.05 if variant.strand == "L" else 0.0
+        else:
+            bottom = 0.0
         marker, stem, base = plt.stem([variant.linear_x], [variant.linear_y],
-                                      "-.", use_line_collection=True)
+                                      "-.", bottom=bottom,
+                                      use_line_collection=True)
         plt.setp(marker, "color", variant.color)
         plt.setp(stem, "color", variant.color)
         plt.setp(base, "linestyle", "None")
