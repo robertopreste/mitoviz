@@ -58,13 +58,18 @@ class _VcfParser:
         for record in self._reader:
             if self.samples:  # sample name is specified
                 for sample, call in record.call_for_sample.items():
-                    variants = [_Variant(record.REF, record.POS, alt,
-                                         self.parse_call(call, i))
+                    variants = [_Variant(reference=record.REF,
+                                         position=record.POS,
+                                         alternate=alt,
+                                         hf=self.parse_call(call, i))
                                 for i, alt in enumerate(record.ALT)]
                     self._variants[sample].extend(variants)
             else:  # single sample without name
                 sample = "MITOVIZ001"
-                variants = [_Variant(record.REF, record.POS, alt, 0.5)
+                variants = [_Variant(reference=record.REF,
+                                     position=record.POS,
+                                     alternate=alt,
+                                     hf=0.5)
                             for alt in record.ALT]
                 self._variants[sample].extend(variants)
 
@@ -129,8 +134,10 @@ class _DataFrameParser:
             rec = record._asdict()
             sample = rec[self.sample_col] if self.has_sample else "MITOVIZ001"
             hf = rec[self.hf_col] if self.has_hf else 0.5
-            variant = _Variant(rec[self.ref_col], rec[self.pos_col],
-                               rec[self.alt_col], hf)
+            variant = _Variant(reference=rec[self.ref_col],
+                               position=rec[self.pos_col],
+                               alternate=rec[self.alt_col],
+                               hf=hf)
             self._variants[sample].append(variant)
 
     def __repr__(self):

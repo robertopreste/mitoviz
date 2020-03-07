@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
-from typing import Union
-
+from traits.api import Bool, Either, Enum, Float, HasTraits, Int, Property, Str
 import vcfpy
 
 from mitoviz.constants import COLOR_MAPS
 from mitoviz.utils import convert_hf, convert_nt
 
 
-class _Variant:
+class _Variant(HasTraits):
     """ Class storing a given variant, used for both linear and polar plots.
 
     Attributes:
@@ -19,41 +18,41 @@ class _Variant:
         hf: heteroplasmic fraction of the variant
     """
 
-    def __init__(self,
-                 reference: str,
-                 position: int,
-                 alternate: Union[str, vcfpy.Substitution],
-                 hf: float):
-        self.reference = reference
-        self.position = position
-        self.alternate = alternate
-        self.hf = hf
+    reference = Str()
+    position = Int()
+    alternate = Either(Str, vcfpy.Substitution)
+    hf = Float(0.5)
+    color = Property(Enum("grey", "#2e8b57", "#ffa500", "#cd5c5c", "#4169e1"))
+    label = Property(Str)
+    linear_x = Property(Int)
+    linear_y = Property(Float)
+    polar_x = Property(Float)
+    polar_y = Property(Float)
+    strand = Property(Enum("", "H", "L"))
+    _is_deletion = Property(Bool)
+    _is_insertion = Property(Bool)
 
-    @property
-    def _is_deletion(self) -> bool:
+    def _get__is_deletion(self):
         """ Check whether the current variant refers to a deletion. """
         # e.g. ref CTG | alt C
         if isinstance(self.alternate, vcfpy.Substitution):
             return self.alternate.type == "DEL"
         return len(self.reference) > len(self.alternate)
 
-    @property
-    def _is_insertion(self) -> bool:
+    def _get__is_insertion(self):
         """ Check whether the current variant refers to an insertion. """
         # e.g. ref C | alt CTG
         if isinstance(self.alternate, vcfpy.Substitution):
             return self.alternate.type == "INS"
         return len(self.reference) < len(self.alternate)
 
-    @property
-    def color(self) -> str:
+    def _get_color(self):
         """ The color of the locus on which the variant is located. """
         for (start, stop), color in COLOR_MAPS.items():
             if self.position in range(start, stop + 1):
                 return color
 
-    @property
-    def label(self) -> str:
+    def _get_label(self):
         """ Create the variant label for deletions, insertions and SNPs. """
         alternate = (self.alternate.value
                      if isinstance(self.alternate, vcfpy.Substitution)
@@ -69,28 +68,23 @@ class _Variant:
 
         return label
 
-    @property
-    def linear_x(self) -> int:
+    def _get_linear_x(self):
         """ The x position of the variant on the linear mt genome plot. """
         return self.position
 
-    @property
-    def linear_y(self) -> float:
+    def _get_linear_y(self):
         """ The y position of the variant on the linear mt genome plot. """
         return self.hf
 
-    @property
-    def polar_x(self) -> float:
+    def _get_polar_x(self):
         """ The x position of the variant on the polar mt genome plot. """
         return convert_nt(self.position)
 
-    @property
-    def polar_y(self) -> float:
+    def _get_polar_y(self):
         """ The y position of the variant on the polar mt genome plot. """
         return 20 + convert_hf(self.hf)
 
-    @property
-    def strand(self) -> str:
+    def _get_strand(self):
         """ The mitochondrial strand on which the variant's locus is located.
         """
         if self.position in [*range(0, 576), *range(4331, 4400),

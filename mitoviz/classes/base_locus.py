@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Roberto Preste
-from mitoviz.constants import COLORS, STRANDS
+from traits.api import Enum, HasTraits, Int, Property, Str
+
+from mitoviz.constants import COLORS, STRANDS, TYPES
 
 
-class _BaseLocus:
+class _BaseLocus(HasTraits):
     """ Class referring to a single mitochondrial locus.
 
     Used to create the base mitochondrial plot, on which variants will
@@ -14,28 +16,23 @@ class _BaseLocus:
     """
     _colors = COLORS
     _strands = STRANDS
+    _types = TYPES
 
-    def __init__(self, name: str, index: int):
-        self.name = name
-        self.index = index
+    name = Str()
+    index = Int()
+    loc_type = Property(Enum("reg", "cds", "rrna", "trna", "nc"))
+    color = Property(Enum("grey", "#2e8b57", "#ffa500", "#cd5c5c", "#4169e1"))
+    strand = Property(Enum("", "H", "L"))
 
-    @property
-    def color(self) -> str:
+    def _get_loc_type(self):
+        """ The locus type (regulatory, coding, rRNA, tRNA, non-coding). """
+        return self._types[self.index]
+
+    def _get_color(self):
         """ The locus-type-specific color. """
         return self._colors[self.loc_type]
 
-    @property
-    def loc_type(self):
-        """ The locus type (regulatory, coding, rRNA, tRNA, non-coding). """
-        return NotImplemented
-
-    @property
-    def width(self):
-        """ The width of the locus. """
-        return NotImplemented
-
-    @property
-    def strand(self) -> str:
+    def _get_strand(self):
         """ The mitochondrial strand on which the locus is located. """
         return self._strands[self.index]
 
