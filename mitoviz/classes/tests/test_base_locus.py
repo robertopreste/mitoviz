@@ -10,10 +10,10 @@ from mitoviz.classes.base_locus import _BaseLocus
 class TestBaseLocus(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.dloop = _BaseLocus("DLOOP", 0)
-        self.tf = _BaseLocus("TF", 1)
-        self.rnr1 = _BaseLocus("RNR1", 2)
-        self.nd1 = _BaseLocus("ND1", 7)
+        self.dloop = _BaseLocus(name="DLOOP", index=0)
+        self.tf = _BaseLocus(name="TF", index=1)
+        self.rnr1 = _BaseLocus(name="RNR1", index=2)
+        self.nd1 = _BaseLocus(name="ND1", index=7)
 
     def test_strand(self):
         self.assertEqual("L", self.dloop.strand)

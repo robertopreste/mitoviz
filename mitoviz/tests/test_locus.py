@@ -9,10 +9,10 @@ from mitoviz.locus import _LinearLocus, _PolarLocus, _PolarSplitLocus
 class TestPolarLocus(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.dloop = _PolarLocus("DLOOP", 0)
-        self.tf = _PolarLocus("TF", 1)
-        self.rnr1 = _PolarLocus("RNR1", 2)
-        self.nd1 = _PolarLocus("ND1", 7)
+        self.dloop = _PolarLocus(name="DLOOP", index=0)
+        self.tf = _PolarLocus(name="TF", index=1)
+        self.rnr1 = _PolarLocus(name="RNR1", index=2)
+        self.nd1 = _PolarLocus(name="ND1", index=7)
 
     def test_loc_type(self):
         self.assertEqual("reg", self.dloop.loc_type)
@@ -60,9 +60,9 @@ class TestPolarLocus(unittest.TestCase):
 class TestPolarSplitLocus(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.dloop = _PolarSplitLocus("DLOOP", 0)
-        self.tf = _PolarSplitLocus("TF", 1)
-        self.nc1 = _PolarSplitLocus("NC1", 6)
+        self.dloop = _PolarSplitLocus(name="DLOOP", index=0)
+        self.tf = _PolarSplitLocus(name="TF", index=1)
+        self.nc1 = _PolarSplitLocus(name="NC1", index=6)
 
     def test_color(self):
         self.assertEqual("#ffa500", self.dloop.color)
@@ -88,10 +88,10 @@ class TestPolarSplitLocus(unittest.TestCase):
 class TestLinearLocus(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.dloop = _LinearLocus("DLOOP", 0)
-        self.nc1 = _LinearLocus("NC1", 6)
-        self.nd1 = _LinearLocus("ND1", 7)
-        self.tq = _LinearLocus("TQ", 9)
+        self.dloop = _LinearLocus(name="DLOOP", index=0)
+        self.nc1 = _LinearLocus(name="NC1", index=6)
+        self.nd1 = _LinearLocus(name="ND1", index=7)
+        self.tq = _LinearLocus(name="TQ", index=9)
 
     def test_loc_type(self):
         self.assertEqual("reg", self.dloop.loc_type)
