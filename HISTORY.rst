@@ -76,3 +76,8 @@ History
 ------------------
 
 * Fix stemlines on split linear plots.
+
+0.6.4 (2020-03-10)
+------------------
+
+* Fix loci label positions on polar plots.
