@@ -6,7 +6,7 @@ from typing import Union
 import vcfpy
 
 from mitoviz.constants import COLOR_MAPS
-from mitoviz.utils import convert_hf, convert_nt
+from mitoviz.utils import convert_hf, convert_nt, convert_plotly
 
 
 class _Variant:
@@ -83,6 +83,12 @@ class _Variant:
     def polar_x(self) -> float:
         """ The x position of the variant on the polar mt genome plot. """
         return convert_nt(self.position)
+
+    @property
+    def polar_x_p(self) -> float:
+        """ The x position of the variant on the polar plotly mt genome plot.
+        """
+        return convert_plotly(self.polar_x)
 
     @property
     def polar_y(self) -> float:
