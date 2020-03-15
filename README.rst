@@ -85,6 +85,13 @@ Linear plots can be created using the ``--linear`` option:
 
     $ mitoviz sample.vcf --linear
 
+Interactive plots can also be created using the ``--interactive`` option, and will be saved to an
+HTML file:
+
+.. code-block:: console
+
+    $ mitoviz sample.vcf --interactive
+
 It is also possible to plot variants stored in a tabular file, such as CSV or TSV formats; mitoviz
 will automatically recognise them, treating the file as comma-separated by default. If a different
 separator is used (as in the case of TSV files), just specify it with the ``--sep`` option:
@@ -117,6 +124,16 @@ By default, a polar plot is returned; linear plots are easily created using the 
 .. code-block:: python
 
     plot_vcf("sample.vcf", save=True, linear=True)
+
+Interactive plots can be created with the ``interactive`` option, and can be either saved to an
+HTML file or inspected in a Jupyter notebook:
+
+.. code-block:: python
+
+    # Show the interactive plot (works in a Jupyter notebook)
+    plot_vcf("sample.vcf", interactive=True)
+    # Save the interactive plot to an HTML file
+    plot_vcf("sample.vcf", interactive=True, save=True)
 
 A similar function to plot variants contained in a pandas DataFrame is available as ``plot_df``.
 Supposing you have a pandas DataFrame with human mitochondrial variants named ``variants_df``, it
