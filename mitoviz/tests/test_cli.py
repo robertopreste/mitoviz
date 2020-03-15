@@ -250,7 +250,6 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("MITOVIZ001.png")
 
-    @unittest.skip("not yet implemented")
     def test_cli_plot_plotly_split(self):
         # Given
         base_img = BASE_IMG_PLOTLY_SPLIT
@@ -468,7 +467,6 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
-    @unittest.skip("not yet implemented")
     def test_cli_plot_hf_plotly_split(self):
         # Given
         base_img = BASE_HF_IMG_PLOTLY_SPLIT
@@ -683,7 +681,6 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
 
-    @unittest.skip("not yet implemented")
     def test_cli_plot_plotly_sample_multi_split(self):
         # Given
         base_img = BASE_MULTI_IMG_PLOTLY_SPLIT
@@ -875,7 +872,6 @@ class TestCliCsv(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
-    @unittest.skip("not yet implemented")
     def test_cli_plot_plotly_csv_split(self):
         # Given
         base_img = BASE_HF_IMG_PLOTLY_SPLIT_DF
