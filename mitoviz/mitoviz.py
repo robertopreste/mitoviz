@@ -58,7 +58,8 @@ def plot_vcf(in_vcf: str,
             if name == "":
                 name = sample
             if interactive:
-                fig.write_html(os.path.join(dirname, f"{name}{ext}"))
+                fig.write_html(os.path.join(dirname, f"{name}.html"),
+                               auto_open=False)
             else:
                 plt.savefig(os.path.join(dirname, f"{name}{ext}"))
                 plt.close()
@@ -72,20 +73,23 @@ def plot_vcf(in_vcf: str,
                 if name == "":
                     name = sample
                     if interactive:
-                        fig.write_html(os.path.join(dirname, f"{name}{ext}"))
+                        fig.write_html(os.path.join(dirname, f"{name}.html"),
+                                       auto_open=False)
                     else:
                         plt.savefig(os.path.join(dirname, f"{name}{ext}"))
                         plt.close()
                 elif len(variants_per_sample) == 1:
                     if interactive:
-                        fig.write_html(os.path.join(dirname, f"{name}{ext}"))
+                        fig.write_html(os.path.join(dirname, f"{name}.html"),
+                                       auto_open=False)
                     else:
                         plt.savefig(os.path.join(dirname, f"{name}{ext}"))
                         plt.close()
                 else:
                     if interactive:
                         fig.write_html(os.path.join(dirname,
-                                                    f"{name}_{i}{ext}"))
+                                                    f"{name}_{i}.html"),
+                                       auto_open=False)
                     else:
                         plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
                         plt.close()
@@ -150,7 +154,8 @@ def plot_df(in_df: pd.DataFrame,
             if name == "":
                 name = sample
             if interactive:
-                fig.write_html(os.path.join(dirname, f"{name}{ext}"))
+                fig.write_html(os.path.join(dirname, f"{name}.html"),
+                               auto_open=False)
             else:
                 plt.savefig(os.path.join(dirname, f"{name}{ext}"))
                 plt.close()
@@ -164,20 +169,23 @@ def plot_df(in_df: pd.DataFrame,
                 if name == "":
                     name = sample
                     if interactive:
-                        fig.write_html(os.path.join(dirname, f"{name}{ext}"))
+                        fig.write_html(os.path.join(dirname, f"{name}.html"),
+                                       auto_open=False)
                     else:
                         plt.savefig(os.path.join(dirname, f"{name}{ext}"))
                         plt.close()
                 elif len(variants_per_sample) == 1:
                     if interactive:
-                        fig.write_html(os.path.join(dirname, f"{name}{ext}"))
+                        fig.write_html(os.path.join(dirname, f"{name}.html"),
+                                       auto_open=False)
                     else:
                         plt.savefig(os.path.join(dirname, f"{name}{ext}"))
                         plt.close()
                 else:
                     if interactive:
                         fig.write_html(os.path.join(dirname,
-                                                    f"{name}_{i}{ext}"))
+                                                    f"{name}_{i}.html"),
+                                       auto_open=False)
                     else:
                         plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
                         plt.close()

@@ -286,7 +286,7 @@ def _plotly_variants_polar(sample: str,
     fig.add_trace(var_trace)
     fig.update_layout(title=sample)
 
-    fig.show()
+    # fig.show()
     # Returning go.Figure to allow saving the html image
     return fig
 
