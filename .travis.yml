@@ -36,7 +36,7 @@ matrix:
         - pip3 install -r requirements.txt
       install: pip3 install -e .
       script:
-        - pytest --cov=./
+        - travis_wait pytest --cov=./
         - flake8 mtoolnote
     - name: "Python 3.7.1 on Ubuntu 16.04"
       os: linux
@@ -48,7 +48,7 @@ matrix:
         - pip3 install -r requirements.txt
       install: pip3 install -e .
       script:
-        - pytest --cov=./
+        - travis_wait pytest --cov=./
         - flake8 mtoolnote
 after_success:
   - codecov
