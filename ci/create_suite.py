@@ -75,8 +75,8 @@ def create_mito_polar_plotly():
     fig = _plotly_mito_polar(legend=True)
     fig.write_html(BASE_MITO_PLOTLY_LEGEND)
 
-    # fig = _plotly_mito_polar(split=True)
-    # fig.write_html(BASE_MITO_PLOTLY_SPLIT)
+    fig = _plotly_mito_polar(split=True)
+    fig.write_html(BASE_MITO_PLOTLY_SPLIT)
 
 
 def create_sample_vcf_polar():
@@ -107,8 +107,8 @@ def create_sample_vcf_polar_plotly():
              output=BASE_IMG_PLOTLY)
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, interactive=True,
              output=BASE_IMG_PLOTLY_LEGEND, legend=True)
-    # plot_vcf(in_vcf=SAMPLE_VCF, save=True, interactive=True,
-    #          output=BASE_IMG_PLOTLY_SPLIT, split=True)
+    plot_vcf(in_vcf=SAMPLE_VCF, save=True, interactive=True,
+             output=BASE_IMG_PLOTLY_SPLIT, split=True)
 
 
 def create_sample_df_polar():
@@ -140,8 +140,8 @@ def create_sample_df_polar_plotly():
             output=BASE_IMG_PLOTLY_DF)
     plot_df(in_df=SAMPLE_DF, save=True, interactive=True,
             output=BASE_IMG_PLOTLY_LEGEND_DF, legend=True)
-    # plot_df(in_df=SAMPLE_DF, save=True, interactive=True,
-    #         output=BASE_IMG_PLOTLY_SPLIT_DF, split=True)
+    plot_df(in_df=SAMPLE_DF, save=True, interactive=True,
+            output=BASE_IMG_PLOTLY_SPLIT_DF, split=True)
 
 
 def create_sample_vcf_hf_polar():
@@ -173,8 +173,8 @@ def create_sample_vcf_hf_polar_plotly():
              output=BASE_HF_IMG_PLOTLY)
     plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True, interactive=True,
              output=BASE_HF_IMG_PLOTLY_LEGEND, legend=True)
-    # plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True, interactive=True,
-    #          output=BASE_HF_IMG_PLOTLY_SPLIT, split=True)
+    plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True, interactive=True,
+             output=BASE_HF_IMG_PLOTLY_SPLIT, split=True)
 
 
 def create_sample_df_hf_polar():
@@ -206,8 +206,8 @@ def create_sample_df_hf_polar_plotly():
             output=BASE_HF_IMG_PLOTLY_DF)
     plot_df(in_df=SAMPLE_HF_DF, save=True, interactive=True,
             output=BASE_HF_IMG_PLOTLY_LEGEND_DF, legend=True)
-    # plot_df(in_df=SAMPLE_HF_DF, save=True, interactive=True,
-    #         output=BASE_HF_IMG_PLOTLY_SPLIT_DF, split=True)
+    plot_df(in_df=SAMPLE_HF_DF, save=True, interactive=True,
+            output=BASE_HF_IMG_PLOTLY_SPLIT_DF, split=True)
 
 
 def create_multisample_vcf_polar():
@@ -247,9 +247,9 @@ def create_multisample_vcf_polar_plotly():
     plot_vcf(in_vcf=SAMPLE_MULTI_VCF, save=True, interactive=True,
              output=os.path.join(IMGDIR, "multisample_plotly_legend.html"),
              legend=True)
-    # plot_vcf(in_vcf=SAMPLE_MULTI_VCF, save=True, interactive=True,
-    #          output=os.path.join(IMGDIR, "multisample_plotly_split.png"),
-    #          split=True)
+    plot_vcf(in_vcf=SAMPLE_MULTI_VCF, save=True, interactive=True,
+             output=os.path.join(IMGDIR, "multisample_plotly_split.png"),
+             split=True)
 
 
 def create_multisample_df_polar():
@@ -289,9 +289,9 @@ def create_multisample_df_polar_plotly():
     plot_df(in_df=SAMPLE_MULTI_DF, save=True, interactive=True,
             output=os.path.join(IMGDIR, "multisample_plotly_legend_df.html"),
             legend=True)
-    # plot_df(in_df=SAMPLE_MULTI_DF, save=True, interactive=True,
-    #         output=os.path.join(IMGDIR, "multisample_plotly_split_df.png"),
-    #         split=True)
+    plot_df(in_df=SAMPLE_MULTI_DF, save=True, interactive=True,
+            output=os.path.join(IMGDIR, "multisample_plotly_split_df.png"),
+            split=True)
 
 
 def create_all():

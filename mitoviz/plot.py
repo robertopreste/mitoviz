@@ -197,10 +197,17 @@ def _plotly_mito_polar(legend: bool = False,
     """
     fig = go.Figure()
 
-    loci = [_PolarLocus(name=name, index=index)
-            for index, name in enumerate(NAMES)]
-    radii = [5.0 for _ in loci]
-    bottoms = [20.0 for _ in loci]
+    if split:
+        names = NAMES + [""]
+        loci = [_PolarSplitLocus(name=name, index=index)
+                for index, name in enumerate(names)]
+        radii = [el.radius for el in loci]
+        bottoms = [el.bottom for el in loci]
+    else:
+        loci = [_PolarLocus(name=name, index=index)
+                for index, name in enumerate(NAMES)]
+        radii = [5.0 for _ in loci]
+        bottoms = [20.0 for _ in loci]
     names = [el.name for el in loci]
     thetas = [el.theta_p for el in loci]
     widths = [el.width_p for el in loci]
@@ -212,6 +219,12 @@ def _plotly_mito_polar(legend: bool = False,
                              showlegend=False)
 
     fig.add_trace(mito_trace)
+
+    border_trace = go.Barpolar(r=[0.1, 0.1], theta=[0, 0], width=[360, 360],
+                               base=[19.9, 25.0], marker_color="black",
+                               hoverinfo="none", showlegend=False)
+
+    fig.add_trace(border_trace)
 
     if legend:
         legend = _legend_plotly()
@@ -286,7 +299,6 @@ def _plotly_variants_polar(sample: str,
     fig.add_trace(var_trace)
     fig.update_layout(title=sample)
 
-    fig.show()
     # Returning go.Figure to allow saving the html image
     return fig
 
