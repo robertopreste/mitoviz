@@ -81,3 +81,10 @@ History
 ------------------
 
 * Fix loci label positions on polar plots.
+
+0.7.0 (2020-03-15)
+==================
+
+* Add ``--interactive`` option to create interactive plots using plot.ly;
+* Implement interactive basic polar plots;
+* Implement interactive split polar plots.

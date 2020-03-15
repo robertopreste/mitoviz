@@ -4,7 +4,7 @@
 import os
 import unittest
 
-from mitoviz.utils import convert_hf, convert_nt, parse_path
+from mitoviz.utils import convert_hf, convert_nt, convert_plotly, parse_path
 
 
 class TestUtils(unittest.TestCase):
@@ -27,6 +27,17 @@ class TestUtils(unittest.TestCase):
 
         # When
         result = convert_hf(hf)
+
+        # Then
+        self.assertEqual(expected, result)
+
+    def test_convert_plotly(self):
+        # Given
+        value = 4
+        expected = 228.4
+
+        # When
+        result = convert_plotly(value)
 
         # Then
         self.assertEqual(expected, result)

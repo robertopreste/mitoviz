@@ -33,6 +33,22 @@ def convert_hf(hf: float) -> float:
     return hf * 5
 
 
+def convert_plotly(value: float) -> float:
+    """ Convert the given element to the proper value used in plotly polar
+    plots.
+
+    Works with _Variant.polar_x, _PolarLocus.theta, _PolarLocus.width, using
+    the somehow magic number 57.1.
+
+    Args:
+        value: input value to convert
+
+    Returns:
+        adjusted value
+    """
+    return value * 57.1
+
+
 def parse_path(path: Optional[str]) -> Tuple[str, str, str]:
     """ Parse the given path into directory name, file name and extension.
 

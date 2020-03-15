@@ -82,6 +82,9 @@ class TestVariant(unittest.TestCase):
     def test_polar_x(self):
         self.assertEqual(1.2557981773190898, self.variant.polar_x)
 
+    def test_polar_x_p(self):
+        self.assertEqual(71.70607592492003, self.variant.polar_x_p)
+
     def test_polar_y(self):
         self.assertEqual(21.5, self.variant.polar_y)
 

@@ -7,7 +7,7 @@ from mitoviz.classes.base_locus import _BaseLocus
 from mitoviz.constants import (
     NT_LENGTHS, STARTS, TEXT_HA, TEXT_VA, TEXT_Y, TYPES
 )
-from mitoviz.utils import convert_nt
+from mitoviz.utils import convert_nt, convert_plotly
 
 
 class _PolarLocus(_BaseLocus):
@@ -57,11 +57,22 @@ class _PolarLocus(_BaseLocus):
                 + sum(map(convert_nt, self._nt_lengths[1:self.index])))
 
     @property
+    def theta_p(self) -> float:
+        """ The position at which the locus will be plotted when using plotly.
+        """
+        return convert_plotly(self.theta)
+
+    @property
     def width(self) -> float:
         """ The relative width of the locus from its length in
-        nucleotides.
-        """
+        nucleotides. """
         return convert_nt(self._nt_lengths[self.index])
+
+    @property
+    def width_p(self) -> float:
+        """ The relative width of the locus from its length in
+        nucleotides when using plotly. """
+        return convert_plotly(self.width)
 
 
 class _PolarSplitLocus(_PolarLocus):

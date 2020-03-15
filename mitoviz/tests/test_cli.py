@@ -15,18 +15,25 @@ from mitoviz.tests.constants import (
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND, BASE_IMG_SPLIT,
     BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
     BASE_IMG_LINEAR_SPLIT,
+    BASE_IMG_PLOTLY, BASE_IMG_PLOTLY_LEGEND, BASE_IMG_PLOTLY_SPLIT,
     BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND, BASE_HF_IMG_SPLIT,
     BASE_HF_IMG_LINEAR, BASE_HF_IMG_LINEAR_LABELS, BASE_HF_IMG_LINEAR_LEGEND,
     BASE_HF_IMG_LINEAR_SPLIT,
+    BASE_HF_IMG_PLOTLY, BASE_HF_IMG_PLOTLY_LEGEND, BASE_HF_IMG_PLOTLY_SPLIT,
     BASE_HF_IMG_DF, BASE_HF_IMG_LABELS_DF, BASE_HF_IMG_LEGEND_DF,
     BASE_HF_IMG_SPLIT_DF,
     BASE_HF_IMG_LINEAR_DF, BASE_HF_IMG_LINEAR_LABELS_DF,
     BASE_HF_IMG_LINEAR_LEGEND_DF, BASE_HF_IMG_LINEAR_SPLIT_DF,
+    BASE_HF_IMG_PLOTLY_DF, BASE_HF_IMG_PLOTLY_LEGEND_DF,
+    BASE_HF_IMG_PLOTLY_SPLIT_DF,
     BASE_MULTI_IMG, BASE_MULTI_IMG_LABELS, BASE_MULTI_IMG_LEGEND,
     BASE_MULTI_IMG_SPLIT,
     BASE_MULTI_IMG_LINEAR, BASE_MULTI_IMG_LINEAR_LABELS,
     BASE_MULTI_IMG_LINEAR_LEGEND, BASE_MULTI_IMG_LINEAR_SPLIT,
-    OUTPUT_IMG, OUTPUT_HF_IMG, OUTPUT_MULTI_IMG
+    BASE_MULTI_IMG_PLOTLY, BASE_MULTI_IMG_PLOTLY_LEGEND,
+    BASE_MULTI_IMG_PLOTLY_SPLIT,
+    OUTPUT_IMG, OUTPUT_HF_IMG, OUTPUT_MULTI_IMG,
+    OUTPUT_HTML, OUTPUT_HF_HTML, OUTPUT_MULTI_HTML
 )
 
 
@@ -74,6 +81,21 @@ class TestCliVcf(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove("MITOVIZ001.png")
+
+    def test_cli_plot_polar_plotly(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main, [SAMPLE_VCF, "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
     def test_cli_plot_polar_labels(self):
         # Given
@@ -143,6 +165,22 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("MITOVIZ001.png")
 
+    def test_cli_plot_plotly_legend(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY_LEGEND
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF, "--legend", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
     def test_cli_plot_output(self):
         # Given
         base_img = cv2.imread(BASE_IMG)
@@ -160,6 +198,23 @@ class TestCliVcf(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove(OUTPUT_IMG)
+
+    def test_cli_plotly_output(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY
+        test_img = OUTPUT_HTML
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF, "--interactive",
+                                     "--output", test_img])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
     def test_cli_plot_polar_split(self):
         # Given
@@ -195,6 +250,22 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("MITOVIZ001.png")
 
+    def test_cli_plot_plotly_split(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY_SPLIT
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF, "--split", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
     def test_cli_plot_hf_polar(self):
         # Given
         base_img = cv2.imread(BASE_HF_IMG)
@@ -226,6 +297,21 @@ class TestCliVcf(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove("HG00420.png")
+
+    def test_cli_plot_hf_plotly(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main, [SAMPLE_HF_VCF, "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
     def test_cli_plot_hf_polar_labels(self):
         # Given
@@ -295,6 +381,23 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
+    def test_cli_plot_hf_plotly_legend(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_LEGEND
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_VCF, "--legend",
+                                     "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
     def test_cli_plot_hf_output(self):
         # Given
         base_img = cv2.imread(BASE_HF_IMG)
@@ -312,6 +415,23 @@ class TestCliVcf(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove(OUTPUT_HF_IMG)
+
+    def test_cli_plotly_hf_output(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY
+        test_img = OUTPUT_HF_HTML
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_VCF, "--interactive",
+                                     "--output", test_img])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
     def test_cli_plot_hf_polar_split(self):
         # Given
@@ -346,6 +466,23 @@ class TestCliVcf(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove("HG00420.png")
+
+    def test_cli_plot_hf_plotly_split(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_SPLIT
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_VCF, "--split",
+                                     "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
     def test_cli_plot_polar_sample_multi(self):
         # Given
@@ -385,6 +522,25 @@ class TestCliVcf(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
+
+    def test_cli_plot_plotly_sample_multi(self):
+        # Given
+        base_img = BASE_MULTI_IMG_PLOTLY
+        test_img = OUTPUT_MULTI_HTML
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_MULTI_VCF,
+                                     "--sample", "SRR1777294",
+                                     "--output", test_img,
+                                     "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
     def test_cli_plot_polar_sample_multi_labels(self):
         # Given
@@ -466,6 +622,25 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
 
+    def test_cli_plot_plotly_sample_multi_legend(self):
+        # Given
+        base_img = BASE_MULTI_IMG_PLOTLY_LEGEND
+        test_img = OUTPUT_MULTI_HTML
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_MULTI_VCF,
+                                     "--sample", "SRR1777294",
+                                     "--output", test_img,
+                                     "--legend", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
     def test_cli_plot_polar_sample_multi_split(self):
         # Given
         base_img = cv2.imread(BASE_MULTI_IMG_SPLIT)
@@ -506,6 +681,25 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
 
+    def test_cli_plot_plotly_sample_multi_split(self):
+        # Given
+        base_img = BASE_MULTI_IMG_PLOTLY_SPLIT
+        test_img = OUTPUT_MULTI_HTML
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_MULTI_VCF,
+                                     "--sample", "SRR1777294",
+                                     "--output", test_img,
+                                     "--split", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
 
 class TestCliCsv(unittest.TestCase):
 
@@ -543,6 +737,21 @@ class TestCliCsv(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove("HG00420.png")
+
+    def test_cli_plot_plotly_csv(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_DF
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main, [SAMPLE_HF_CSV, "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
     def test_cli_plot_polar_csv_labels(self):
         # Given
@@ -612,6 +821,23 @@ class TestCliCsv(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
+    def test_cli_plot_plotly_csv_legend(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_LEGEND_DF
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_CSV, "--legend",
+                                     "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
     def test_cli_plot_polar_csv_split(self):
         # Given
         base_img = cv2.imread(BASE_HF_IMG_SPLIT_DF)
@@ -645,6 +871,23 @@ class TestCliCsv(unittest.TestCase):
         self.assertFalse(np.any(diff))
         # Cleanup
         os.remove("HG00420.png")
+
+    def test_cli_plot_plotly_csv_split(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_SPLIT_DF
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_CSV, "--split",
+                                     "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
     def test_cli_plot_csv_output(self):
         # Given

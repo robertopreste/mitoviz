@@ -8,7 +8,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from mitoviz.parsers import _DataFrameParser, _TabularParser, _VcfParser
-from mitoviz.plot import _plot_variants_polar, _plot_variants_linear
+from mitoviz.plot import (
+    _plot_variants_polar, _plot_variants_linear, _plotly_variants_polar
+)
 from mitoviz.utils import parse_path
 
 
@@ -19,7 +21,8 @@ def plot_vcf(in_vcf: str,
              output: Optional[str] = None,
              labels: bool = False,
              legend: bool = False,
-             split: bool = False) -> None:
+             split: bool = False,
+             interactive: bool = False) -> None:
     """ Plot variants from the given VCF file.
 
     Args:
@@ -32,40 +35,64 @@ def plot_vcf(in_vcf: str,
         labels: if true, add a label for each variant shown [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
-        split: plot split H and L strands [default: False]
+        split: if true, plot split H and L strands [default: False]
+        interactive: if true, create an interactive version of the plot
+            [default: False]
     """
     vcf = _VcfParser(in_vcf)
     variants_per_sample = vcf.variants
-    plot_variants = _plot_variants_linear if linear else _plot_variants_polar
+
+    if linear:
+        plot_variants = _plot_variants_linear
+    elif interactive:
+        plot_variants = _plotly_variants_polar
+    else:
+        plot_variants = _plot_variants_polar
 
     if sample:
-        plot_variants(sample,
-                      variants_per_sample[sample],
-                      labels,
-                      legend,
-                      split)
+        fig = plot_variants(sample, variants_per_sample[sample], labels,
+                            legend, split)
 
         if save:
             dirname, name, ext = parse_path(output)
             if name == "":
                 name = sample
-            plt.savefig(os.path.join(dirname, f"{name}{ext}"))
-            plt.close()
+            if interactive:
+                fig.write_html(os.path.join(dirname, f"{name}.html"),
+                               auto_open=False)
+            else:
+                plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                plt.close()
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            plot_variants(sample, variants, labels, legend, split)
+            fig = plot_variants(sample, variants, labels, legend, split)
 
             if save:
                 dirname, name, ext = parse_path(output)
                 if name == "":
                     name = sample
-                    plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                    if interactive:
+                        fig.write_html(os.path.join(dirname, f"{name}.html"),
+                                       auto_open=False)
+                    else:
+                        plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                        plt.close()
                 elif len(variants_per_sample) == 1:
-                    plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                    if interactive:
+                        fig.write_html(os.path.join(dirname, f"{name}.html"),
+                                       auto_open=False)
+                    else:
+                        plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                        plt.close()
                 else:
-                    plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
-                plt.close()
+                    if interactive:
+                        fig.write_html(os.path.join(dirname,
+                                                    f"{name}_{i}.html"),
+                                       auto_open=False)
+                    else:
+                        plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
+                        plt.close()
 
 
 def plot_df(in_df: pd.DataFrame,
@@ -76,6 +103,7 @@ def plot_df(in_df: pd.DataFrame,
             labels: bool = False,
             legend: bool = False,
             split: bool = False,
+            interactive: bool = False,
             pos_col: str = "POS",
             ref_col: str = "REF",
             alt_col: str = "ALT",
@@ -93,7 +121,9 @@ def plot_df(in_df: pd.DataFrame,
         labels: if true, add a label for each variant shown [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
-        split: plot split H and L strands [default: False]
+        split: if true, plot split H and L strands [default: False]
+        interactive: if true, create an interactive version of the plot
+            [default: False]
         pos_col: column name for the variant position
         ref_col: column name for the variant reference allele
         alt_col: column name for the variant alternate allele
@@ -107,36 +137,58 @@ def plot_df(in_df: pd.DataFrame,
                           sample_col=sample_col,
                           hf_col=hf_col)
     variants_per_sample = df.variants
-    plot_variants = _plot_variants_linear if linear else _plot_variants_polar
+
+    if linear:
+        plot_variants = _plot_variants_linear
+    elif interactive:
+        plot_variants = _plotly_variants_polar
+    else:
+        plot_variants = _plot_variants_polar
 
     if sample:
-        plot_variants(sample,
-                      variants_per_sample[sample],
-                      labels,
-                      legend,
-                      split)
+        fig = plot_variants(sample, variants_per_sample[sample], labels,
+                            legend, split)
 
         if save:
             dirname, name, ext = parse_path(output)
             if name == "":
                 name = sample
-            plt.savefig(os.path.join(dirname, f"{name}{ext}"))
-            plt.close()
+            if interactive:
+                fig.write_html(os.path.join(dirname, f"{name}.html"),
+                               auto_open=False)
+            else:
+                plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                plt.close()
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            plot_variants(sample, variants, labels, legend, split)
+            fig = plot_variants(sample, variants, labels, legend, split)
 
             if save:
                 dirname, name, ext = parse_path(output)
                 if name == "":
                     name = sample
-                    plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                    if interactive:
+                        fig.write_html(os.path.join(dirname, f"{name}.html"),
+                                       auto_open=False)
+                    else:
+                        plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                        plt.close()
                 elif len(variants_per_sample) == 1:
-                    plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                    if interactive:
+                        fig.write_html(os.path.join(dirname, f"{name}.html"),
+                                       auto_open=False)
+                    else:
+                        plt.savefig(os.path.join(dirname, f"{name}{ext}"))
+                        plt.close()
                 else:
-                    plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
-                plt.close()
+                    if interactive:
+                        fig.write_html(os.path.join(dirname,
+                                                    f"{name}_{i}.html"),
+                                       auto_open=False)
+                    else:
+                        plt.savefig(os.path.join(dirname, f"{name}_{i}{ext}"))
+                        plt.close()
 
 
 def plot_table(in_table: str,
@@ -148,6 +200,7 @@ def plot_table(in_table: str,
                labels: bool = False,
                legend: bool = False,
                split: bool = False,
+               interactive: bool = False,
                pos_col: str = "POS",
                ref_col: str = "REF",
                alt_col: str = "ALT",
@@ -167,7 +220,9 @@ def plot_table(in_table: str,
         labels: if true, add a label for each variant shown [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
-        split: plot split H and L strands [default: False]
+        split: if true, plot split H and L strands [default: False]
+        interactive: if true, create an interactive version of the plot
+            [default: False]
         pos_col: column name for the variant position
         ref_col: column name for the variant reference allele
         alt_col: column name for the variant alternate allele
@@ -184,6 +239,7 @@ def plot_table(in_table: str,
             labels=labels,
             legend=legend,
             split=split,
+            interactive=interactive,
             pos_col=pos_col,
             ref_col=ref_col,
             alt_col=alt_col,

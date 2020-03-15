@@ -62,6 +62,13 @@ using the ``--linear`` option:
 Linear plots can be managed and customised using the ``--output``, ``--sample``, ``--labels``,
 ``--legend`` and ``--split`` options.
 
+Interactive plots can also be created using the ``--interactive`` option, and will be saved to an
+HTML file:
+
+.. code-block:: console
+
+    $ mitoviz sample.vcf --interactive
+
 It is also possible to plot variants stored in a tabular file, such as CSV or TSV formats; mitoviz
 will automatically recognise them, treating the file as comma-separated by default. If a different
 separator is used (as in the case of TSV files), just specify it with the ``--sep`` option:
@@ -146,6 +153,16 @@ option:
     plot_vcf("sample.vcf", linear=True)
 
 The ``linear=True`` option can be combined with previously described options as well.
+
+Interactive plots can be created with the ``interactive`` option, and can be either saved to an
+HTML file or inspected in a Jupyter notebook:
+
+.. code-block:: python
+
+    # Show the interactive plot (works in a Jupyter notebook)
+    plot_vcf("sample.vcf", interactive=True)
+    # Save the interactive plot to an HTML file
+    plot_vcf("sample.vcf", interactive=True, save=True)
 
 Comprehensive help about the ``plot_vcf`` function can be found with ``help(mitoviz.plot_vcf)``.
 

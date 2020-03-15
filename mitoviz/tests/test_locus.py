@@ -32,11 +32,23 @@ class TestPolarLocus(unittest.TestCase):
         self.assertEqual(0.3621618685497012, self.rnr1.width)
         self.assertEqual(0.36292111775001507, self.nd1.width)
 
+    def test_width_p(self):
+        self.assertEqual(24.32110555857324, self.dloop.width_p)
+        self.assertEqual(1.5390360914961676, self.tf.width_p)
+        self.assertEqual(20.67944269418794, self.rnr1.width_p)
+        self.assertEqual(20.72279582352586, self.nd1.width_p)
+
     def test_theta(self):
         self.assertEqual(0.0, self.dloop.theta)
         self.assertEqual(0.2264460739936025, self.tf.theta)
         self.assertEqual(0.42100368157402374, self.rnr1.theta)
         self.assertEqual(1.4308051179914298, self.nd1.theta)
+
+    def test_theta_p(self):
+        self.assertEqual(0.0, self.dloop.theta_p)
+        self.assertEqual(12.930070825034703, self.tf.theta_p)
+        self.assertEqual(24.039310217876757, self.rnr1.theta_p)
+        self.assertEqual(81.69897223731064, self.nd1.theta_p)
 
     def test_text_ha(self):
         self.assertEqual("center", self.dloop.text_ha)

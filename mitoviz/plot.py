@@ -6,6 +6,7 @@ from typing import List
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
+import plotly.graph_objects as go
 
 from mitoviz.constants import COLORS, NAMES
 from mitoviz.locus import _LinearLocus, _PolarLocus, _PolarSplitLocus
@@ -47,6 +48,27 @@ def _legend_patches() -> List[mpatches.Patch]:
     rrna = mpatches.Patch(color=COLORS["rrna"], label="rRNA")
     trna = mpatches.Patch(color=COLORS["trna"], label="tRNA")
     nc = mpatches.Patch(color=COLORS["nc"], label="Non Coding")
+    return [cds, reg, rrna, trna, nc]
+
+
+def _legend_plotly() -> List[go.Scatterpolar]:
+    """ Return a list of plotly Scatterpolar elements to create the loci
+    legend. """
+    cds = go.Scatterpolar(r=[None], theta=[None], mode="markers",
+                          marker=dict(size=10, color="#2e8b57"),
+                          showlegend=True, name="Coding")
+    reg = go.Scatterpolar(r=[None], theta=[None], mode="markers",
+                          marker=dict(size=10, color="#ffa500"),
+                          showlegend=True, name="Regulatory")
+    rrna = go.Scatterpolar(r=[None], theta=[None], mode="markers",
+                           marker=dict(size=10, color="#cd5c5c"),
+                           showlegend=True, name="rRNA")
+    trna = go.Scatterpolar(r=[None], theta=[None], mode="markers",
+                           marker=dict(size=10, color="#4169e1"),
+                           showlegend=True, name="tRNA")
+    nc = go.Scatterpolar(r=[None], theta=[None], mode="markers",
+                         marker=dict(size=10, color="grey"),
+                         showlegend=True, name="Non Coding")
     return [cds, reg, rrna, trna, nc]
 
 
@@ -165,11 +187,68 @@ def _plot_mito_polar(legend: bool = False,
     return fig, ax
 
 
+def _plotly_mito_polar(legend: bool = False,
+                       split: bool = False) -> go.Figure:
+    """ Return a plotly figure with the base mt genome polar plot.
+
+    Args:
+        legend: add a legend for loci colors in the plot [default: False]
+        split: plot split H and L strand [default: False]
+    """
+    fig = go.Figure()
+
+    if split:
+        names = NAMES + [""]
+        loci = [_PolarSplitLocus(name=name, index=index)
+                for index, name in enumerate(names)]
+        radii = [el.radius for el in loci]
+        bottoms = [el.bottom for el in loci]
+    else:
+        loci = [_PolarLocus(name=name, index=index)
+                for index, name in enumerate(NAMES)]
+        radii = [5.0 for _ in loci]
+        bottoms = [20.0 for _ in loci]
+    names = [el.name for el in loci]
+    thetas = [el.theta_p for el in loci]
+    widths = [el.width_p for el in loci]
+    colors = [el.color for el in loci]
+
+    mito_trace = go.Barpolar(r=radii, theta=thetas, width=widths, base=bottoms,
+                             marker_color=colors, meta=names,
+                             hovertemplate="%{meta}<extra></extra>",
+                             showlegend=False)
+
+    fig.add_trace(mito_trace)
+
+    border_trace = go.Barpolar(r=[0.1, 0.1], theta=[0, 0], width=[360, 360],
+                               base=[19.9, 25.0], marker_color="black",
+                               hoverinfo="none", showlegend=False)
+
+    fig.add_trace(border_trace)
+
+    if legend:
+        legend = _legend_plotly()
+        for el in legend:
+            fig.add_trace(el)
+
+    fig.update_layout(width=900, height=800, template="none",
+                      legend=dict(x=0.5, y=0.5,
+                                  xanchor="center", yanchor="middle"),
+                      polar=dict(
+                          radialaxis=dict(showticklabels=False, ticks="",
+                                          showgrid=False, showline=False),
+                          angularaxis=dict(rotation=90, showticklabels=False,
+                                           ticks="", showgrid=False,
+                                           showline=False)))
+
+    return fig
+
+
 def _plot_variants_polar(sample: str,
                          variants: List[_Variant],
                          labels: bool = False,
                          legend: bool = False,
-                         split: bool = False) -> None:
+                         split: bool = False):
     """ Plot variants available in the given list onto a polar plot.
 
     Args:
@@ -189,12 +268,46 @@ def _plot_variants_polar(sample: str,
 
     ax.set_title(sample)
 
+    return fig, ax
+
+
+def _plotly_variants_polar(sample: str,
+                           variants: List[_Variant],
+                           labels: bool = False,
+                           legend: bool = False,
+                           split: bool = False) -> go.Figure:
+    """ Plot variants available in the given list onto a plotly polar plot.
+
+    Args:
+        sample: sample name, used for the plot title
+        variants: list of _PolarVariant instances to plot
+        labels: add a label for each variant shown [default: False]
+        legend: add a legend for loci colors in the plot [default: False]
+        split: plot split H and L strands [default: False]
+    """
+    fig = _plotly_mito_polar(legend, split)
+
+    radii = [el.polar_y for el in variants]
+    theta = [el.polar_x_p for el in variants]
+    meta = [el.label for el in variants]
+
+    var_trace = go.Scatterpolar(r=radii, theta=theta, mode="markers",
+                                marker=dict(color="black"), meta=meta,
+                                hovertemplate="%{meta}<extra></extra>",
+                                showlegend=False)
+
+    fig.add_trace(var_trace)
+    fig.update_layout(title=sample)
+
+    # Returning go.Figure to allow saving the html image
+    return fig
+
 
 def _plot_variants_linear(sample: str,
                           variants: List[_Variant],
                           labels: bool = False,
                           legend: bool = False,
-                          split: bool = False) -> None:
+                          split: bool = False):
     """ Plot variant available in a given list onto a linear plot.
 
     Args:
@@ -222,3 +335,5 @@ def _plot_variants_linear(sample: str,
             _label_variant(ax, variant, linear=True)
 
     ax.set_title(sample)
+
+    return fig, ax
