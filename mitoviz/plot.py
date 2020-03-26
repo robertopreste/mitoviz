@@ -51,9 +51,9 @@ def _legend_patches() -> List[mpatches.Patch]:
     return [cds, reg, rrna, trna, nc]
 
 
-def _legend_plotly() -> List[go.Scatterpolar]:
+def _legend_plotly_polar() -> List[go.Scatterpolar]:
     """ Return a list of plotly Scatterpolar elements to create the loci
-    legend. """
+    legend on a polar plot. """
     cds = go.Scatterpolar(r=[None], theta=[None], mode="markers",
                           marker=dict(size=10, color="#2e8b57"),
                           showlegend=True, name="Coding")
@@ -69,6 +69,27 @@ def _legend_plotly() -> List[go.Scatterpolar]:
     nc = go.Scatterpolar(r=[None], theta=[None], mode="markers",
                          marker=dict(size=10, color="grey"),
                          showlegend=True, name="Non Coding")
+    return [cds, reg, rrna, trna, nc]
+
+
+def _legend_plotly_linear() -> List[go.Scatterpolar]:
+    """ Return a list of plotly Scatter elements to create the loci legend
+    on a linear plot. """
+    cds = go.Scatter(x=[None], y=[None], mode="markers",
+                     marker=dict(size=10, color="#2e8b57"),
+                     showlegend=True, name="Coding")
+    reg = go.Scatter(x=[None], y=[None], mode="markers",
+                     marker=dict(size=10, color="#ffa500"),
+                     showlegend=True, name="Regulatory")
+    rrna = go.Scatter(x=[None], y=[None], mode="markers",
+                      marker=dict(size=10, color="#cd5c5c"),
+                      showlegend=True, name="rRNA")
+    trna = go.Scatter(x=[None], y=[None], mode="markers",
+                      marker=dict(size=10, color="#4169e1"),
+                      showlegend=True, name="tRNA")
+    nc = go.Scatter(x=[None], y=[None], mode="markers",
+                    marker=dict(size=10, color="grey"),
+                    showlegend=True, name="Non Coding")
     return [cds, reg, rrna, trna, nc]
 
 
@@ -128,6 +149,82 @@ def _plot_mito_linear(legend: bool = False,
         ax.set_xlim([-500, 18000])
 
     return fig, ax
+
+
+def _plotly_mito_linear(legend: bool = False,
+                        split: bool = False) -> go.Figure:
+    """Return a plotly figure with the base mt genome linear plot.
+
+    Args:
+        legend: add a legend for loci colors in the plot [default: False]
+        split: plot split H and L strand [default: False]
+    """
+    names = NAMES + ["DLOOP"]
+    loci = [_LinearLocus(name=name, index=index)
+            for index, name in enumerate(names)]
+
+    if split:
+        shapes = []
+        for locus in loci:
+            if locus.strand == "H":
+                y0 = -0.1
+                y1 = 0.0
+            elif locus.strand == "L":
+                y0 = -0.2
+                y1 = -0.1
+            else:
+                y0 = -0.2
+                y1 = 0.0
+            shape = dict(type="rect",
+                         x0=locus.start,
+                         y0=y0,
+                         x1=(locus.start + locus.width),
+                         y1=y1,
+                         fillcolor=locus.color,
+                         line_color=locus.color)
+            shapes.append(shape)
+    else:
+        shapes = [dict(type="rect",
+                       x0=locus.start,
+                       y0=-0.2,
+                       x1=(locus.start + locus.width),
+                       y1=0.0,
+                       fillcolor=locus.color,
+                       line_color=locus.color) for locus in loci]
+
+    scatters = go.Scatter(
+        x=[locus.text_x for locus in loci],
+        y=[-0.1 for _ in loci],
+        text=[locus.name for locus in loci],
+        hovertemplate="%{text}<extra></extra>",
+        mode="markers",
+        marker=dict(symbol="square", opacity=0),
+        showlegend=False,
+    )
+    fig = go.Figure()
+    fig.add_trace(scatters)
+
+    if legend:
+        legend = _legend_plotly_linear()
+        for el in legend:
+            fig.add_trace(el)
+
+    fig.update_layout(width=1000, height=800, template="none",
+                      legend=dict(x=0.0, y=1.0,
+                                  xanchor="right", yanchor="middle"),
+                      xaxis=dict(showgrid=False,
+                                 showline=False,
+                                 zeroline=False),
+                      yaxis=dict(showgrid=False,
+                                 showline=False,
+                                 zeroline=False),
+                      yaxis_range=[-0.3, 1.2],
+                      hovermode="closest",
+                      shapes=shapes)
+    fig.update_xaxes(tickvals=[0, 4000, 8000, 12000, 16000])
+    fig.update_yaxes(tickvals=[0, 0.25, 0.5, 0.75, 1.0])
+
+    return fig
 
 
 def _plot_mito_polar(legend: bool = False,
@@ -227,7 +324,7 @@ def _plotly_mito_polar(legend: bool = False,
     fig.add_trace(border_trace)
 
     if legend:
-        legend = _legend_plotly()
+        legend = _legend_plotly_polar()
         for el in legend:
             fig.add_trace(el)
 
@@ -337,3 +434,46 @@ def _plot_variants_linear(sample: str,
     ax.set_title(sample)
 
     return fig, ax
+
+
+def _plotly_variants_linear(sample: str,
+                            variants: List[_Variant],
+                            labels: bool = False,
+                            legend: bool = False,
+                            split: bool = False) -> go.Figure:
+    """ Plot variant available in a given list onto a plotly linear plot.
+
+    Args:
+        sample: sample name, used for the plot title
+        variants: list of _LinearVariant instances to plot
+        labels: add a label for each variant shown [default: False]
+        legend: add a legend for loci colors in the plot [default: False]
+        split: plot split H and L strands [default: False]
+    """
+    fig = _plotly_mito_linear(legend, split)
+
+    xs = [variant.linear_x for variant in variants]
+    ys = [variant.linear_y for variant in variants]
+    meta = [el.label for el in variants]
+
+    var_trace = go.Scatter(x=xs, y=ys, mode="markers",
+                           marker=dict(color="black"), meta=meta,
+                           hovertemplate="%{meta}<extra></extra>",
+                           showlegend=False)
+    lines = [dict(type="line",
+                  xref="x",
+                  yref="y",
+                  x0=variant.linear_x,
+                  y0=-0.1,
+                  x1=variant.linear_x,
+                  y1=(variant.linear_y - 0.006),
+                  layer="below",
+                  line=dict(color="grey", width=1))
+             for variant in variants]
+
+    fig.add_trace(var_trace)
+    base_shapes = list(fig.layout.shapes)
+    fig.update_layout(shapes=[*base_shapes, *lines], title=sample)
+
+    # Returning go.Figure to allow saving the html image
+    return fig
