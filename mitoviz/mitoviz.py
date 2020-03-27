@@ -9,7 +9,8 @@ import pandas as pd
 
 from mitoviz.parsers import _DataFrameParser, _TabularParser, _VcfParser
 from mitoviz.plot import (
-    _plot_variants_polar, _plot_variants_linear, _plotly_variants_polar
+    _plot_variants_polar, _plot_variants_linear, _plotly_variants_polar,
+    _plotly_variants_linear
 )
 from mitoviz.utils import parse_path
 
@@ -43,11 +44,15 @@ def plot_vcf(in_vcf: str,
     variants_per_sample = vcf.variants
 
     if linear:
-        plot_variants = _plot_variants_linear
-    elif interactive:
-        plot_variants = _plotly_variants_polar
+        if interactive:
+            plot_variants = _plotly_variants_linear
+        else:
+            plot_variants = _plot_variants_linear
     else:
-        plot_variants = _plot_variants_polar
+        if interactive:
+            plot_variants = _plotly_variants_polar
+        else:
+            plot_variants = _plot_variants_polar
 
     if sample:
         fig = plot_variants(sample, variants_per_sample[sample], labels,
@@ -139,11 +144,15 @@ def plot_df(in_df: pd.DataFrame,
     variants_per_sample = df.variants
 
     if linear:
-        plot_variants = _plot_variants_linear
-    elif interactive:
-        plot_variants = _plotly_variants_polar
+        if interactive:
+            plot_variants = _plotly_variants_linear
+        else:
+            plot_variants = _plot_variants_linear
     else:
-        plot_variants = _plot_variants_polar
+        if interactive:
+            plot_variants = _plotly_variants_polar
+        else:
+            plot_variants = _plot_variants_polar
 
     if sample:
         fig = plot_variants(sample, variants_per_sample[sample], labels,
