@@ -22,10 +22,14 @@ from mitoviz.tests.constants import (
     BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
     BASE_IMG_LINEAR_SPLIT,
     BASE_IMG_PLOTLY, BASE_IMG_PLOTLY_LEGEND, BASE_IMG_PLOTLY_SPLIT,
+    BASE_IMG_PLOTLY_LINEAR, BASE_IMG_PLOTLY_LINEAR_LEGEND,
+    BASE_IMG_PLOTLY_LINEAR_SPLIT,
     BASE_IMG_DF, BASE_IMG_LABELS_DF, BASE_IMG_LEGEND_DF, BASE_IMG_SPLIT_DF,
     BASE_IMG_LINEAR_DF, BASE_IMG_LINEAR_LABELS_DF, BASE_IMG_LINEAR_LEGEND_DF,
     BASE_IMG_LINEAR_SPLIT_DF,
     BASE_IMG_PLOTLY_DF, BASE_IMG_PLOTLY_LEGEND_DF, BASE_IMG_PLOTLY_SPLIT_DF,
+    BASE_IMG_PLOTLY_LINEAR_DF, BASE_IMG_PLOTLY_LINEAR_LEGEND_DF,
+    BASE_IMG_PLOTLY_LINEAR_SPLIT_DF,
     BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND, BASE_HF_IMG_SPLIT,
     BASE_HF_IMG_LINEAR, BASE_HF_IMG_LINEAR_LABELS, BASE_HF_IMG_LINEAR_LEGEND,
     BASE_HF_IMG_LINEAR_SPLIT,
@@ -126,6 +130,16 @@ def create_sample_vcf_polar_plotly():
              output=BASE_IMG_PLOTLY_SPLIT, split=True)
 
 
+def create_sample_vcf_linear_plotly():
+    """ Create linear plots from sample.vcf with plotly. """
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, interactive=True,
+             output=BASE_IMG_PLOTLY_LINEAR)
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, interactive=True,
+             output=BASE_IMG_PLOTLY_LINEAR_LEGEND, legend=True)
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, interactive=True,
+             output=BASE_IMG_PLOTLY_LINEAR_SPLIT, split=True)
+
+
 def create_sample_df_polar():
     """ Create polar plots from the sample dataframe. """
     plot_df(in_df=SAMPLE_DF, save=True, output=BASE_IMG_DF)
@@ -156,6 +170,16 @@ def create_sample_df_polar_plotly():
     plot_df(in_df=SAMPLE_DF, save=True, interactive=True,
             output=BASE_IMG_PLOTLY_LEGEND_DF, legend=True)
     plot_df(in_df=SAMPLE_DF, save=True, interactive=True,
+            output=BASE_IMG_PLOTLY_SPLIT_DF, split=True)
+
+
+def create_sample_df_linear_plotly():
+    """ Create linear plots from the sample dataframe with plotly. """
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True, interactive=True,
+            output=BASE_IMG_PLOTLY_DF)
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True, interactive=True,
+            output=BASE_IMG_PLOTLY_LEGEND_DF, legend=True)
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True, interactive=True,
             output=BASE_IMG_PLOTLY_SPLIT_DF, split=True)
 
 
@@ -319,10 +343,12 @@ def create_all():
     create_sample_vcf_polar()
     create_sample_vcf_linear()
     create_sample_vcf_polar_plotly()
+    create_sample_vcf_linear_plotly()
 
     create_sample_df_polar()
     create_sample_df_linear()
     create_sample_df_polar_plotly()
+    create_sample_vcf_linear_plotly()
 
     create_sample_vcf_hf_polar()
     create_sample_vcf_hf_linear()

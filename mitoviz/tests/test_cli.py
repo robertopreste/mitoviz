@@ -16,6 +16,8 @@ from mitoviz.tests.constants import (
     BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
     BASE_IMG_LINEAR_SPLIT,
     BASE_IMG_PLOTLY, BASE_IMG_PLOTLY_LEGEND, BASE_IMG_PLOTLY_SPLIT,
+    BASE_IMG_PLOTLY_LINEAR, BASE_IMG_PLOTLY_LINEAR_LEGEND,
+    BASE_IMG_PLOTLY_LINEAR_SPLIT,
     BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND, BASE_HF_IMG_SPLIT,
     BASE_HF_IMG_LINEAR, BASE_HF_IMG_LINEAR_LABELS, BASE_HF_IMG_LINEAR_LEGEND,
     BASE_HF_IMG_LINEAR_SPLIT,
@@ -97,6 +99,22 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove(test_img)
 
+    def test_cli_plot_linear_plotly(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY_LINEAR
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main, [SAMPLE_VCF,
+                                               "--linear", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
     def test_cli_plot_polar_labels(self):
         # Given
         base_img = cv2.imread(BASE_IMG_LABELS)
@@ -165,7 +183,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("MITOVIZ001.png")
 
-    def test_cli_plot_plotly_legend(self):
+    def test_cli_plot_polar_plotly_legend(self):
         # Given
         base_img = BASE_IMG_PLOTLY_LEGEND
         test_img = "MITOVIZ001.html"
@@ -173,6 +191,23 @@ class TestCliVcf(unittest.TestCase):
         # When
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_VCF, "--legend", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_legend(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY_LINEAR_LEGEND
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF,
+                                     "--legend", "--linear", "--interactive"])
 
         # Then
         self.assertEqual(0, result.exit_code)
@@ -250,7 +285,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("MITOVIZ001.png")
 
-    def test_cli_plot_plotly_split(self):
+    def test_cli_plot_polar_plotly_split(self):
         # Given
         base_img = BASE_IMG_PLOTLY_SPLIT
         test_img = "MITOVIZ001.html"
@@ -258,6 +293,23 @@ class TestCliVcf(unittest.TestCase):
         # When
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_VCF, "--split", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_split(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY_LINEAR_SPLIT
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF,
+                                     "--split", "--linear", "--interactive"])
 
         # Then
         self.assertEqual(0, result.exit_code)
