@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 
 from mitoviz import plot_df, plot_vcf
 from mitoviz.plot import (
-    _plot_mito_linear, _plot_mito_polar, _plotly_mito_polar
+    _plot_mito_linear, _plot_mito_polar, _plotly_mito_polar,
+    _plotly_mito_linear
 )
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF,
@@ -15,6 +16,8 @@ from mitoviz.tests.constants import (
     BASE_MITO_POLAR, BASE_MITO_POLAR_LEGEND, BASE_MITO_POLAR_SPLIT,
     BASE_MITO_LINEAR, BASE_MITO_LINEAR_LEGEND, BASE_MITO_LINEAR_SPLIT,
     BASE_MITO_PLOTLY, BASE_MITO_PLOTLY_LEGEND, BASE_MITO_PLOTLY_SPLIT,
+    BASE_MITO_PLOTLY_LINEAR, BASE_MITO_PLOTLY_LINEAR_LEGEND,
+    BASE_MITO_PLOTLY_LINEAR_SPLIT,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND, BASE_IMG_SPLIT,
     BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
     BASE_IMG_LINEAR_SPLIT,
@@ -77,6 +80,18 @@ def create_mito_polar_plotly():
 
     fig = _plotly_mito_polar(split=True)
     fig.write_html(BASE_MITO_PLOTLY_SPLIT)
+
+
+def create_mito_linear_plotly():
+    """ Create base mitochondrial linear plots with plotly. """
+    fig = _plotly_mito_linear()
+    fig.write_html(BASE_MITO_PLOTLY_LINEAR)
+
+    fig = _plotly_mito_linear(legend=True)
+    fig.write_html(BASE_MITO_PLOTLY_LINEAR_LEGEND)
+
+    fig = _plotly_mito_linear(split=True)
+    fig.write_html(BASE_MITO_PLOTLY_LINEAR_SPLIT)
 
 
 def create_sample_vcf_polar():
@@ -299,6 +314,7 @@ def create_all():
     create_mito_polar()
     create_mito_linear()
     create_mito_polar_plotly()
+    create_mito_linear_plotly()
 
     create_sample_vcf_polar()
     create_sample_vcf_linear()

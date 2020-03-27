@@ -17,6 +17,8 @@ SAMPLE_HF_CSV = os.path.join(DATADIR, "sample_hf.csv")
 SAMPLE_HF_TSV = os.path.join(DATADIR, "sample_hf.tsv")
 SAMPLE_HF_TSV_COMM = os.path.join(DATADIR, "sample_hf_comment.tsv")
 
+# Base
+
 BASE_MITO_POLAR = os.path.join(IMGDIR, "base_mito_polar.png")
 BASE_MITO_POLAR_LEGEND = os.path.join(IMGDIR, "base_mito_polar_legend.png")
 BASE_MITO_POLAR_SPLIT = os.path.join(IMGDIR, "base_mito_polar_split.png")
@@ -28,6 +30,12 @@ BASE_MITO_LINEAR_SPLIT = os.path.join(IMGDIR, "base_mito_linear_split.png")
 BASE_MITO_PLOTLY = os.path.join(IMGDIR, "base_mito_plotly.html")
 BASE_MITO_PLOTLY_LEGEND = os.path.join(IMGDIR, "base_mito_plotly_legend.html")
 BASE_MITO_PLOTLY_SPLIT = os.path.join(IMGDIR, "base_mito_plotly_split.html")
+
+BASE_MITO_PLOTLY_LINEAR = os.path.join(IMGDIR, "base_mito_plotly_linear.html")
+BASE_MITO_PLOTLY_LINEAR_LEGEND = os.path.join(
+    IMGDIR, "base_mito_plotly_linear_legend.html")
+BASE_MITO_PLOTLY_LINEAR_SPLIT = os.path.join(
+    IMGDIR, "base_mito_plotly_linear_split.html")
 
 BASE_IMG = os.path.join(IMGDIR, "sample.png")
 BASE_IMG_LABELS = os.path.join(IMGDIR, "sample_labels.png")
