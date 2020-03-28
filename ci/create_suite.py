@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 
 from mitoviz import plot_df, plot_vcf
 from mitoviz.plot import (
-    _plot_mito_linear, _plot_mito_polar, _plotly_mito_polar
+    _plot_mito_linear, _plot_mito_polar, _plotly_mito_polar,
+    _plotly_mito_linear
 )
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF,
@@ -15,24 +16,34 @@ from mitoviz.tests.constants import (
     BASE_MITO_POLAR, BASE_MITO_POLAR_LEGEND, BASE_MITO_POLAR_SPLIT,
     BASE_MITO_LINEAR, BASE_MITO_LINEAR_LEGEND, BASE_MITO_LINEAR_SPLIT,
     BASE_MITO_PLOTLY, BASE_MITO_PLOTLY_LEGEND, BASE_MITO_PLOTLY_SPLIT,
+    BASE_MITO_PLOTLY_LINEAR, BASE_MITO_PLOTLY_LINEAR_LEGEND,
+    BASE_MITO_PLOTLY_LINEAR_SPLIT,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND, BASE_IMG_SPLIT,
     BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
     BASE_IMG_LINEAR_SPLIT,
     BASE_IMG_PLOTLY, BASE_IMG_PLOTLY_LEGEND, BASE_IMG_PLOTLY_SPLIT,
+    BASE_IMG_PLOTLY_LINEAR, BASE_IMG_PLOTLY_LINEAR_LEGEND,
+    BASE_IMG_PLOTLY_LINEAR_SPLIT,
     BASE_IMG_DF, BASE_IMG_LABELS_DF, BASE_IMG_LEGEND_DF, BASE_IMG_SPLIT_DF,
     BASE_IMG_LINEAR_DF, BASE_IMG_LINEAR_LABELS_DF, BASE_IMG_LINEAR_LEGEND_DF,
     BASE_IMG_LINEAR_SPLIT_DF,
     BASE_IMG_PLOTLY_DF, BASE_IMG_PLOTLY_LEGEND_DF, BASE_IMG_PLOTLY_SPLIT_DF,
+    BASE_IMG_PLOTLY_LINEAR_DF, BASE_IMG_PLOTLY_LINEAR_LEGEND_DF,
+    BASE_IMG_PLOTLY_LINEAR_SPLIT_DF,
     BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND, BASE_HF_IMG_SPLIT,
     BASE_HF_IMG_LINEAR, BASE_HF_IMG_LINEAR_LABELS, BASE_HF_IMG_LINEAR_LEGEND,
     BASE_HF_IMG_LINEAR_SPLIT,
     BASE_HF_IMG_PLOTLY, BASE_HF_IMG_PLOTLY_LEGEND, BASE_HF_IMG_PLOTLY_SPLIT,
+    BASE_HF_IMG_PLOTLY_LINEAR, BASE_HF_IMG_PLOTLY_LINEAR_LEGEND,
+    BASE_HF_IMG_PLOTLY_LINEAR_SPLIT,
     BASE_HF_IMG_DF, BASE_HF_IMG_LABELS_DF, BASE_HF_IMG_LEGEND_DF,
     BASE_HF_IMG_SPLIT_DF,
     BASE_HF_IMG_LINEAR_DF, BASE_HF_IMG_LINEAR_LABELS_DF,
     BASE_HF_IMG_LINEAR_LEGEND_DF, BASE_HF_IMG_LINEAR_SPLIT_DF,
     BASE_HF_IMG_PLOTLY_DF, BASE_HF_IMG_PLOTLY_LEGEND_DF,
     BASE_HF_IMG_PLOTLY_SPLIT_DF,
+    BASE_HF_IMG_PLOTLY_LINEAR_DF, BASE_HF_IMG_PLOTLY_LINEAR_LEGEND_DF,
+    BASE_HF_IMG_PLOTLY_LINEAR_SPLIT_DF,
     SAMPLE_MULTI_VCF, SAMPLE_MULTI_DF, IMGDIR
 )
 
@@ -79,6 +90,18 @@ def create_mito_polar_plotly():
     fig.write_html(BASE_MITO_PLOTLY_SPLIT)
 
 
+def create_mito_linear_plotly():
+    """ Create base mitochondrial linear plots with plotly. """
+    fig = _plotly_mito_linear()
+    fig.write_html(BASE_MITO_PLOTLY_LINEAR)
+
+    fig = _plotly_mito_linear(legend=True)
+    fig.write_html(BASE_MITO_PLOTLY_LINEAR_LEGEND)
+
+    fig = _plotly_mito_linear(split=True)
+    fig.write_html(BASE_MITO_PLOTLY_LINEAR_SPLIT)
+
+
 def create_sample_vcf_polar():
     """ Create polar plots from sample.vcf. """
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG)
@@ -109,6 +132,16 @@ def create_sample_vcf_polar_plotly():
              output=BASE_IMG_PLOTLY_LEGEND, legend=True)
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, interactive=True,
              output=BASE_IMG_PLOTLY_SPLIT, split=True)
+
+
+def create_sample_vcf_linear_plotly():
+    """ Create linear plots from sample.vcf with plotly. """
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, interactive=True,
+             output=BASE_IMG_PLOTLY_LINEAR)
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, interactive=True,
+             output=BASE_IMG_PLOTLY_LINEAR_LEGEND, legend=True)
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, interactive=True,
+             output=BASE_IMG_PLOTLY_LINEAR_SPLIT, split=True)
 
 
 def create_sample_df_polar():
@@ -144,6 +177,16 @@ def create_sample_df_polar_plotly():
             output=BASE_IMG_PLOTLY_SPLIT_DF, split=True)
 
 
+def create_sample_df_linear_plotly():
+    """ Create linear plots from the sample dataframe with plotly. """
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True, interactive=True,
+            output=BASE_IMG_PLOTLY_LINEAR_DF)
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True, interactive=True,
+            output=BASE_IMG_PLOTLY_LINEAR_LEGEND_DF, legend=True)
+    plot_df(in_df=SAMPLE_DF, linear=True, save=True, interactive=True,
+            output=BASE_IMG_PLOTLY_LINEAR_SPLIT_DF, split=True)
+
+
 def create_sample_vcf_hf_polar():
     """ Create polar plots from sample_hf.vcf. """
     plot_vcf(in_vcf=SAMPLE_HF_VCF, save=True, output=BASE_HF_IMG)
@@ -177,6 +220,16 @@ def create_sample_vcf_hf_polar_plotly():
              output=BASE_HF_IMG_PLOTLY_SPLIT, split=True)
 
 
+def create_sample_vcf_hf_linear_plotly():
+    """ Create linear plots from sample_hf.vcf with plotly. """
+    plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True, interactive=True,
+             output=BASE_HF_IMG_PLOTLY_LINEAR)
+    plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True, interactive=True,
+             output=BASE_HF_IMG_PLOTLY_LINEAR_LEGEND, legend=True)
+    plot_vcf(in_vcf=SAMPLE_HF_VCF, linear=True, save=True, interactive=True,
+             output=BASE_HF_IMG_PLOTLY_LINEAR_SPLIT, split=True)
+
+
 def create_sample_df_hf_polar():
     """ Create polar plots from the sample dataframe with hf. """
     plot_df(in_df=SAMPLE_HF_DF, save=True, output=BASE_HF_IMG_DF)
@@ -208,6 +261,16 @@ def create_sample_df_hf_polar_plotly():
             output=BASE_HF_IMG_PLOTLY_LEGEND_DF, legend=True)
     plot_df(in_df=SAMPLE_HF_DF, save=True, interactive=True,
             output=BASE_HF_IMG_PLOTLY_SPLIT_DF, split=True)
+
+
+def create_sample_df_hf_linear_plotly():
+    """ Create linear plots from the sample dataframe with hf with plotly. """
+    plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True, interactive=True,
+            output=BASE_HF_IMG_PLOTLY_LINEAR_DF)
+    plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True, interactive=True,
+            output=BASE_HF_IMG_PLOTLY_LINEAR_LEGEND_DF, legend=True)
+    plot_df(in_df=SAMPLE_HF_DF, linear=True, save=True, interactive=True,
+            output=BASE_HF_IMG_PLOTLY_LINEAR_SPLIT_DF, split=True)
 
 
 def create_multisample_vcf_polar():
@@ -249,6 +312,20 @@ def create_multisample_vcf_polar_plotly():
              legend=True)
     plot_vcf(in_vcf=SAMPLE_MULTI_VCF, save=True, interactive=True,
              output=os.path.join(IMGDIR, "multisample_plotly_split.png"),
+             split=True)
+
+
+def create_multisample_vcf_linear_plotly():
+    """ Create linear plots from multisample.vcf with plotly. """
+    plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True, interactive=True,
+             output=os.path.join(IMGDIR, "multisample_plotly_linear.html"))
+    plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True, interactive=True,
+             output=os.path.join(IMGDIR,
+                                 "multisample_plotly_linear_legend.html"),
+             legend=True)
+    plot_vcf(in_vcf=SAMPLE_MULTI_VCF, linear=True, save=True, interactive=True,
+             output=os.path.join(IMGDIR,
+                                 "multisample_plotly_linear_split.png"),
              split=True)
 
 
@@ -294,32 +371,53 @@ def create_multisample_df_polar_plotly():
             split=True)
 
 
+def create_multisample_df_linear_plotly():
+    """ Create linear plots from the multisample dataframe with plotly. """
+    plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True, interactive=True,
+            output=os.path.join(IMGDIR, "multisample_plotly_linear_df.html"))
+    plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True, interactive=True,
+            output=os.path.join(IMGDIR,
+                                "multisample_plotly_linear_legend_df.html"),
+            legend=True)
+    plot_df(in_df=SAMPLE_MULTI_DF, linear=True, save=True, interactive=True,
+            output=os.path.join(IMGDIR,
+                                "multisample_plotly_linear_split_df.png"),
+            split=True)
+
+
 def create_all():
     """ Create all the test files needed. """
     create_mito_polar()
     create_mito_linear()
     create_mito_polar_plotly()
+    create_mito_linear_plotly()
 
     create_sample_vcf_polar()
     create_sample_vcf_linear()
     create_sample_vcf_polar_plotly()
+    create_sample_vcf_linear_plotly()
 
     create_sample_df_polar()
     create_sample_df_linear()
     create_sample_df_polar_plotly()
+    create_sample_vcf_linear_plotly()
 
     create_sample_vcf_hf_polar()
     create_sample_vcf_hf_linear()
     create_sample_vcf_hf_polar_plotly()
+    create_sample_vcf_hf_linear_plotly()
 
     create_sample_df_hf_polar()
     create_sample_df_hf_linear()
     create_sample_df_hf_polar_plotly()
+    create_sample_df_hf_linear_plotly()
 
     create_multisample_vcf_polar()
     create_multisample_vcf_linear()
     create_multisample_vcf_polar_plotly()
+    create_multisample_vcf_linear_plotly()
 
     create_multisample_df_polar()
     create_multisample_df_linear()
     create_multisample_df_polar_plotly()
+    create_multisample_df_linear_plotly()

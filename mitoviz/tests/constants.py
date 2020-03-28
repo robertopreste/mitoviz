@@ -17,6 +17,8 @@ SAMPLE_HF_CSV = os.path.join(DATADIR, "sample_hf.csv")
 SAMPLE_HF_TSV = os.path.join(DATADIR, "sample_hf.tsv")
 SAMPLE_HF_TSV_COMM = os.path.join(DATADIR, "sample_hf_comment.tsv")
 
+# Base
+
 BASE_MITO_POLAR = os.path.join(IMGDIR, "base_mito_polar.png")
 BASE_MITO_POLAR_LEGEND = os.path.join(IMGDIR, "base_mito_polar_legend.png")
 BASE_MITO_POLAR_SPLIT = os.path.join(IMGDIR, "base_mito_polar_split.png")
@@ -28,6 +30,14 @@ BASE_MITO_LINEAR_SPLIT = os.path.join(IMGDIR, "base_mito_linear_split.png")
 BASE_MITO_PLOTLY = os.path.join(IMGDIR, "base_mito_plotly.html")
 BASE_MITO_PLOTLY_LEGEND = os.path.join(IMGDIR, "base_mito_plotly_legend.html")
 BASE_MITO_PLOTLY_SPLIT = os.path.join(IMGDIR, "base_mito_plotly_split.html")
+
+BASE_MITO_PLOTLY_LINEAR = os.path.join(IMGDIR, "base_mito_plotly_linear.html")
+BASE_MITO_PLOTLY_LINEAR_LEGEND = os.path.join(
+    IMGDIR, "base_mito_plotly_linear_legend.html")
+BASE_MITO_PLOTLY_LINEAR_SPLIT = os.path.join(
+    IMGDIR, "base_mito_plotly_linear_split.html")
+
+# No HF
 
 BASE_IMG = os.path.join(IMGDIR, "sample.png")
 BASE_IMG_LABELS = os.path.join(IMGDIR, "sample_labels.png")
@@ -42,6 +52,14 @@ BASE_IMG_LINEAR_SPLIT = os.path.join(IMGDIR, "sample_linear_split.png")
 BASE_IMG_PLOTLY = os.path.join(IMGDIR, "sample_plotly.html")
 BASE_IMG_PLOTLY_LEGEND = os.path.join(IMGDIR, "sample_plotly_legend.html")
 BASE_IMG_PLOTLY_SPLIT = os.path.join(IMGDIR, "sample_plotly_split.html")
+
+BASE_IMG_PLOTLY_LINEAR = os.path.join(IMGDIR, "sample_plotly_linear.html")
+BASE_IMG_PLOTLY_LINEAR_LEGEND = os.path.join(
+    IMGDIR, "sample_plotly_linear_legend.html")
+BASE_IMG_PLOTLY_LINEAR_SPLIT = os.path.join(
+    IMGDIR, "sample_plotly_linear_split.html")
+
+# Dataframe no HF
 
 BASE_IMG_DF = os.path.join(IMGDIR, "sample_df.png")
 BASE_IMG_LABELS_DF = os.path.join(IMGDIR, "sample_labels_df.png")
@@ -58,6 +76,13 @@ BASE_IMG_PLOTLY_LEGEND_DF = os.path.join(IMGDIR,
                                          "sample_plotly_legend_df.html")
 BASE_IMG_PLOTLY_SPLIT_DF = os.path.join(IMGDIR, "sample_plotly_split_df.html")
 
+BASE_IMG_PLOTLY_LINEAR_DF = os.path.join(
+    IMGDIR, "sample_plotly_linear_df.html")
+BASE_IMG_PLOTLY_LINEAR_LEGEND_DF = os.path.join(
+    IMGDIR, "sample_plotly_linear_legend_df.html")
+BASE_IMG_PLOTLY_LINEAR_SPLIT_DF = os.path.join(
+    IMGDIR, "sample_plotly_linear_split_df.html")
+
 BASE_HF_IMG = os.path.join(IMGDIR, "sample_hf.png")
 BASE_HF_IMG_LABELS = os.path.join(IMGDIR, "sample_hf_labels.png")
 BASE_HF_IMG_LEGEND = os.path.join(IMGDIR, "sample_hf_legend.png")
@@ -72,6 +97,13 @@ BASE_HF_IMG_PLOTLY = os.path.join(IMGDIR, "sample_plotly_hf.html")
 BASE_HF_IMG_PLOTLY_LEGEND = os.path.join(IMGDIR,
                                          "sample_plotly_hf_legend.html")
 BASE_HF_IMG_PLOTLY_SPLIT = os.path.join(IMGDIR, "sample_plotly_hf_split.html")
+
+BASE_HF_IMG_PLOTLY_LINEAR = os.path.join(
+    IMGDIR, "sample_plotly_linear_hf.html")
+BASE_HF_IMG_PLOTLY_LINEAR_LEGEND = os.path.join(
+    IMGDIR, "sample_plotly_linear_hf_legend.html")
+BASE_HF_IMG_PLOTLY_LINEAR_SPLIT = os.path.join(
+    IMGDIR, "sample_plotly_linear_hf_split.html")
 
 BASE_HF_IMG_DF = os.path.join(IMGDIR, "sample_hf_df.png")
 BASE_HF_IMG_LABELS_DF = os.path.join(IMGDIR, "sample_hf_labels_df.png")
@@ -92,6 +124,13 @@ BASE_HF_IMG_PLOTLY_LEGEND_DF = os.path.join(IMGDIR,
 BASE_HF_IMG_PLOTLY_SPLIT_DF = os.path.join(IMGDIR,
                                            "sample_plotly_hf_split_df.html")
 
+BASE_HF_IMG_PLOTLY_LINEAR_DF = os.path.join(
+    IMGDIR, "sample_plotly_linear_hf_df.html")
+BASE_HF_IMG_PLOTLY_LINEAR_LEGEND_DF = os.path.join(
+    IMGDIR, "sample_plotly_linear_hf_legend_df.html")
+BASE_HF_IMG_PLOTLY_LINEAR_SPLIT_DF = os.path.join(
+    IMGDIR, "sample_plotly_linear_hf_split_df.html")
+
 BASE_MULTI_IMG = os.path.join(IMGDIR, "multisample_1.png")
 BASE_MULTI_IMG_LABELS = os.path.join(IMGDIR, "multisample_labels_1.png")
 BASE_MULTI_IMG_LEGEND = os.path.join(IMGDIR, "multisample_legend_1.png")
@@ -111,6 +150,13 @@ BASE_MULTI_IMG_PLOTLY_LEGEND = os.path.join(IMGDIR,
 BASE_MULTI_IMG_PLOTLY_SPLIT = os.path.join(IMGDIR,
                                            "multisample_plotly_split_1.html")
 
+BASE_MULTI_IMG_PLOTLY_LINEAR = os.path.join(
+    IMGDIR, "multisample_plotly_linear_1.html")
+BASE_MULTI_IMG_PLOTLY_LINEAR_LEGEND = os.path.join(
+    IMGDIR, "multisample_plotly_linear_legend_1.html")
+BASE_MULTI_IMG_PLOTLY_LINEAR_SPLIT = os.path.join(
+    IMGDIR, "multisample_plotly_linear_split_1.html")
+
 BASE_MULTI_IMG_DF = os.path.join(IMGDIR, "multisample_df_1.png")
 BASE_MULTI_IMG_LABELS_DF = os.path.join(IMGDIR, "multisample_labels_df_1.png")
 BASE_MULTI_IMG_LEGEND_DF = os.path.join(IMGDIR, "multisample_legend_df_1.png")
@@ -129,6 +175,13 @@ BASE_MULTI_IMG_PLOTLY_LEGEND_DF = os.path.join(
     IMGDIR, "multisample_plotly_legend_df_1.html")
 BASE_MULTI_IMG_PLOTLY_SPLIT_DF = os.path.join(
     IMGDIR, "multisample_plotly_split_df_1.html")
+
+BASE_MULTI_IMG_PLOTLY_LINEAR_DF = os.path.join(
+    IMGDIR, "multisample_plotly_linear_df_1.html")
+BASE_MULTI_IMG_PLOTLY_LINEAR_LEGEND_DF = os.path.join(
+    IMGDIR, "multisample_plotly_linear_legend_df_1.html")
+BASE_MULTI_IMG_PLOTLY_LINEAR_SPLIT_DF = os.path.join(
+    IMGDIR, "multisample_plotly_linear_split_df_1.html")
 
 OUTPUT_IMG = os.path.join(IMGDIR, "out_plot.png")
 OUTPUT_HF_IMG = os.path.join(IMGDIR, "out_hf_plot.png")

@@ -16,22 +16,30 @@ from mitoviz.tests.constants import (
     BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
     BASE_IMG_LINEAR_SPLIT,
     BASE_IMG_PLOTLY, BASE_IMG_PLOTLY_LEGEND, BASE_IMG_PLOTLY_SPLIT,
+    BASE_IMG_PLOTLY_LINEAR, BASE_IMG_PLOTLY_LINEAR_LEGEND,
+    BASE_IMG_PLOTLY_LINEAR_SPLIT,
     BASE_HF_IMG, BASE_HF_IMG_LABELS, BASE_HF_IMG_LEGEND, BASE_HF_IMG_SPLIT,
     BASE_HF_IMG_LINEAR, BASE_HF_IMG_LINEAR_LABELS, BASE_HF_IMG_LINEAR_LEGEND,
     BASE_HF_IMG_LINEAR_SPLIT,
     BASE_HF_IMG_PLOTLY, BASE_HF_IMG_PLOTLY_LEGEND, BASE_HF_IMG_PLOTLY_SPLIT,
+    BASE_HF_IMG_PLOTLY_LINEAR, BASE_HF_IMG_PLOTLY_LINEAR_LEGEND,
+    BASE_HF_IMG_PLOTLY_LINEAR_SPLIT,
     BASE_HF_IMG_DF, BASE_HF_IMG_LABELS_DF, BASE_HF_IMG_LEGEND_DF,
     BASE_HF_IMG_SPLIT_DF,
     BASE_HF_IMG_LINEAR_DF, BASE_HF_IMG_LINEAR_LABELS_DF,
     BASE_HF_IMG_LINEAR_LEGEND_DF, BASE_HF_IMG_LINEAR_SPLIT_DF,
     BASE_HF_IMG_PLOTLY_DF, BASE_HF_IMG_PLOTLY_LEGEND_DF,
     BASE_HF_IMG_PLOTLY_SPLIT_DF,
+    BASE_HF_IMG_PLOTLY_LINEAR_DF, BASE_HF_IMG_PLOTLY_LINEAR_LEGEND_DF,
+    BASE_HF_IMG_PLOTLY_LINEAR_SPLIT_DF,
     BASE_MULTI_IMG, BASE_MULTI_IMG_LABELS, BASE_MULTI_IMG_LEGEND,
     BASE_MULTI_IMG_SPLIT,
     BASE_MULTI_IMG_LINEAR, BASE_MULTI_IMG_LINEAR_LABELS,
     BASE_MULTI_IMG_LINEAR_LEGEND, BASE_MULTI_IMG_LINEAR_SPLIT,
     BASE_MULTI_IMG_PLOTLY, BASE_MULTI_IMG_PLOTLY_LEGEND,
     BASE_MULTI_IMG_PLOTLY_SPLIT,
+    BASE_MULTI_IMG_PLOTLY_LINEAR, BASE_MULTI_IMG_PLOTLY_LINEAR_LEGEND,
+    BASE_MULTI_IMG_PLOTLY_LINEAR_SPLIT,
     OUTPUT_IMG, OUTPUT_HF_IMG, OUTPUT_MULTI_IMG,
     OUTPUT_HTML, OUTPUT_HF_HTML, OUTPUT_MULTI_HTML
 )
@@ -89,6 +97,22 @@ class TestCliVcf(unittest.TestCase):
 
         # When
         result = self.runner.invoke(cli.main, [SAMPLE_VCF, "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY_LINEAR
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main, [SAMPLE_VCF,
+                                               "--linear", "--interactive"])
 
         # Then
         self.assertEqual(0, result.exit_code)
@@ -165,7 +189,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("MITOVIZ001.png")
 
-    def test_cli_plot_plotly_legend(self):
+    def test_cli_plot_polar_plotly_legend(self):
         # Given
         base_img = BASE_IMG_PLOTLY_LEGEND
         test_img = "MITOVIZ001.html"
@@ -173,6 +197,23 @@ class TestCliVcf(unittest.TestCase):
         # When
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_VCF, "--legend", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_legend(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY_LINEAR_LEGEND
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF,
+                                     "--legend", "--linear", "--interactive"])
 
         # Then
         self.assertEqual(0, result.exit_code)
@@ -250,7 +291,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("MITOVIZ001.png")
 
-    def test_cli_plot_plotly_split(self):
+    def test_cli_plot_polar_plotly_split(self):
         # Given
         base_img = BASE_IMG_PLOTLY_SPLIT
         test_img = "MITOVIZ001.html"
@@ -258,6 +299,23 @@ class TestCliVcf(unittest.TestCase):
         # When
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_VCF, "--split", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_split(self):
+        # Given
+        base_img = BASE_IMG_PLOTLY_LINEAR_SPLIT
+        test_img = "MITOVIZ001.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF,
+                                     "--split", "--linear", "--interactive"])
 
         # Then
         self.assertEqual(0, result.exit_code)
@@ -298,13 +356,29 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
-    def test_cli_plot_hf_plotly(self):
+    def test_cli_plot_hf_polar_plotly(self):
         # Given
         base_img = BASE_HF_IMG_PLOTLY
         test_img = "HG00420.html"
 
         # When
         result = self.runner.invoke(cli.main, [SAMPLE_HF_VCF, "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_hf_linear_plotly(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_LINEAR
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main, [SAMPLE_HF_VCF,
+                                               "--linear", "--interactive"])
 
         # Then
         self.assertEqual(0, result.exit_code)
@@ -381,7 +455,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
-    def test_cli_plot_hf_plotly_legend(self):
+    def test_cli_plot_hf_polar_plotly_legend(self):
         # Given
         base_img = BASE_HF_IMG_PLOTLY_LEGEND
         test_img = "HG00420.html"
@@ -390,6 +464,23 @@ class TestCliVcf(unittest.TestCase):
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_HF_VCF, "--legend",
                                      "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_hf_linear_plotly_legend(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_LINEAR_LEGEND
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_VCF,
+                                     "--linear", "--legend", "--interactive"])
 
         # Then
         self.assertEqual(0, result.exit_code)
@@ -467,7 +558,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
-    def test_cli_plot_hf_plotly_split(self):
+    def test_cli_plot_hf_polar_plotly_split(self):
         # Given
         base_img = BASE_HF_IMG_PLOTLY_SPLIT
         test_img = "HG00420.html"
@@ -476,6 +567,23 @@ class TestCliVcf(unittest.TestCase):
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_HF_VCF, "--split",
                                      "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_hf_linear_plotly_split(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_LINEAR_SPLIT
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_VCF,
+                                     "--linear", "--split", "--interactive"])
 
         # Then
         self.assertEqual(0, result.exit_code)
@@ -523,7 +631,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
 
-    def test_cli_plot_plotly_sample_multi(self):
+    def test_cli_plot_polar_plotly_sample_multi(self):
         # Given
         base_img = BASE_MULTI_IMG_PLOTLY
         test_img = OUTPUT_MULTI_HTML
@@ -531,6 +639,25 @@ class TestCliVcf(unittest.TestCase):
         # When
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_MULTI_VCF,
+                                     "--sample", "SRR1777294",
+                                     "--output", test_img,
+                                     "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_sample_multi(self):
+        # Given
+        base_img = BASE_MULTI_IMG_PLOTLY_LINEAR
+        test_img = OUTPUT_MULTI_HTML
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_MULTI_VCF, "--linear",
                                      "--sample", "SRR1777294",
                                      "--output", test_img,
                                      "--interactive"])
@@ -622,7 +749,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
 
-    def test_cli_plot_plotly_sample_multi_legend(self):
+    def test_cli_plot_polar_plotly_sample_multi_legend(self):
         # Given
         base_img = BASE_MULTI_IMG_PLOTLY_LEGEND
         test_img = OUTPUT_MULTI_HTML
@@ -630,6 +757,25 @@ class TestCliVcf(unittest.TestCase):
         # When
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_MULTI_VCF,
+                                     "--sample", "SRR1777294",
+                                     "--output", test_img,
+                                     "--legend", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_sample_multi_legend(self):
+        # Given
+        base_img = BASE_MULTI_IMG_PLOTLY_LINEAR_LEGEND
+        test_img = OUTPUT_MULTI_HTML
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_MULTI_VCF, "--linear",
                                      "--sample", "SRR1777294",
                                      "--output", test_img,
                                      "--legend", "--interactive"])
@@ -681,7 +827,7 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove(OUTPUT_MULTI_IMG)
 
-    def test_cli_plot_plotly_sample_multi_split(self):
+    def test_cli_plot_polar_plotly_sample_multi_split(self):
         # Given
         base_img = BASE_MULTI_IMG_PLOTLY_SPLIT
         test_img = OUTPUT_MULTI_HTML
@@ -689,6 +835,25 @@ class TestCliVcf(unittest.TestCase):
         # When
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_MULTI_VCF,
+                                     "--sample", "SRR1777294",
+                                     "--output", test_img,
+                                     "--split", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_sample_multi_split(self):
+        # Given
+        base_img = BASE_MULTI_IMG_PLOTLY_LINEAR_SPLIT
+        test_img = OUTPUT_MULTI_HTML
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_MULTI_VCF, "--linear",
                                      "--sample", "SRR1777294",
                                      "--output", test_img,
                                      "--split", "--interactive"])
@@ -738,7 +903,7 @@ class TestCliCsv(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
-    def test_cli_plot_plotly_csv(self):
+    def test_cli_plot_polar_plotly_csv(self):
         # Given
         base_img = BASE_HF_IMG_PLOTLY_DF
         test_img = "HG00420.html"
@@ -750,6 +915,21 @@ class TestCliCsv(unittest.TestCase):
         self.assertEqual(0, result.exit_code)
         self.assertTrue(os.path.isfile(test_img))
         self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_csv(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_LINEAR_DF
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main, [SAMPLE_HF_CSV,
+                                               "--linear", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
         # Cleanup
         os.remove(test_img)
 
@@ -821,7 +1001,7 @@ class TestCliCsv(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
-    def test_cli_plot_plotly_csv_legend(self):
+    def test_cli_plot_polar_plotly_csv_legend(self):
         # Given
         base_img = BASE_HF_IMG_PLOTLY_LEGEND_DF
         test_img = "HG00420.html"
@@ -835,6 +1015,22 @@ class TestCliCsv(unittest.TestCase):
         self.assertEqual(0, result.exit_code)
         self.assertTrue(os.path.isfile(test_img))
         self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_csv_legend(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_LINEAR_LEGEND_DF
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_CSV,
+                                     "--linear", "--legend", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
         # Cleanup
         os.remove(test_img)
 
@@ -872,7 +1068,7 @@ class TestCliCsv(unittest.TestCase):
         # Cleanup
         os.remove("HG00420.png")
 
-    def test_cli_plot_plotly_csv_split(self):
+    def test_cli_plot_polar_plotly_csv_split(self):
         # Given
         base_img = BASE_HF_IMG_PLOTLY_SPLIT_DF
         test_img = "HG00420.html"
@@ -886,6 +1082,22 @@ class TestCliCsv(unittest.TestCase):
         self.assertEqual(0, result.exit_code)
         self.assertTrue(os.path.isfile(test_img))
         self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_cli_plot_linear_plotly_csv_split(self):
+        # Given
+        base_img = BASE_HF_IMG_PLOTLY_LINEAR_SPLIT_DF
+        test_img = "HG00420.html"
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_HF_CSV,
+                                     "--linear", "--split", "--interactive"])
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile(test_img))
         # Cleanup
         os.remove(test_img)
 
