@@ -88,3 +88,9 @@ History
 * Add ``--interactive`` option to create interactive plots using plot.ly;
 * Implement interactive basic polar plots;
 * Implement interactive split polar plots.
+
+0.7.1 (2020-03-28)
+------------------
+
+* Implement interactive basic linear plots;
+* Implement interactive split linear plots.
