@@ -85,8 +85,8 @@ Linear plots can be created using the ``--linear`` option:
 
     $ mitoviz sample.vcf --linear
 
-Interactive plots can also be created using the ``--interactive`` option, and will be saved to an
-HTML file:
+Polar and linear interactive plots can also be created by adding the ``--interactive`` option, and
+will be saved to an HTML file:
 
 .. code-block:: console
 

@@ -62,8 +62,8 @@ using the ``--linear`` option:
 Linear plots can be managed and customised using the ``--output``, ``--sample``, ``--labels``,
 ``--legend`` and ``--split`` options.
 
-Interactive plots can also be created using the ``--interactive`` option, and will be saved to an
-HTML file:
+Polar and linear interactive plots can also be created by adding the ``--interactive`` option, and
+will be saved to an HTML file:
 
 .. code-block:: console
 
