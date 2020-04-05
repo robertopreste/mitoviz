@@ -9,8 +9,8 @@ import click
 from mitoviz.mitoviz import plot_table, plot_vcf
 
 
-@click.command(context_settings=dict(ignore_unknown_options=True,
-                                     allow_extra_args=True))
+@click.command("mitoviz", context_settings=dict(ignore_unknown_options=True,
+                                                allow_extra_args=True))
 @click.version_option()
 @click.argument("input_file", type=click.Path(exists=True))
 @click.option("--linear", "-r", default=False, is_flag=True,

@@ -31,7 +31,8 @@ setup(  # pragma: no cover
     description="Plot variants on the human mitochondrial genome.",
     entry_points={
         "console_scripts": [
-            "mitoviz=mitoviz.cli:main",
+            "mitoviz=mitoviz.cli.mitoviz_plot:main",
+            "mitoviz-base=mitoviz.cli.mitoviz_base:main"
         ],
     },
     install_requires=requirements,
