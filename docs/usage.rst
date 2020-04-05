@@ -84,8 +84,24 @@ Additional keyword options can be specified in the format ``option=value``, and 
 
     $ mitoviz sample.tsv --sep "\t" comment=#
 
+If you just need to create an empty mitochondrial plot, we've got you covered: use the
+``mitoviz-base`` command and provide one or more options like ``--linear``, ``--interactive``,
+``--legend``, ``--split``, ``--output``, based on your needs:
 
-Comprehensive help about the mitoviz CLI can be found with ``mitoviz --help``.
+.. code-block:: console
+
+    # Create a base polar plot
+    $ mitoviz-base
+
+    # Create a base linear plot and save it as "base_linear.png"
+    $ mitoviz-base --linear --output "base_linear.png"
+
+    # Create an interactive linear plot with split loci
+    $ mitoviz-base --linear --interactive --split
+
+
+Comprehensive help about the mitoviz CLI can be found with ``mitoviz --help`` and
+``mitoviz-base --help``.
 
 Python Module
 -------------
@@ -216,3 +232,18 @@ when processing the given input file:
 
 
 Comprehensive help about the ``plot_table`` function can be found with ``help(mitoviz.plot_table)``.
+
+If you just need to create an empty mitochondrial plot, the ``plot_base`` function allows to do so,
+and accepts the ``linear``, ``interactive``, ``legend``, ``split``, ``output`` and ``save``
+arguments to further tweak its behaviour:
+
+.. code-block:: python
+
+    from mitoviz import plot_base
+
+    # Create a base polar plot
+    plot_base()
+    # Create a base linear plot and save it as "base_linear.png"
+    plot_base(linear=True, save=True, output="base_linear.png)
+    # Create an interactive linear plot with split loci
+    plot_base(linear=True, interactive=True, split=True)
