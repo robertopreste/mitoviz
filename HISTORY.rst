@@ -94,3 +94,8 @@ History
 
 * Implement interactive basic linear plots;
 * Implement interactive split linear plots.
+
+0.8.0 (2020-04-05)
+==================
+
+* Add ``mitoviz-base`` command to create base mitochondrial plots.
