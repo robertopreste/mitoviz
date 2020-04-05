@@ -7,7 +7,7 @@ import unittest
 import cv2
 import numpy as np
 
-from mitoviz.mitoviz import plot_df, plot_table, plot_vcf
+from mitoviz.mitoviz import plot_base, plot_df, plot_table, plot_vcf
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF, SAMPLE_MULTI_VCF, SAMPLE_CUSTOM_DF,
     SAMPLE_DF, SAMPLE_HF_DF, SAMPLE_MULTI_DF,
@@ -18,8 +18,219 @@ from mitoviz.tests.constants import (
     BASE_HF_IMG_DF, BASE_HF_IMG_LABELS_DF, BASE_HF_IMG_LEGEND_DF,
     BASE_MULTI_IMG, BASE_MULTI_IMG_LABELS, BASE_MULTI_IMG_LEGEND,
     BASE_MULTI_IMG_DF, BASE_MULTI_IMG_LABELS_DF, BASE_MULTI_IMG_LEGEND_DF,
-    OUTPUT_IMG, OUTPUT_HF_IMG, OUTPUT_MULTI_IMG
+    BASE_MITO_POLAR, BASE_MITO_POLAR_LEGEND, BASE_MITO_POLAR_SPLIT,
+    BASE_MITO_LINEAR, BASE_MITO_LINEAR_LEGEND, BASE_MITO_LINEAR_SPLIT,
+    BASE_MITO_PLOTLY, BASE_MITO_PLOTLY_LEGEND, BASE_MITO_PLOTLY_SPLIT,
+    BASE_MITO_PLOTLY_LINEAR, BASE_MITO_PLOTLY_LINEAR_LEGEND,
+    BASE_MITO_PLOTLY_LINEAR_SPLIT, OUTPUT_IMG, OUTPUT_HF_IMG, OUTPUT_MULTI_IMG,
+    OUTPUT_HTML
 )
+
+
+class TestModuleBase(unittest.TestCase):
+
+    def test_module_base_polar(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_POLAR)
+
+        # When
+        plot_base(save=True)
+        result_img = cv2.imread("base_mt.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("base_mt.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("base_mt.png")
+
+    def test_module_base_linear(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_LINEAR)
+
+        # When
+        plot_base(linear=True, save=True)
+        result_img = cv2.imread("base_mt.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("base_mt.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("base_mt.png")
+
+    def test_module_base_polar_plotly(self):
+        # Given
+        base_img = BASE_MITO_PLOTLY
+        test_img = "base_mt.html"
+
+        # When
+        plot_base(interactive=True, save=True)
+
+        # Then
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_module_base_linear_plotly(self):
+        # Given
+        base_img = BASE_MITO_PLOTLY_LINEAR
+        test_img = "base_mt.html"
+
+        # When
+        plot_base(linear=True, interactive=True, save=True)
+
+        # Then
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_module_plot_polar_legend(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_POLAR_LEGEND)
+
+        # When
+        plot_base(legend=True, save=True)
+        result_img = cv2.imread("base_mt.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("base_mt.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("base_mt.png")
+
+    def test_module_base_linear_legend(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_LINEAR_LEGEND)
+
+        # When
+        plot_base(legend=True, linear=True, save=True)
+        result_img = cv2.imread("base_mt.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("base_mt.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("base_mt.png")
+
+    def test_module_base_polar_plotly_legend(self):
+        # Given
+        base_img = BASE_MITO_PLOTLY_LEGEND
+        test_img = "base_mt.html"
+
+        # When
+        plot_base(legend=True, interactive=True, save=True)
+
+        # Then
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_module_base_linear_plotly_legend(self):
+        # Given
+        base_img = BASE_MITO_PLOTLY_LINEAR_LEGEND
+        test_img = "base_mt.html"
+
+        # When
+        plot_base(legend=True, linear=True, interactive=True, save=True)
+
+        # Then
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_module_base_output(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_POLAR)
+
+        # When
+        plot_base(output=OUTPUT_IMG, save=True)
+        result_img = cv2.imread(OUTPUT_IMG)
+
+        # Then
+        self.assertTrue(os.path.isfile(OUTPUT_IMG))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove(OUTPUT_IMG)
+
+    def test_module_base_plotly_output(self):
+        # Given
+        base_img = BASE_MITO_PLOTLY
+        test_img = OUTPUT_HTML
+
+        # When
+        plot_base(interactive=True, output=test_img, save=True)
+
+        # Then
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_module_base_polar_split(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_POLAR_SPLIT)
+
+        # When
+        plot_base(split=True, save=True)
+        result_img = cv2.imread("base_mt.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("base_mt.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("base_mt.png")
+
+    def test_module_base_linear_split(self):
+        # Given
+        base_img = cv2.imread(BASE_MITO_LINEAR_SPLIT)
+
+        # When
+        plot_base(split=True, linear=True, save=True)
+        result_img = cv2.imread("base_mt.png")
+
+        # Then
+        self.assertTrue(os.path.isfile("base_mt.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("base_mt.png")
+
+    def test_module_base_polar_plotly_split(self):
+        # Given
+        base_img = BASE_MITO_PLOTLY_SPLIT
+        test_img = "base_mt.html"
+
+        # When
+        plot_base(split=True, interactive=True, save=True)
+
+        # Then
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
+
+    def test_module_base_linear_plotly_split(self):
+        # Given
+        base_img = BASE_MITO_PLOTLY_LINEAR_SPLIT
+        test_img = "base_mt.html"
+
+        # When
+        plot_base(split=True, linear=True, interactive=True, save=True)
+
+        # Then
+        self.assertTrue(os.path.isfile(test_img))
+        self.assertEqual(os.path.getsize(base_img), os.path.getsize(test_img))
+        # Cleanup
+        os.remove(test_img)
 
 
 class TestModuleVcf(unittest.TestCase):

@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 from click.testing import CliRunner
 
-from mitoviz import cli
+from mitoviz.cli import mitoviz_plot as cli
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF, SAMPLE_MULTI_VCF, SAMPLE_HF_CSV, SAMPLE_HF_TSV,
     SAMPLE_HF_TSV_COMM,
@@ -30,8 +30,6 @@ from mitoviz.tests.constants import (
     BASE_HF_IMG_LINEAR_LEGEND_DF, BASE_HF_IMG_LINEAR_SPLIT_DF,
     BASE_HF_IMG_PLOTLY_DF, BASE_HF_IMG_PLOTLY_LEGEND_DF,
     BASE_HF_IMG_PLOTLY_SPLIT_DF,
-    BASE_HF_IMG_PLOTLY_LINEAR_DF, BASE_HF_IMG_PLOTLY_LINEAR_LEGEND_DF,
-    BASE_HF_IMG_PLOTLY_LINEAR_SPLIT_DF,
     BASE_MULTI_IMG, BASE_MULTI_IMG_LABELS, BASE_MULTI_IMG_LEGEND,
     BASE_MULTI_IMG_SPLIT,
     BASE_MULTI_IMG_LINEAR, BASE_MULTI_IMG_LINEAR_LABELS,
@@ -50,7 +48,7 @@ class TestCliVcf(unittest.TestCase):
     def setUp(self) -> None:
         self.runner = CliRunner()
 
-    def test_cli_help(self):
+    def test_cli_plot_help(self):
         # Given/When
         result = self.runner.invoke(cli.main, ["--help"])
 
@@ -920,7 +918,6 @@ class TestCliCsv(unittest.TestCase):
 
     def test_cli_plot_linear_plotly_csv(self):
         # Given
-        base_img = BASE_HF_IMG_PLOTLY_LINEAR_DF
         test_img = "HG00420.html"
 
         # When
@@ -1020,7 +1017,6 @@ class TestCliCsv(unittest.TestCase):
 
     def test_cli_plot_linear_plotly_csv_legend(self):
         # Given
-        base_img = BASE_HF_IMG_PLOTLY_LINEAR_LEGEND_DF
         test_img = "HG00420.html"
 
         # When
@@ -1087,7 +1083,6 @@ class TestCliCsv(unittest.TestCase):
 
     def test_cli_plot_linear_plotly_csv_split(self):
         # Given
-        base_img = BASE_HF_IMG_PLOTLY_LINEAR_SPLIT_DF
         test_img = "HG00420.html"
 
         # When
