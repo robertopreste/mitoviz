@@ -100,6 +100,10 @@ separator is used (as in the case of TSV files), just specify it with the ``--se
 
     $ mitoviz sample.tsv --sep "\t"
 
+If you just need to create an empty mitochondrial plot, we've got you covered: use the
+``mitoviz-base`` command and provide one or more options like ``--linear``, ``--interactive``,
+``--legend``, ``--split``, ``--output``, based on your needs.
+
 Python Module
 -------------
 
@@ -164,6 +168,10 @@ when processing the given input file:
 .. code-block:: python
 
     plot_table("sample.tsv", sep="\t", comment="#", skiprows=0)
+
+If you just need to create an empty mitochondrial plot, the ``plot_base`` function allows to do so,
+and accepts the ``linear``, ``interactive``, ``legend``, ``split``, ``output`` and ``save``
+arguments to further tweak its behaviour.
 
 Please refer to the Usage_ section of the documentation for further information.
 
