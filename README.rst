@@ -41,7 +41,7 @@ Variants are shown according to their heteroplasmic fraction (HF), plotting vari
 HF = 1.0 on the outer border of the mitochondrial circle, those with HF = 0.0 on the inner
 border and all the others in between, according to their actual HF value.
 
-.. image:: https://github.com/robertopreste/mitoviz/raw/master/mitoviz/tests/images/sample_hf.png
+.. image:: https://github.com/robertopreste/mitoviz_testimgs/raw/master/images/sample_hf.png
   :alt: Mitochondrial plot with HF
 
 If the HF information is not available, variants will all be shown in the middle of the
@@ -51,7 +51,7 @@ A linear representation of the mitochondrial genome can also be plotted; in this
 variants are shown using a *lollipop plot* style, with the height of the marker reflecting
 their HF.
 
-.. image:: https://github.com/robertopreste/mitoviz/raw/master/mitoviz/tests/images/sample_linear_hf.png
+.. image:: https://github.com/robertopreste/mitoviz_testimgs/raw/master/images/sample_linear_hf.png
   :alt: Mitochondrial linear plot with HF
 
 Variants with no HF information will be shown as if their HF was 0.5.
