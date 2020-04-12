@@ -77,8 +77,10 @@ Ready to contribute? Here's how to set up ``mitoviz`` for local development.
    Now you can make your changes locally.
 
 5. When you're done making changes, check that your changes pass flake8 and the
-   tests, including testing other Python versions with tox::
+   tests, including testing other Python versions with tox. In order to test mitoviz,
+   you'll also need to clone the ``mitoviz_testimgs`` repo to the right location::
 
+    $ git clone https://github.com/robertopreste/mitoviz_testimgs.git mitoviz/tests/imgs
     $ python -m ci flake8
     $ pytest
     $ tox
