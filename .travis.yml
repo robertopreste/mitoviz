@@ -10,6 +10,7 @@ matrix:
         - python3 --version
         - pip3 install -U pip
         - pip3 install -r requirements.txt
+        - git clone https://github.com/robertopreste/mitoviz_testimgs.git mitoviz/tests/imgs
       install: pip3 install -e .
       script:
         - pytest --cov=./
@@ -22,6 +23,7 @@ matrix:
         - python3 --version
         - pip3 install -U pip
         - pip3 install -r requirements.txt
+        - git clone https://github.com/robertopreste/mitoviz_testimgs.git mitoviz/tests/imgs
       install: pip3 install -e .
       script:
         - pytest --cov=./
@@ -34,6 +36,7 @@ matrix:
         - python3 --version
         - pip3 install -U pip
         - pip3 install -r requirements.txt
+        - git clone https://github.com/robertopreste/mitoviz_testimgs.git mitoviz/tests/imgs
       install: pip3 install -e .
       script:
         - pytest --cov=./
@@ -46,6 +49,7 @@ matrix:
         - python3 --version
         - pip3 install -U pip
         - pip3 install -r requirements.txt
+        - git clone https://github.com/robertopreste/mitoviz_testimgs.git mitoviz/tests/imgs
       install: pip3 install -e .
       script:
         - pytest --cov=./
