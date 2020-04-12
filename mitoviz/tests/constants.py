@@ -7,7 +7,7 @@ import pandas as pd
 
 TESTDIR = os.path.dirname(os.path.realpath(__file__))
 DATADIR = os.path.join(TESTDIR, "data")
-IMGDIR = os.path.join(TESTDIR, "images")
+IMGDIR = os.path.join(TESTDIR, "imgs", "images")
 
 SAMPLE_VCF = os.path.join(DATADIR, "sample.vcf")
 SAMPLE_HF_VCF = os.path.join(DATADIR, "sample_hf.vcf")
