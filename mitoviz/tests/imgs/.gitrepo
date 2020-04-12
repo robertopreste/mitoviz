@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/robertopreste/mitoviz_testimgs.git
+	branch = master
+	commit = 017367b0b9ba7c1de6e180298a14c5dfa082af24
+	parent = 4a3bbf13d3bc017e983ef9c51cfd29d945bdf046
+	method = merge
+	cmdver = 0.4.1
