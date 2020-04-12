@@ -99,3 +99,8 @@ History
 ==================
 
 * Add ``mitoviz-base`` command to create base mitochondrial plots.
+
+0.8.1 (2020-04-12)
+------------------
+
+* Move test images to separate subrepo.
