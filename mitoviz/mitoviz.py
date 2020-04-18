@@ -65,6 +65,7 @@ def plot_vcf(in_vcf: str,
              save: bool = False,
              output: Optional[str] = None,
              labels: bool = False,
+             labels_hf: bool = False,
              legend: bool = False,
              split: bool = False,
              interactive: bool = False) -> None:
@@ -78,6 +79,8 @@ def plot_vcf(in_vcf: str,
         save: if true, the final plot will be saved to a file [default: False]
         output: path of the output file where the plot will be saved
         labels: if true, add a label for each variant shown [default: False]
+        labels_hf: if true and `labels=True`, show HF value in each variant's
+            label [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
         split: if true, plot split H and L strands [default: False]
@@ -99,7 +102,8 @@ def plot_vcf(in_vcf: str,
             plot_variants = _plot_variants_polar
 
     if sample:
-        fig = plot_variants(sample, variants_per_sample[sample], labels,
+        fig = plot_variants(sample, variants_per_sample[sample],
+                            labels, labels_hf,
                             legend, split)
 
         if save:
@@ -115,7 +119,8 @@ def plot_vcf(in_vcf: str,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            fig = plot_variants(sample, variants, labels, legend, split)
+            fig = plot_variants(sample, variants, labels, labels_hf,
+                                legend, split)
 
             if save:
                 dirname, name, ext = parse_path(output)
@@ -150,6 +155,7 @@ def plot_df(in_df: pd.DataFrame,
             save: bool = False,
             output: Optional[str] = None,
             labels: bool = False,
+            labels_hf: bool = False,
             legend: bool = False,
             split: bool = False,
             interactive: bool = False,
@@ -168,6 +174,8 @@ def plot_df(in_df: pd.DataFrame,
         save: if true, the final plot will be saved to a file [default: False]
         output: path of the output file where the plot will be saved
         labels: if true, add a label for each variant shown [default: False]
+        labels_hf: if true and `labels=True`, show HF value in each variant's
+            label [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
         split: if true, plot split H and L strands [default: False]
@@ -199,7 +207,8 @@ def plot_df(in_df: pd.DataFrame,
             plot_variants = _plot_variants_polar
 
     if sample:
-        fig = plot_variants(sample, variants_per_sample[sample], labels,
+        fig = plot_variants(sample, variants_per_sample[sample],
+                            labels, labels_hf,
                             legend, split)
 
         if save:
@@ -215,7 +224,8 @@ def plot_df(in_df: pd.DataFrame,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            fig = plot_variants(sample, variants, labels, legend, split)
+            fig = plot_variants(sample, variants, labels, labels_hf,
+                                legend, split)
 
             if save:
                 dirname, name, ext = parse_path(output)
@@ -251,6 +261,7 @@ def plot_table(in_table: str,
                save: bool = False,
                output: Optional[str] = None,
                labels: bool = False,
+               labels_hf: bool = False,
                legend: bool = False,
                split: bool = False,
                interactive: bool = False,
@@ -271,6 +282,8 @@ def plot_table(in_table: str,
         save: if true, the final plot will be saved to a file [default: False]
         output: path of the output file where the plot will be saved
         labels: if true, add a label for each variant shown [default: False]
+        labels_hf: if true and `labels=True`, show HF value in each variant's
+            label [default: False]
         legend: if true, add a legend for loci colors in the plot
             [default: False]
         split: if true, plot split H and L strands [default: False]
@@ -290,6 +303,7 @@ def plot_table(in_table: str,
             save=save,
             output=output,
             labels=labels,
+            labels_hf=labels_hf,
             legend=legend,
             split=split,
             interactive=interactive,

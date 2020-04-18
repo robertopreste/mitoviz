@@ -70,6 +70,12 @@ class _Variant:
         return label
 
     @property
+    def label_hf(self) -> str:
+        """ Create the variant label with additional HF value. """
+        label = self.label + f"\nHF: {self.hf}"
+        return label
+
+    @property
     def linear_x(self) -> int:
         """ The x position of the variant on the linear mt genome plot. """
         return self.position
