@@ -379,6 +379,7 @@ def _plot_variants_polar(sample: str,
 def _plotly_variants_polar(sample: str,
                            variants: List[_Variant],
                            labels: bool = False,
+                           labels_hf: bool = False,
                            legend: bool = False,
                            split: bool = False) -> go.Figure:
     """ Plot variants available in the given list onto a plotly polar plot.
@@ -387,6 +388,7 @@ def _plotly_variants_polar(sample: str,
         sample: sample name, used for the plot title
         variants: list of _PolarVariant instances to plot
         labels: add a label for each variant shown [default: False]
+        labels_hf: show HF value in each variant's label [default: False]
         legend: add a legend for loci colors in the plot [default: False]
         split: plot split H and L strands [default: False]
     """
@@ -449,6 +451,7 @@ def _plot_variants_linear(sample: str,
 def _plotly_variants_linear(sample: str,
                             variants: List[_Variant],
                             labels: bool = False,
+                            labels_hf: bool = False,
                             legend: bool = False,
                             split: bool = False) -> go.Figure:
     """ Plot variant available in a given list onto a plotly linear plot.
@@ -457,6 +460,7 @@ def _plotly_variants_linear(sample: str,
         sample: sample name, used for the plot title
         variants: list of _LinearVariant instances to plot
         labels: add a label for each variant shown [default: False]
+        labels_hf: show HF value in each variant's label [default: False]
         legend: add a legend for loci colors in the plot [default: False]
         split: plot split H and L strands [default: False]
     """
