@@ -13,7 +13,8 @@ from mitoviz.locus import _LinearLocus, _PolarLocus, _PolarSplitLocus
 from mitoviz.variant import _Variant
 
 
-def _label_variant(ax: plt.axes, variant: _Variant, linear: bool = False):
+def _label_variant(ax: plt.axes, variant: _Variant, linear: bool = False,
+                   show_hf: bool = False):
     """ Annotate each variant with a label in the polar or linear plot.
 
     Args:
@@ -21,9 +22,14 @@ def _label_variant(ax: plt.axes, variant: _Variant, linear: bool = False):
         variant: variant to annotate
         linear: whether the resulting is a linear or polar plot
             [default: False]
+        show_hf: show HF value in each variant's label [default: False]
     """
+    if show_hf:
+        label = variant.label_hf
+    else:
+        label = variant.label
     if linear:
-        ax.annotate(variant.label,
+        ax.annotate(label,
                     xy=(variant.linear_x, variant.linear_y + 0.02),
                     xytext=(variant.linear_x, variant.linear_y + 0.02),
                     ha="center", va="bottom",
@@ -31,7 +37,7 @@ def _label_variant(ax: plt.axes, variant: _Variant, linear: bool = False):
                               alpha=0.8,
                               boxstyle="round"))
     else:
-        ax.annotate(variant.label,
+        ax.annotate(label,
                     xy=(variant.polar_x, variant.polar_y),
                     xytext=(variant.polar_x, variant.polar_y),
                     textcoords="offset pixels",
@@ -344,6 +350,7 @@ def _plotly_mito_polar(legend: bool = False,
 def _plot_variants_polar(sample: str,
                          variants: List[_Variant],
                          labels: bool = False,
+                         labels_hf: bool = False,
                          legend: bool = False,
                          split: bool = False):
     """ Plot variants available in the given list onto a polar plot.
@@ -352,6 +359,7 @@ def _plot_variants_polar(sample: str,
         sample: sample name, used for the plot title
         variants: list of _PolarVariant instances to plot
         labels: add a label for each variant shown [default: False]
+        labels_hf: show HF value in each variant's label [default: False]
         legend: add a legend for loci colors in the plot [default: False]
         split: plot split H and L strands [default: False]
     """
@@ -361,7 +369,7 @@ def _plot_variants_polar(sample: str,
         ax.scatter(variant.polar_x, variant.polar_y,
                    c="black", s=20, zorder=20)
         if labels:
-            _label_variant(ax, variant, linear=False)
+            _label_variant(ax, variant, linear=False, show_hf=labels_hf)
 
     ax.set_title(sample)
 
@@ -371,6 +379,7 @@ def _plot_variants_polar(sample: str,
 def _plotly_variants_polar(sample: str,
                            variants: List[_Variant],
                            labels: bool = False,
+                           labels_hf: bool = False,
                            legend: bool = False,
                            split: bool = False) -> go.Figure:
     """ Plot variants available in the given list onto a plotly polar plot.
@@ -379,6 +388,7 @@ def _plotly_variants_polar(sample: str,
         sample: sample name, used for the plot title
         variants: list of _PolarVariant instances to plot
         labels: add a label for each variant shown [default: False]
+        labels_hf: show HF value in each variant's label [default: False]
         legend: add a legend for loci colors in the plot [default: False]
         split: plot split H and L strands [default: False]
     """
@@ -403,6 +413,7 @@ def _plotly_variants_polar(sample: str,
 def _plot_variants_linear(sample: str,
                           variants: List[_Variant],
                           labels: bool = False,
+                          labels_hf: bool = False,
                           legend: bool = False,
                           split: bool = False):
     """ Plot variant available in a given list onto a linear plot.
@@ -411,6 +422,7 @@ def _plot_variants_linear(sample: str,
         sample: sample name, used for the plot title
         variants: list of _LinearVariant instances to plot
         labels: add a label for each variant shown [default: False]
+        labels_hf: show HF value in each variant's label [default: False]
         legend: add a legend for loci colors in the plot [default: False]
         split: plot split H and L strands [default: False]
     """
@@ -429,7 +441,7 @@ def _plot_variants_linear(sample: str,
         plt.setp(base, "linestyle", "None")
 
         if labels:
-            _label_variant(ax, variant, linear=True)
+            _label_variant(ax, variant, linear=True, show_hf=labels_hf)
 
     ax.set_title(sample)
 
@@ -439,6 +451,7 @@ def _plot_variants_linear(sample: str,
 def _plotly_variants_linear(sample: str,
                             variants: List[_Variant],
                             labels: bool = False,
+                            labels_hf: bool = False,
                             legend: bool = False,
                             split: bool = False) -> go.Figure:
     """ Plot variant available in a given list onto a plotly linear plot.
@@ -447,6 +460,7 @@ def _plotly_variants_linear(sample: str,
         sample: sample name, used for the plot title
         variants: list of _LinearVariant instances to plot
         labels: add a label for each variant shown [default: False]
+        labels_hf: show HF value in each variant's label [default: False]
         legend: add a legend for loci colors in the plot [default: False]
         split: plot split H and L strands [default: False]
     """

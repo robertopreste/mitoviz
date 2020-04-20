@@ -18,9 +18,10 @@ from mitoviz.tests.constants import (
     BASE_MITO_PLOTLY, BASE_MITO_PLOTLY_LEGEND, BASE_MITO_PLOTLY_SPLIT,
     BASE_MITO_PLOTLY_LINEAR, BASE_MITO_PLOTLY_LINEAR_LEGEND,
     BASE_MITO_PLOTLY_LINEAR_SPLIT,
-    BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND, BASE_IMG_SPLIT,
+    BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LABELS_HF, BASE_IMG_LEGEND,
+    BASE_IMG_SPLIT,
     BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
-    BASE_IMG_LINEAR_SPLIT,
+    BASE_IMG_LINEAR_SPLIT, BASE_IMG_LINEAR_LABELS_HF,
     BASE_IMG_PLOTLY, BASE_IMG_PLOTLY_LEGEND, BASE_IMG_PLOTLY_SPLIT,
     BASE_IMG_PLOTLY_LINEAR, BASE_IMG_PLOTLY_LINEAR_LEGEND,
     BASE_IMG_PLOTLY_LINEAR_SPLIT,
@@ -107,6 +108,8 @@ def create_sample_vcf_polar():
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG)
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_LABELS,
              labels=True)
+    plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_LABELS_HF,
+             labels=True, labels_hf=True)
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_LEGEND,
              legend=True)
     plot_vcf(in_vcf=SAMPLE_VCF, save=True, output=BASE_IMG_SPLIT,
@@ -118,6 +121,8 @@ def create_sample_vcf_linear():
     plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True, output=BASE_IMG_LINEAR)
     plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,
              output=BASE_IMG_LINEAR_LABELS, labels=True)
+    plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,
+             output=BASE_IMG_LINEAR_LABELS_HF, labels=True, labels_hf=True)
     plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,
              output=BASE_IMG_LINEAR_LEGEND, legend=True)
     plot_vcf(in_vcf=SAMPLE_VCF, linear=True, save=True,

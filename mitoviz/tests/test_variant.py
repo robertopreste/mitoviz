@@ -79,6 +79,10 @@ class TestVariant(unittest.TestCase):
         self.assertEqual("3308.A", self.variant_ins.label)
         self.assertEqual("3308.A", self.variant_ins_raw.label)
 
+    def test_label_hf(self):
+        self.assertEqual("3308C>A\nHF: 0.3", self.variant.label_hf)
+        self.assertEqual("3308C>A\nHF: 0.3", self.variant_raw.label_hf)
+
     def test_polar_x(self):
         self.assertEqual(1.2557981773190898, self.variant.polar_x)
 

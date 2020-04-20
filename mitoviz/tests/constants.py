@@ -41,11 +41,13 @@ BASE_MITO_PLOTLY_LINEAR_SPLIT = os.path.join(
 
 BASE_IMG = os.path.join(IMGDIR, "sample.png")
 BASE_IMG_LABELS = os.path.join(IMGDIR, "sample_labels.png")
+BASE_IMG_LABELS_HF = os.path.join(IMGDIR, "sample_labels_hf.png")
 BASE_IMG_LEGEND = os.path.join(IMGDIR, "sample_legend.png")
 BASE_IMG_SPLIT = os.path.join(IMGDIR, "sample_split.png")
 
 BASE_IMG_LINEAR = os.path.join(IMGDIR, "sample_linear.png")
 BASE_IMG_LINEAR_LABELS = os.path.join(IMGDIR, "sample_linear_labels.png")
+BASE_IMG_LINEAR_LABELS_HF = os.path.join(IMGDIR, "sample_linear_labels_hf.png")
 BASE_IMG_LINEAR_LEGEND = os.path.join(IMGDIR, "sample_linear_legend.png")
 BASE_IMG_LINEAR_SPLIT = os.path.join(IMGDIR, "sample_linear_split.png")
 

@@ -14,7 +14,7 @@ from mitoviz.tests.constants import (
     SAMPLE_HF_TSV_COMM,
     BASE_IMG, BASE_IMG_LABELS, BASE_IMG_LEGEND, BASE_IMG_SPLIT,
     BASE_IMG_LINEAR, BASE_IMG_LINEAR_LABELS, BASE_IMG_LINEAR_LEGEND,
-    BASE_IMG_LINEAR_SPLIT,
+    BASE_IMG_LINEAR_SPLIT, BASE_IMG_LABELS_HF, BASE_IMG_LINEAR_LABELS_HF,
     BASE_IMG_PLOTLY, BASE_IMG_PLOTLY_LEGEND, BASE_IMG_PLOTLY_SPLIT,
     BASE_IMG_PLOTLY_LINEAR, BASE_IMG_PLOTLY_LINEAR_LEGEND,
     BASE_IMG_PLOTLY_LINEAR_SPLIT,
@@ -136,6 +136,23 @@ class TestCliVcf(unittest.TestCase):
         # Cleanup
         os.remove("MITOVIZ001.png")
 
+    def test_cli_plot_polar_labels_hf(self):
+        # Given
+        base_img = cv2.imread(BASE_IMG_LABELS_HF)
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF, "--labels", "--labels-hf"])
+        result_img = cv2.imread("MITOVIZ001.png")
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile("MITOVIZ001.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("MITOVIZ001.png")
+
     def test_cli_plot_linear_labels(self):
         # Given
         base_img = cv2.imread(BASE_IMG_LINEAR_LABELS)
@@ -143,6 +160,24 @@ class TestCliVcf(unittest.TestCase):
         # When
         result = self.runner.invoke(cli.main,
                                     [SAMPLE_VCF, "--labels", "--linear"])
+        result_img = cv2.imread("MITOVIZ001.png")
+
+        # Then
+        self.assertEqual(0, result.exit_code)
+        self.assertTrue(os.path.isfile("MITOVIZ001.png"))
+        diff = cv2.subtract(base_img, result_img)
+        self.assertFalse(np.any(diff))
+        # Cleanup
+        os.remove("MITOVIZ001.png")
+
+    def test_cli_plot_linear_labels_hf(self):
+        # Given
+        base_img = cv2.imread(BASE_IMG_LINEAR_LABELS_HF)
+
+        # When
+        result = self.runner.invoke(cli.main,
+                                    [SAMPLE_VCF, "--labels", "--labels-hf",
+                                     "--linear"])
         result_img = cv2.imread("MITOVIZ001.png")
 
         # Then
