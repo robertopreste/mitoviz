@@ -36,6 +36,12 @@ It is possible to show labels above each variant using the ``--labels`` flag:
 
     $ mitoviz sample.vcf --labels
 
+If you want to include the HF value of variants in the labels, add the ``--labels-hf`` flag:
+
+.. code-block:: console
+
+    $ mitoviz sample.vcf --labels --labels-hf
+
 Mitochondrial loci on mitoviz plots are drawn using a green color for protein-coding, blue for
 tRNAs, red for rRNAs, orange for regulatory (D-Loop and L-strand origin) and grey for non-coding
 loci. It is possible to include a legend in the
@@ -140,6 +146,14 @@ If you want to show labels for each variant plotted, add the ``labels=True`` opt
     from mitoviz import plot_vcf
 
     plot_vcf("sample.vcf", labels=True)
+
+If you also want HF values in the labels, add the ``labels_hf=True`` option:
+
+.. code-block:: python
+
+    from mitoviz import plot_vcf
+
+    plot_vcf("sample.vcf", labels=True, labels_hf=True)
 
 It is possible to include a legend for loci colors in the output plot, using the ``legend=True``
 option:
