@@ -104,3 +104,9 @@ History
 ------------------
 
 * Move test images to separate subrepo.
+
+0.8.2 (2020-04-20)
+------------------
+
+* Add ``--labels-hf`` (``labels-hf=True`` in Python) options to include the HF value
+  in plot labels.
