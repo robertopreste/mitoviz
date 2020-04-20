@@ -83,6 +83,11 @@ class TestVariant(unittest.TestCase):
         self.assertEqual("3308C>A\nHF: 0.3", self.variant.label_hf)
         self.assertEqual("3308C>A\nHF: 0.3", self.variant_raw.label_hf)
 
+    def test_label_hf_plotly(self):
+        self.assertEqual("3308C>A<br>HF: 0.3", self.variant.label_hf_plotly)
+        self.assertEqual("3308C>A<br>HF: 0.3",
+                         self.variant_raw.label_hf_plotly)
+
     def test_polar_x(self):
         self.assertEqual(1.2557981773190898, self.variant.polar_x)
 
