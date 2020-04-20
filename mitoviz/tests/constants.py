@@ -52,10 +52,14 @@ BASE_IMG_LINEAR_LEGEND = os.path.join(IMGDIR, "sample_linear_legend.png")
 BASE_IMG_LINEAR_SPLIT = os.path.join(IMGDIR, "sample_linear_split.png")
 
 BASE_IMG_PLOTLY = os.path.join(IMGDIR, "sample_plotly.html")
+BASE_IMG_PLOTLY_LABELS_HF = os.path.join(
+    IMGDIR, "sample_plotly_labels_hf.html")
 BASE_IMG_PLOTLY_LEGEND = os.path.join(IMGDIR, "sample_plotly_legend.html")
 BASE_IMG_PLOTLY_SPLIT = os.path.join(IMGDIR, "sample_plotly_split.html")
 
 BASE_IMG_PLOTLY_LINEAR = os.path.join(IMGDIR, "sample_plotly_linear.html")
+BASE_IMG_PLOTLY_LINEAR_LABELS_HF = os.path.join(
+    IMGDIR, "sample_plotly_linear_labels_hf.html")
 BASE_IMG_PLOTLY_LINEAR_LEGEND = os.path.join(
     IMGDIR, "sample_plotly_linear_legend.html")
 BASE_IMG_PLOTLY_LINEAR_SPLIT = os.path.join(
