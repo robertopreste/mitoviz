@@ -396,7 +396,10 @@ def _plotly_variants_polar(sample: str,
 
     radii = [el.polar_y for el in variants]
     theta = [el.polar_x_p for el in variants]
-    meta = [el.label for el in variants]
+    if labels_hf:
+        meta = [el.label_hf_plotly for el in variants]
+    else:
+        meta = [el.label for el in variants]
 
     var_trace = go.Scatterpolar(r=radii, theta=theta, mode="markers",
                                 marker=dict(color="black"), meta=meta,
@@ -468,7 +471,10 @@ def _plotly_variants_linear(sample: str,
 
     xs = [variant.linear_x for variant in variants]
     ys = [variant.linear_y for variant in variants]
-    meta = [el.label for el in variants]
+    if labels_hf:
+        meta = [el.label_hf_plotly for el in variants]
+    else:
+        meta = [el.label for el in variants]
 
     var_trace = go.Scatter(x=xs, y=ys, mode="markers",
                            marker=dict(color="black"), meta=meta,
