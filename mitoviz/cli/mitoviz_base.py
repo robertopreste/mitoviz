@@ -10,14 +10,16 @@ from mitoviz.mitoviz import plot_base
 
 @click.command("mitoviz-base")
 @click.version_option()
-@click.option("--linear", "-r", default=False, is_flag=True,
+@click.option("--linear", "-r", default=False, is_flag=True, show_default=True,
               help="Show a linear plot rather than a polar one.")
-@click.option("--output", "-o", default=None, help="Output filename.")
-@click.option("--legend", "-L", default=False, is_flag=True,
+@click.option("--output", "-o", default=None, show_default=True,
+              help="Output filename.")
+@click.option("--legend", "-L", default=False, is_flag=True, show_default=True,
               help="Add legend to the plot.")
-@click.option("--split", "-p", default=False, is_flag=True,
+@click.option("--split", "-p", default=False, is_flag=True, show_default=True,
               help="Plot split H and L strands.")
 @click.option("--interactive", "-i", default=False, is_flag=True,
+              show_default=True,
               help="Create an interactive version of the plot.")
 def main(linear, output, legend, split, interactive):
     """ Plot an empty base mitochondrial representation. """

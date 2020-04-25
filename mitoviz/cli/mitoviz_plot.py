@@ -13,21 +13,24 @@ from mitoviz.mitoviz import plot_table, plot_vcf
                                                 allow_extra_args=True))
 @click.version_option()
 @click.argument("input_file", type=click.Path(exists=True))
-@click.option("--linear", "-r", default=False, is_flag=True,
+@click.option("--linear", "-r", default=False, is_flag=True, show_default=True,
               help="Plot variants on a linear plot rather than a polar one.")
-@click.option("--sample", "-s", default=None, help="Specific sample to plot.")
-@click.option("--output", "-o", default=None, help="Output filename.")
-@click.option("--labels", "-l", default=False, is_flag=True,
+@click.option("--sample", "-s", default=None, show_default=True,
+              help="Specific sample to plot.")
+@click.option("--output", "-o", default=None, show_default=True,
+              help="Output filename.")
+@click.option("--labels", "-l", default=False, is_flag=True, show_default=True,
               help="Add variant labels.")
 @click.option("--labels-hf", default=False, is_flag=True, show_default=True,
               help="Show HF value in each variant's label")
-@click.option("--legend", "-L", default=False, is_flag=True,
+@click.option("--legend", "-L", default=False, is_flag=True, show_default=True,
               help="Add legend to the plot.")
-@click.option("--split", "-p", default=False, is_flag=True,
+@click.option("--split", "-p", default=False, is_flag=True, show_default=True,
               help="Plot split H and L strands.")
 @click.option("--interactive", "-i", default=False, is_flag=True,
+              show_default=True,
               help="Create an interactive version of the plot.")
-@click.option("--sep", "-S", default=",",
+@click.option("--sep", "-S", default=",", show_default=True,
               help="Column delimiter used (if INPUT_FILE is not a VCF file)")
 @click.pass_context
 def main(ctx, input_file, linear, sample, output, labels, labels_hf, legend,
