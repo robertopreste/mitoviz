@@ -110,3 +110,8 @@ History
 
 * Add ``--labels-hf`` (``labels-hf=True`` in Python) options to include the HF value
   in plot labels.
+
+0.9.0 (2020-06-11)
+==================
+
+* Refactor code to create plotting classes.

@@ -8,11 +8,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from mitoviz.parsers import _DataFrameParser, _TabularParser, _VcfParser
-from mitoviz.plot import (
-    _plot_variants_polar, _plot_variants_linear, _plotly_variants_polar,
-    _plotly_variants_linear, _plot_mito_polar, _plot_mito_linear,
-    _plotly_mito_polar, _plotly_mito_linear
-)
+from mitoviz.plot import PlotBase, PlotVariants
 from mitoviz.utils import parse_path
 
 
@@ -34,16 +30,17 @@ def plot_base(linear: bool = False,
         interactive: if true, create an interactive version of the plot
             [default: False]
     """
+    base_plot = PlotBase()
     if linear:
         if interactive:
-            plot_mito = _plotly_mito_linear
+            plot_mito = base_plot.linear_plotly
         else:
-            plot_mito = _plot_mito_linear
+            plot_mito = base_plot.linear
     else:
         if interactive:
-            plot_mito = _plotly_mito_polar
+            plot_mito = base_plot.polar_plotly
         else:
-            plot_mito = _plot_mito_polar
+            plot_mito = base_plot.polar
 
     fig = plot_mito(legend, split)
 
@@ -89,20 +86,21 @@ def plot_vcf(in_vcf: str,
     """
     vcf = _VcfParser(in_vcf)
     variants_per_sample = vcf.variants
-
+    variant_plot = PlotVariants()
     if linear:
         if interactive:
-            plot_variants = _plotly_variants_linear
+            plot_variants = variant_plot.linear_plotly
         else:
-            plot_variants = _plot_variants_linear
+            plot_variants = variant_plot.linear
     else:
         if interactive:
-            plot_variants = _plotly_variants_polar
+            plot_variants = variant_plot.polar_plotly
         else:
-            plot_variants = _plot_variants_polar
+            plot_variants = variant_plot.polar
 
     if sample:
-        fig = plot_variants(sample, variants_per_sample[sample],
+        variant_plot.sample = sample
+        fig = plot_variants(variants_per_sample[sample],
                             labels, labels_hf,
                             legend, split)
 
@@ -119,7 +117,8 @@ def plot_vcf(in_vcf: str,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            fig = plot_variants(sample, variants, labels, labels_hf,
+            variant_plot.sample = sample
+            fig = plot_variants(variants, labels, labels_hf,
                                 legend, split)
 
             if save:
@@ -194,20 +193,21 @@ def plot_df(in_df: pd.DataFrame,
                           sample_col=sample_col,
                           hf_col=hf_col)
     variants_per_sample = df.variants
-
+    variant_plot = PlotVariants()
     if linear:
         if interactive:
-            plot_variants = _plotly_variants_linear
+            plot_variants = variant_plot.linear_plotly
         else:
-            plot_variants = _plot_variants_linear
+            plot_variants = variant_plot.linear
     else:
         if interactive:
-            plot_variants = _plotly_variants_polar
+            plot_variants = variant_plot.polar_plotly
         else:
-            plot_variants = _plot_variants_polar
+            plot_variants = variant_plot.polar
 
     if sample:
-        fig = plot_variants(sample, variants_per_sample[sample],
+        variant_plot.sample = sample
+        fig = plot_variants(variants_per_sample[sample],
                             labels, labels_hf,
                             legend, split)
 
@@ -224,7 +224,8 @@ def plot_df(in_df: pd.DataFrame,
     else:
         for i, (sample, variants) in enumerate(variants_per_sample.items(),
                                                start=1):
-            fig = plot_variants(sample, variants, labels, labels_hf,
+            variant_plot.sample = sample
+            fig = plot_variants(variants, labels, labels_hf,
                                 legend, split)
 
             if save:

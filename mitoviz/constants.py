@@ -48,11 +48,19 @@ STRANDS = ["L", "H", "H", "H", "H", "H", "",
            "", "H", "H", "", "L", "L"]
 
 COLORS = {
-    "trna": "#4169e1",  # royalblue
-    "rrna": "#cd5c5c",  # indianred
-    "reg": "#ffa500",  # orange
     "cds": "#2e8b57",  # seagreen
+    "reg": "#ffa500",  # orange
+    "rrna": "#cd5c5c",  # indianred
+    "trna": "#4169e1",  # royalblue
     "nc": "grey",
+}
+
+LABELS = {
+    "cds": "Coding",
+    "reg": "Regulatory",
+    "rrna": "rRNA",
+    "trna": "tRNA",
+    "nc": "Non Coding",
 }
 
 TEXT_HA = ["center", "center", "right", "right", "right", "right", "center",

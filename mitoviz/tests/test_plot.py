@@ -9,10 +9,7 @@ import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 
-from mitoviz.plot import (
-    _legend_patches, _plot_mito_linear, _plot_mito_polar, _plotly_mito_linear,
-    _plotly_mito_polar
-)
+from mitoviz.plot import Legend, PlotBase
 from mitoviz.tests.constants import (
     BASE_MITO_POLAR, BASE_MITO_POLAR_LEGEND, BASE_MITO_POLAR_SPLIT,
     BASE_MITO_LINEAR, BASE_MITO_LINEAR_LEGEND, BASE_MITO_LINEAR_SPLIT,
@@ -22,9 +19,12 @@ from mitoviz.tests.constants import (
 )
 
 
-class TestPlot(unittest.TestCase):
+class TestLegend(unittest.TestCase):
 
-    def test__legend_patches(self):
+    def setUp(self) -> None:
+        self.legend = Legend()
+
+    def test_patches(self):
         # Given
         expected = [
             mpatches.Patch(color="#2e8b57", label="Coding"),
@@ -35,19 +35,29 @@ class TestPlot(unittest.TestCase):
         ]
 
         # When
-        result = _legend_patches()
+        result = self.legend.patches()
 
         # Then
         for n in range(len(result)):
             self.assertTrue(self._compare_patches(expected[n], result[n]))
 
-    def test__plot_mito_polar(self):
+    @staticmethod
+    def _compare_patches(expected, result):
+        return expected._original_facecolor == result._original_facecolor
+
+
+class TestBasePlot(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.base_plot = PlotBase()
+
+    def test_polar(self):
         # Given
         base_img = cv2.imread(BASE_MITO_POLAR)
         result_img_path = "test_base_mito.png"
 
         # When
-        fig, ax = _plot_mito_polar()
+        fig, ax = self.base_plot.polar()
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)
@@ -59,13 +69,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img_path)
 
-    def test__plot_mito_polar_legend(self):
+    def test_polar_legend(self):
         # Given
         base_img = cv2.imread(BASE_MITO_POLAR_LEGEND)
         result_img_path = "test_base_mito_legend.png"
 
         # When
-        fig, ax = _plot_mito_polar(legend=True)
+        fig, ax = self.base_plot.polar(legend=True)
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)
@@ -77,13 +87,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img_path)
 
-    def test__plot_mito_polar_split(self):
+    def test_polar_split(self):
         # Given
         base_img = cv2.imread(BASE_MITO_POLAR_SPLIT)
         result_img_path = "test_base_mito_split.png"
 
         # When
-        fig, ax = _plot_mito_polar(split=True)
+        fig, ax = self.base_plot.polar(split=True)
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)
@@ -95,13 +105,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img_path)
 
-    def test__plot_mito_linear(self):
+    def test_linear(self):
         # Given
         base_img = cv2.imread(BASE_MITO_LINEAR)
         result_img_path = "test_base_mito.png"
 
         # When
-        fig, ax = _plot_mito_linear()
+        fig, ax = self.base_plot.linear()
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)
@@ -113,13 +123,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img_path)
 
-    def test__plot_mito_linear_legend(self):
+    def test_linear_legend(self):
         # Given
         base_img = cv2.imread(BASE_MITO_LINEAR_LEGEND)
         result_img_path = "test_base_mito_legend.png"
 
         # When
-        fig, ax = _plot_mito_linear(legend=True)
+        fig, ax = self.base_plot.linear(legend=True)
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)
@@ -131,13 +141,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img_path)
 
-    def test__plot_mito_linear_split(self):
+    def test_linear_split(self):
         # Given
         base_img = cv2.imread(BASE_MITO_LINEAR_SPLIT)
         result_img_path = "test_base_mito_split.png"
 
         # When
-        fig, ax = _plot_mito_linear(split=True)
+        fig, ax = self.base_plot.linear(split=True)
         plt.savefig(result_img_path)
         plt.close()
         result_img = cv2.imread(result_img_path)
@@ -149,13 +159,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img_path)
 
-    def test__plotly_mito_polar(self):
+    def test_polar_plotly(self):
         # Given
         base_img = BASE_MITO_PLOTLY
         result_img = "test_base_mito.html"
 
         # When
-        fig = _plotly_mito_polar()
+        fig = self.base_plot.polar_plotly()
         fig.write_html(result_img)
 
         # Then
@@ -165,13 +175,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img)
 
-    def test__plotly_mito_polar_legend(self):
+    def test_polar_plotly_legend(self):
         # Given
         base_img = BASE_MITO_PLOTLY_LEGEND
         result_img = "test_base_mito_legend.html"
 
         # When
-        fig = _plotly_mito_polar(legend=True)
+        fig = self.base_plot.polar_plotly(legend=True)
         fig.write_html(result_img)
 
         # Then
@@ -181,13 +191,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img)
 
-    def test__plotly_mito_polar_split(self):
+    def test_polar_plotly_split(self):
         # Given
         base_img = BASE_MITO_PLOTLY_SPLIT
         result_img = "test_base_mito_split.html"
 
         # When
-        fig = _plotly_mito_polar(split=True)
+        fig = self.base_plot.polar_plotly(split=True)
         fig.write_html(result_img)
 
         # Then
@@ -197,13 +207,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img)
 
-    def test__plotly_mito_linear(self):
+    def test_linear_plotly(self):
         # Given
         base_img = BASE_MITO_PLOTLY_LINEAR
         result_img = "test_base_mito_linear.html"
 
         # When
-        fig = _plotly_mito_linear()
+        fig = self.base_plot.linear_plotly()
         fig.write_html(result_img)
 
         # Then
@@ -213,13 +223,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img)
 
-    def test__plotly_mito_linear_legend(self):
+    def test_linear_plotly_legend(self):
         # Given
         base_img = BASE_MITO_PLOTLY_LINEAR_LEGEND
         result_img = "test_base_mito_legend_linear.html"
 
         # When
-        fig = _plotly_mito_linear(legend=True)
+        fig = self.base_plot.linear_plotly(legend=True)
         fig.write_html(result_img)
 
         # Then
@@ -229,13 +239,13 @@ class TestPlot(unittest.TestCase):
         # Cleanup
         os.remove(result_img)
 
-    def test__plotly_mito_linear_split(self):
+    def test_linear_plotly_split(self):
         # Given
         base_img = BASE_MITO_PLOTLY_LINEAR_SPLIT
         result_img = "test_base_mito_split_linear.html"
 
         # When
-        fig = _plotly_mito_linear(split=True)
+        fig = self.base_plot.linear_plotly(split=True)
         fig.write_html(result_img)
 
         # Then
@@ -244,7 +254,3 @@ class TestPlot(unittest.TestCase):
                          os.path.getsize(result_img))
         # Cleanup
         os.remove(result_img)
-
-    @staticmethod
-    def _compare_patches(expected, result):
-        return expected._original_facecolor == result._original_facecolor
