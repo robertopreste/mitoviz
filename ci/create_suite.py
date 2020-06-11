@@ -6,10 +6,7 @@ import os
 import matplotlib.pyplot as plt
 
 from mitoviz import plot_df, plot_vcf
-from mitoviz.plot import (
-    _plot_mito_linear, _plot_mito_polar, _plotly_mito_polar,
-    _plotly_mito_linear
-)
+from mitoviz.plot import PlotBase
 from mitoviz.tests.constants import (
     SAMPLE_VCF, SAMPLE_HF_VCF,
     SAMPLE_DF, SAMPLE_HF_DF,
@@ -52,55 +49,63 @@ from mitoviz.tests.constants import (
 
 def create_mito_polar():
     """ Create base mitochondrial polar plots. """
-    fig, ax = _plot_mito_polar()
+    plot = PlotBase()
+
+    fig, ax = plot.polar()
     plt.savefig(BASE_MITO_POLAR)
     plt.close()
 
-    fig, ax = _plot_mito_polar(legend=True)
+    fig, ax = plot.polar(legend=True)
     plt.savefig(BASE_MITO_POLAR_LEGEND)
     plt.close()
 
-    fig, ax = _plot_mito_polar(split=True)
+    fig, ax = plot.polar(split=True)
     plt.savefig(BASE_MITO_POLAR_SPLIT)
     plt.close()
 
 
 def create_mito_linear():
     """ Create base mitochondrial linear plots. """
-    fig, ax = _plot_mito_linear()
+    plot = PlotBase()
+
+    fig, ax = plot.linear()
     plt.savefig(BASE_MITO_LINEAR)
     plt.close()
 
-    fig, ax = _plot_mito_linear(legend=True)
+    fig, ax = plot.linear(legend=True)
     plt.savefig(BASE_MITO_LINEAR_LEGEND)
     plt.close()
 
-    fig, ax = _plot_mito_linear(split=True)
+    fig, ax = plot.linear(split=True)
     plt.savefig(BASE_MITO_LINEAR_SPLIT)
     plt.close()
 
 
 def create_mito_polar_plotly():
     """ Create base mitochondrial polar plots with plotly. """
-    fig = _plotly_mito_polar()
+    plot = PlotBase()
+
+    fig = plot.polar_plotly()
     fig.write_html(BASE_MITO_PLOTLY)
 
-    fig = _plotly_mito_polar(legend=True)
+    fig = plot.polar_plotly(legend=True)
     fig.write_html(BASE_MITO_PLOTLY_LEGEND)
 
-    fig = _plotly_mito_polar(split=True)
+    fig = plot.polar_plotly(split=True)
     fig.write_html(BASE_MITO_PLOTLY_SPLIT)
 
 
 def create_mito_linear_plotly():
     """ Create base mitochondrial linear plots with plotly. """
-    fig = _plotly_mito_linear()
+    plot = PlotBase()
+
+    fig = plot.linear_plotly()
     fig.write_html(BASE_MITO_PLOTLY_LINEAR)
 
-    fig = _plotly_mito_linear(legend=True)
+    fig = plot.linear_plotly(legend=True)
     fig.write_html(BASE_MITO_PLOTLY_LINEAR_LEGEND)
 
-    fig = _plotly_mito_linear(split=True)
+    fig = plot.linear_plotly(split=True)
     fig.write_html(BASE_MITO_PLOTLY_LINEAR_SPLIT)
 
 
