@@ -21,5 +21,5 @@ pandas==0.25.3
 matplotlib==3.1.2
 pysam==0.15.3
 vcfpy==0.12.1
-opencv-python==4.2.0.32
+opencv-python==4.6.0.66
 plotly==5.6.0
